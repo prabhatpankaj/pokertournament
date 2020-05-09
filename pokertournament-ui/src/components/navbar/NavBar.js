@@ -21,7 +21,7 @@ class NavBar extends Component {
                         <BootstrapNavBar.Toggle aria-controls="basic-navbar-nav" />
                         <BootstrapNavBar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
-                                <LinkContainer to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
+                                <LinkContainer exact to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
                                 <LinkContainer to="/tournaments"><Nav.Link>Tournaments</Nav.Link></LinkContainer>
                                 <LinkContainer to="/players"><Nav.Link>Players</Nav.Link></LinkContainer>
                                 <LinkContainer to="/dashboard"><Nav.Link>Dashboard</Nav.Link></LinkContainer>
