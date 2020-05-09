@@ -38,6 +38,9 @@ public class Tournament {
     private String name;
 
     @Column
+    private String description;
+
+    @Column
     @NotNull
     private String hostedBy;
 

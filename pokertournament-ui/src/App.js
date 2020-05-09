@@ -4,19 +4,20 @@ import PrivateRoute from './components/privateRoute/PrivateRoute';
 import NavBar from './components/navbar/NavBar'
 import LoginView from './components/login/LoginView';
 import HomeView from './components/home/HomeView';
-import TournamentsView from './components/tournaments/TournamentsView';
 import PlayersView from './components/players/PlayersView';
-import DashboardView from './components/dashboard/DashboardView';
-import ClockView from './components/clock/ClockView';
+import TournamentView from './components/tournament/TournamentView'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-
+import Logger from "js-logger";
 import './App.css';
+
+Logger.setLevel(Logger.DEBUG)
 
 class App extends Component {
 
-    // eslint-disable-next-line
     constructor(props) {
         super(props)
+        this.state = {
+        }
     }
 
     render() {
@@ -36,22 +37,14 @@ class App extends Component {
                             <LoginView />
                         </Route>
 
-                        <PrivateRoute authed={this.props.user.enabled} path='/dashboard'>
-                            <DashboardView />
-                        </PrivateRoute>
-
                         <PrivateRoute authed={this.props.user.enabled} path='/players'>
                             <PlayersView />
                         </PrivateRoute>
 
-                        <PrivateRoute authed={this.props.user.enabled} path='/tournaments'>
-                            <TournamentsView />
+                        <PrivateRoute authed={this.props.user.enabled} path='/tournament'>
+                            <TournamentView />
                         </PrivateRoute>
-                        
-                        <PrivateRoute authed={this.props.user.enabled} path='/clock'>
-                            <ClockView />
-                        </PrivateRoute>
-                        
+
                     </Switch>
                 </BrowserRouter>
             </div>
