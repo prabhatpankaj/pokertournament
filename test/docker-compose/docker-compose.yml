@@ -1,0 +1,48 @@
+version: "3.3"
+
+services:
+  pokertournament-db:
+    container_name: pokertournament-db
+    image: postgres:9.6.17
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=Passw0rd!
+
+  pokertournament-api:
+    container_name: pokertournament-api
+    image: pokertournament-api:0.0.1-SNAPSHOT
+    ports:
+      - 8080:8080
+      - 5000:5000
+    environment:
+      - JAVA_OPTS=
+        -Xdebug 
+        -Xrunjdwp:transport=dt_socket,server=y,address=*:5000,suspend=n
+      - APPLICATION_OPTS=
+        --spring.datasource.url=jdbc:postgresql://pokertournament-db/postgres
+        --spring.datasource.username=postgres
+        --spring.datasource.password=Passw0rd!
+        --logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter=DEBUG
+    entrypoint: [
+      "/tmp/tools/wait-for-it.sh",
+      "-s",
+      "-t",
+      "0",
+      "pokertournament-db:5432",
+      "--",
+      "/entrypoint.sh"
+    ]
+    depends_on:
+      - pokertournament-db
+    volumes:
+      - ./tools:/tmp/tools
+
+  pokertournament-ui:
+    container_name: pokertournament-ui
+    image: pokertournament-ui:0.0.1-SNAPSHOT
+    ports:
+      - 80:80
+    depends_on:
+      - pokertournament-db
+      - pokertournament-api

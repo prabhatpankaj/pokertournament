@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+		<groupId>com.pilon.pokertournament</groupId>
+		<artifactId>pokertournament-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+	</parent>
+
+    <groupId>com.pilon.pokertournament</groupId>
+    <artifactId>pokertournament-ui</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>pokertournament-ui</name>
+    <description>Poker Tournament UI</description>
+    <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.33.0</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <phase>install</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${project.artifactId}:${project.version}</name>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

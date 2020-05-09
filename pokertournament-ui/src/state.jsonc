@@ -1,0 +1,127 @@
+{
+    // Set when a user logs in
+    // Actions:
+    //      SET_USER
+    //      CLEAR_USER
+    "user": {
+        "authorities": [
+            {
+                "authority": "ROLE_ADMIN"
+            }
+        ],
+        "details": {
+            "remoteAddress": "0:0:0:0:0:0:0:1",
+            "sessionId": "06419137C965EDCC0C3D4B87ACA454CD"
+        },
+        "authenticated": true,
+        "principal": {
+            "password": null,
+            "username": "chuck.pilon@gmail.com",
+            "authorities": [
+                {
+                    "authority": "ROLE_ADMIN"
+                }
+            ],
+            "accountNonExpired": true,
+            "accountNonLocked": true,
+            "credentialsNonExpired": true,
+            "enabled": true
+        },
+        "credentials": null,
+        "name": "chuck.pilon@gmail.com"
+    },
+    "view": "TABLE_VIEW",
+    // Set when a tournament is selected (though not necessarily started)
+    "tournament": {
+        "league": "Pocket Aces",
+        "name": "Pocket Aces Event 4",
+        "start": "2020-03-27T19:00:00.000Z",
+        "location": "Mike's Warehouse",
+        "structure": {
+            "levels": [
+                {
+                    "break": false,
+                    "smallBlind": 25,
+                    "bigBlind": 50,
+                    "ante": 0,
+                    "durationSeconds": 1200
+                },
+                {
+                    "break": false,
+                    "smallBlind": 50,
+                    "bigBlind": 100,
+                    "ante": 0,
+                    "durationSeconds": 1200
+                },
+                {
+                    "break": true,
+                    "durationSeconds": 600
+                }
+            ]
+        },
+        // Updated while a tournament is in progress
+        "status": {
+            "currentLevel": 1,
+            "timeRemainingInLevelSeconds": 485,
+            // Loaded from backend
+            "players": {
+                "1": {
+                    "firstName": "Chuck",
+                    "lastName": "Pilon"
+                },
+                "2": {
+                    "firstName": "Jerry",
+                    "lastName": "Hanson"
+                },
+                "3": {
+                    "firstName": "Rob",
+                    "lastName": "Belz"
+                },
+                "4": {
+                    "firstName": "Mark",
+                    "lastName": "Cotton"
+                }
+            },
+            "playersStatus": {
+                "1": {
+                    "active": true
+                },
+                "2": {
+                    "active": false,
+                    "bustedBy": "1",
+                    "place": 4
+                },
+                "3": {
+                    "active": true
+                },
+                "4": {
+                    "active": true
+                }
+            },
+            "tableMap": {
+                "1": {
+                    "name": "Spades",
+                    "seats": 10,
+                    // Ids of players
+                    "seating": [
+                        "1",
+                        null,
+                        "4",
+                        "3",
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                    ]
+                }
+            }
+        }
+    }
+}
+
+// Should probably have things like 
+// playersById: { id -> player }
+// players: array<id>
+// How would I normalize the runtime state of the application to store in a database?
