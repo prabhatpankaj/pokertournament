@@ -1,8 +1,8 @@
 export const TournamentStatus = {
-    SCHEDULED: 1,
-    IN_PROGRESS: 2,
-    COMPLETED: 3,
-    CANCELED: 4
+    SCHEDULED: "SCHEDULED",
+    IN_PROGRESS: "IN_PROGRESS",
+    COMPLETED: "COMPLETED",
+    CANCELED: "CANCELED"
 }
 
 export const TournamentStatusDescription = {

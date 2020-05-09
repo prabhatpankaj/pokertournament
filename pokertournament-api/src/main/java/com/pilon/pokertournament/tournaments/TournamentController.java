@@ -26,7 +26,7 @@ public class TournamentController {
     private TournamentManager tournamentManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    Iterable<Tournament> getTournamentsByStatus(@RequestParam Optional<Integer> statusCode) {
+    Iterable<Tournament> getTournamentsByStatus(@RequestParam Optional<TournamentStatusCode> statusCode) {
         if (statusCode.isPresent()) {
             return tournamentService.findAllByStatusCode(statusCode.get());
         } else {

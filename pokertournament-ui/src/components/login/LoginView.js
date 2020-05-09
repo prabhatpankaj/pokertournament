@@ -87,7 +87,6 @@ class LoginView extends Component {
                 <Row>
                     <Col sm="4" />
                     <Col sm="4">
-                        <h1>Pocket Aces</h1>
                         <Form onSubmit={this.onSubmit}>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Email</Form.Label>
