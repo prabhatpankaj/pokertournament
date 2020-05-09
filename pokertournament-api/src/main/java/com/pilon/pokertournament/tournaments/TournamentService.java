@@ -19,7 +19,7 @@ public class TournamentService {
         return tournamentRepository.findById(id);
     }
 
-    public Iterable<Tournament> findAllByStatusCode(Integer statusCode) {
+    public Iterable<Tournament> findAllByStatusCode(TournamentStatusCode statusCode) {
         return tournamentRepository.findAllByStatusCode(statusCode);
     }
 
