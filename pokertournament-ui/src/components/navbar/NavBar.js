@@ -1,15 +1,24 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import { Navbar as BootstrapNavBar, Nav } from 'react-bootstrap';
+import { Navbar as BootstrapNavBar, Nav, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./NavBar.css";
 
 class NavBar extends Component {
 
-    // eslint-disable-next-line
     constructor(props) {
         super(props);
+        this.state = {
+        }
+    }
+
+    // TODO: Add name to NavBar <h3>{this.props.user.firstName} {this.props.user.lastName}</h3>
+    // TODO: Could I use actions to control what menu items should show up?
+
+    onSelect = (eventKey, event) => {
+        event.preventDefault()
+        alert(eventKey)
     }
 
     render() {
@@ -22,10 +31,12 @@ class NavBar extends Component {
                         <BootstrapNavBar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
                                 <LinkContainer exact to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
-                                <LinkContainer to="/tournaments"><Nav.Link>Tournaments</Nav.Link></LinkContainer>
                                 <LinkContainer to="/players"><Nav.Link>Players</Nav.Link></LinkContainer>
-                                <LinkContainer to="/dashboard"><Nav.Link>Dashboard</Nav.Link></LinkContainer>
-                                <LinkContainer to="/clock"><Nav.Link>Clock</Nav.Link></LinkContainer>
+                                <NavDropdown title="Tournament" id="basic-nav-dropdown">
+                                    <NavDropdown.Item eventKey='start' onSelect={this.onSelect}>Start</NavDropdown.Item>
+                                    <NavDropdown.Item eventKey='pause' onSelect={this.onSelect}>Pause</NavDropdown.Item>
+                                    <NavDropdown.Item eventKey='stop' onSelect={this.onSelect}>Stop</NavDropdown.Item>
+                                </NavDropdown>
                             </Nav>
                         </BootstrapNavBar.Collapse>
                     </BootstrapNavBar>

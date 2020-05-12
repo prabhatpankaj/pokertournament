@@ -24,18 +24,18 @@ INSERT INTO tournament_status (code, description) VALUES (2, 'In Progress');
 INSERT INTO tournament_status (code, description) VALUES (3, 'Completed');
 INSERT INTO tournament_status (code, description) VALUES (4, 'Canceled');
 
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 1', 'Pocket Aces', '2020-01-10 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 3);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 2', 'Pocket Aces', '2020-01-31 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 3);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 3', 'Pocket Aces', '2020-02-28 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 3);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 4', 'Pocket Aces', '2020-03-27 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 4);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 5', 'Pocket Aces', '2020-04-24 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 4);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 6', 'Pocket Aces', '2020-05-15 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 2);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 1', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-01-10 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 3);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 2', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-01-31 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 3);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 3', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-02-28 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 3);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 4', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-03-27 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 4);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 5', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-04-24 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 4);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 6', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-05-15 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
 
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 1, 1200, 5, 10, 0, null);
@@ -82,17 +82,17 @@ INSERT INTO tournament_breaks (tournament_id, after_level, duration_seconds, mes
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 17, 300, 'Chip up $500');
 
 
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 7', 'Pocket Aces', '2020-06-05 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 8', 'Pocket Aces', '2020-07-10 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 9', 'Pocket Aces', '2020-07-31 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 10', 'Pocket Aces', '2020-08-28 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 11', 'Pocket Aces', '2020-09-25 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 12', 'Pocket Aces', '2020-10-23 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
-INSERT INTO tournaments (league_id, name, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Final Event', 'Pocket Aces', '2020-11-14 17:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 7', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-06-05 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 8', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-07-10 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 9', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-07-31 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 10', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-08-28 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 11', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-09-25 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 12', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-10-23 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Final Event', null, 'Pocket Aces', '2020-11-14 17:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);

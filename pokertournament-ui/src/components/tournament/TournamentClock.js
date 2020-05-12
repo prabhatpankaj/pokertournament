@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import SockJsClient from "react-stomp";
+// import Logger from 'js-logger'
 import "../../Bootstrap/css/bootstrap.min.css";
-import "./ClockView.css";
+import "./TournamentClock.css";
 
-class ClockView extends Component {
+class TournamentClock extends Component {
 
     constructor(props) {
         super(props);
-        this.form = {};
         this.state = {
             clientConnected: false,
             dateTimeStamp: "",
@@ -25,38 +25,24 @@ class ClockView extends Component {
                     dateTimeStamp: message
                 }))
                 break;
-            
+
             case "/topic/7":
                 this.setState(prevState => ({
                     statusMessage: message
                 }))
                 break;
-            
+
             default:
                 break;
         }
     }
 
-    sendMessage = (selfMsg) => {
-        try {
-            this.clientRef.sendMessage("/app/all", JSON.stringify(selfMsg));
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    onChange = event => {
-        const { name, value } = event.target;
-        this.form[name] = value;
-    }
 
     render() {
         const wsSourceUrl = "/handler";
-        const connectionStatus = this.state.clientConnected ? "Connected" : "Disconnected"
 
         return (
-            <div className="ClockView">
+            <div className="TournamentClock">
                 <SockJsClient
                     url={wsSourceUrl}
                     topics={["/topic/all", "/topic/7"]}
@@ -72,23 +58,22 @@ class ClockView extends Component {
                     }}
                     debug={false} />
 
-                <Row>
-                    <Col sm="2" />
-                    <Col sm="8">
-                        <h1>Tournament Clock</h1>
-                        <h2>{connectionStatus}</h2>
-                        <p className='clock'>{this.state.dateTimeStamp}</p>
-                        <p>{this.state.statusMessage}</p>
-                    </Col>
-                    <Col sm="2" />
-                </Row>
+
+                <Card>
+                    <Card.Body>
+                        <Card.Text className='clock'>{this.state.dateTimeStamp}</Card.Text>
+                    </Card.Body>
+                </Card>
+
             </div>
         )
     }
+
 }
 
 const mapStateToProps = state => {
     return {
+        tournament: state.tournament
     }
 }
 
@@ -97,4 +82,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ClockView));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TournamentClock));

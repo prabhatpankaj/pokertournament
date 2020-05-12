@@ -42,6 +42,7 @@ CREATE TABLE tournaments (
     id SERIAL,
     league_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
+    description VARCHAR(100),
     hosted_by VARCHAR(50) NOT NULL,
     scheduled_start TIMESTAMP WITH TIME ZONE NOT NULL,
     location VARCHAR(100),

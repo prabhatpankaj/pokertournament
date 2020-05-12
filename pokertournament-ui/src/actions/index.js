@@ -6,6 +6,11 @@ export const UserAction = {
     CLEAR_USER: 'CLEAR_USER'
 }
 
+export const TournamentAction = {
+    SET_TOURNAMENT: 'SET_TOURNAMENT',
+    CLEAR_TOURNAMENT: 'CLEAR_TOURNAMENT'
+}
+
 export const SET_TOURNAMENT_VIEW = 'SET_TOURNAMENT_VIEW'
 
 // Action Creators (https://redux.js.org/basics/actions#action-creators)
@@ -16,6 +21,15 @@ export const setUser = user => ({
 
 export const clearUser = () => ({
     type: UserAction.CLEAR_USER,
+})
+
+export const setTournament = tournament => ({
+    type: TournamentAction.SET_TOURNAMENT,
+    tournament
+})
+
+export const clearTournament = () => ({
+    type: TournamentAction.CLEAR_TOURNAMENT,
 })
 
 export const setTournamentView = view => ({

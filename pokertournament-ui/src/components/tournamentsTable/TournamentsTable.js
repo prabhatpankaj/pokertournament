@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { Redirect, withRouter } from 'react-router-dom';
 import { Row, Col, Table } from 'react-bootstrap';
-import { TournamentStatusDescription } from '../../constants'
-import toLocaleDateTime from '../../utils/dateUtils'
+import { TournamentStatusDescription } from '../../constants';
+import { setTournament } from '../../actions';
+import toLocaleDateTime from '../../utils/dateUtils';
+import Logger from "js-logger";
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentsTable.css";
 
@@ -13,6 +15,7 @@ class TournamentsTable extends Component {
         super(props);
         this.state = {
             tournaments: [],
+            redirectToTournament: false
         }
     }
 
@@ -33,11 +36,36 @@ class TournamentsTable extends Component {
             });
     }
 
+    fetchTournament(tournamentId) {
+        const url = `${process.env.REACT_APP_API_PATH}/tournaments/${tournamentId}`
+        const that = this
+
+        fetch(url)
+            .then(response => response.json())
+            .then(tournament => {
+                that.props.setTournament(tournament)
+
+                that.setState({
+                    tournament: tournament,
+                    redirectToTournament: true
+                });
+            })
+            .catch(error => {
+                Logger.error('Error getting tournament');
+                Logger.error(error);
+            });
+
+    }
+
+    onClick = tournament => {
+        this.fetchTournament(tournament.id)
+    }
+
     getTournamentRows(tournaments) {
         const tournamentRows = []
         for (const [index, tournament] of tournaments.entries()) {
             tournamentRows.push(
-                <tr key={index}>
+                <tr key={index} onClick={() => this.onClick(tournament)}>
                     <td>{tournament.name}</td>
                     <td>{toLocaleDateTime(tournament.scheduledStart)}</td>
                     <td>{tournament.location}</td>
@@ -48,6 +76,11 @@ class TournamentsTable extends Component {
 
     render() {
         const tournamentRows = this.getTournamentRows(this.state.tournaments)
+        const { redirectToTournament } = this.state
+
+        if (redirectToTournament === true) {
+            return <Redirect to="/tournament" />
+        }
 
         return (
             <div className="TournamentsTable">
@@ -84,13 +117,16 @@ class TournamentsTable extends Component {
 
 const mapStateToProps = state => {
     return {
+        tournament: state.tournament
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
+        setTournament: tournament => {
+            dispatch(setTournament(tournament))
+        }
     }
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TournamentsTable));
-
