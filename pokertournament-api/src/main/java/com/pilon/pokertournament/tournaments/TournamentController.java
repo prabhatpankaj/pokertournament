@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping(path = "/tournaments")
-@Slf4j
 public class TournamentController {
 
     @Autowired
     private TournamentService tournamentService;
 
     @Autowired
-    private TournamentManager tournamentManager;
+    private TournamentDirector tournamentDirector;
 
     @RequestMapping(method = RequestMethod.GET)
     Iterable<Tournament> getTournamentsByStatus(@RequestParam Optional<TournamentStatusCode> statusCode) {
@@ -45,6 +45,7 @@ public class TournamentController {
     ResponseEntity<TournamentActionResponse> actionTournament(@PathVariable(name = "tournamentId") Long tournamentId, @RequestParam TournamentActions action) {
         log.info(String.format("Tournament: %d %s", tournamentId, action));
 
+        // Load Tournament
         Tournament tournament = tournamentService.findById(tournamentId).get();
         if (tournament == null) {
             return new ResponseEntity<TournamentActionResponse>(HttpStatus.BAD_REQUEST);
@@ -52,7 +53,8 @@ public class TournamentController {
 
         switch (action) {
             case START:
-                tournamentManager.startTournament(tournament);
+                tournamentDirector.startTournament(tournament);
+                return new ResponseEntity<TournamentActionResponse>(HttpStatus.OK);
 
             case PAUSE:
             case COMPLETE:

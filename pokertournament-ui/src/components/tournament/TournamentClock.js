@@ -16,17 +16,21 @@ class TournamentClock extends Component {
             dateTimeStamp: "",
             statusMessage: ""
         }
+        this.topics = {
+            clock: `/topic/${props.tournament.id}/clock`, 
+            event: `/topic/${props.tournament.id}/event`
+        }
     }
 
     onMessageReceive = (message, topic) => {
         switch (topic) {
-            case "/topic/all":
+            case this.topics.clock:
                 this.setState(prevState => ({
                     dateTimeStamp: message
                 }))
                 break;
 
-            case "/topic/7":
+            case this.topics.event:
                 this.setState(prevState => ({
                     statusMessage: message
                 }))
@@ -40,12 +44,13 @@ class TournamentClock extends Component {
 
     render() {
         const wsSourceUrl = "/handler";
+        const topics = [this.topics.clock, this.topics.event]
 
         return (
             <div className="TournamentClock">
                 <SockJsClient
                     url={wsSourceUrl}
-                    topics={["/topic/all", "/topic/7"]}
+                    topics={topics}
                     onMessage={this.onMessageReceive}
                     ref={(client) => {
                         this.clientRef = client
@@ -56,7 +61,7 @@ class TournamentClock extends Component {
                     onDisconnect={() => {
                         this.setState({ clientConnected: false })
                     }}
-                    debug={false} />
+                    debug={true} />
 
 
                 <Card>
