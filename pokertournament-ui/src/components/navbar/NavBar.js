@@ -13,13 +13,8 @@ class NavBar extends Component {
         }
     }
 
-    // TODO: Add name to NavBar <h3>{this.props.user.firstName} {this.props.user.lastName}</h3>
-    // TODO: Could I use actions to control what menu items should show up?
 
-    onSelect = (eventKey, event) => {
-        event.preventDefault()
-        alert(eventKey)
-    }
+    // TODO: Add name to NavBar <h3>{this.props.user.firstName} {this.props.user.lastName}</h3>
 
     render() {
         if (this.props.user.enabled) {
@@ -32,11 +27,13 @@ class NavBar extends Component {
                             <Nav className="mr-auto">
                                 <LinkContainer exact to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
                                 <LinkContainer to="/players"><Nav.Link>Players</Nav.Link></LinkContainer>
-                                <NavDropdown title="Tournament" id="basic-nav-dropdown">
-                                    <NavDropdown.Item eventKey='start' onSelect={this.onSelect}>Start</NavDropdown.Item>
-                                    <NavDropdown.Item eventKey='pause' onSelect={this.onSelect}>Pause</NavDropdown.Item>
-                                    <NavDropdown.Item eventKey='stop' onSelect={this.onSelect}>Stop</NavDropdown.Item>
-                                </NavDropdown>
+                                {this.props.menus.map((menuItem, menuIndex) => {
+                                    return <NavDropdown key={menuIndex} title={menuItem.name} id="basic-nav-dropdown">
+                                        {menuItem.items.map((value, itemIndex) => {
+                                            return <NavDropdown.Item key={itemIndex} eventKey={value.eventKey} onSelect={value.onSelect}>{value.text}</NavDropdown.Item>
+                                        })}
+                                    </NavDropdown>
+                                })}
                             </Nav>
                         </BootstrapNavBar.Collapse>
                     </BootstrapNavBar>
@@ -63,7 +60,8 @@ class NavBar extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user
+        user: state.user,
+        menus: state.menus
     }
 }
 

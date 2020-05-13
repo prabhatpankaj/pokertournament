@@ -7,6 +7,7 @@ import TournamentLevel from './TournamentLevel'
 import TournamentViewCard from './TournamentViewCard'
 import TournamentPayouts from './TournamentPayouts'
 import SockJsClient from "react-stomp";
+import { setMenus, clearMenus } from '../../actions';
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentView.css";
 
@@ -21,6 +22,29 @@ class TournamentView extends Component {
             dateTimeStamp: "",
             statusMessage: ""
         }
+        this.tournamentMenus = [
+            {
+                name: 'Tournament',
+                items: [
+                    { eventKey: 'start', text: 'Start', onSelect: this.onSelect },
+                    { eventKey: 'pause', text: 'Pause', onSelect: this.onSelect },
+                    { eventKey: 'stop', text: 'Stop', onSelect: this.onSelect }
+                ]
+            }
+        ]
+    }
+
+    onSelect = (eventKey, event) => {
+        event.preventDefault()
+        alert(`Tournament ${eventKey}`)
+    }
+
+    componentDidMount = () => {
+        this.props.setMenus(this.tournamentMenus)
+    }
+
+    componentWillUnmount = () => {
+        this.props.clearMenus()
     }
 
     onMessageReceive = (message, topic) => {
@@ -134,6 +158,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        setMenus: menus => {
+            dispatch(setMenus(menus))
+        },
+        clearMenus: menus => {
+            dispatch(clearMenus())
+        }
     }
 }
 
