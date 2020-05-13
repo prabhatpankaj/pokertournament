@@ -9,7 +9,7 @@ class Template extends Component {
 
     constructor(props) {
         super(props);
-        state = {
+        this.state = {
         }
     }
 
