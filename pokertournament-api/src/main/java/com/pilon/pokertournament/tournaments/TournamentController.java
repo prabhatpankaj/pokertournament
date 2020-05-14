@@ -39,7 +39,6 @@ public class TournamentController {
         return tournamentService.findById(tournamentId);
     }
 
-    // TODO: Can make action case-insensitve and handle conversion exceptions: https://www.baeldung.com/spring-enum-request-param
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(path = "/{tournamentId}", method = RequestMethod.PUT)
     ResponseEntity<TournamentActionResponse> actionTournament(@PathVariable(name = "tournamentId") Long tournamentId, @RequestParam TournamentActions action) {

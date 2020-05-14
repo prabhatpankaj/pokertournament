@@ -13,7 +13,7 @@ class TournamentClock extends Component {
         super(props);
         this.state = {
             clientConnected: false,
-            dateTimeStamp: "",
+            timeLeftInLevel: "",
             statusMessage: ""
         }
         this.topics = {
@@ -25,8 +25,13 @@ class TournamentClock extends Component {
     onMessageReceive = (message, topic) => {
         switch (topic) {
             case this.topics.clock:
+                const remainingSeconds = parseInt(message)
+                const minutes = Math.floor(remainingSeconds / 60)
+                const seconds = remainingSeconds - (minutes * 60)
+                const timeLeftInLevel = `${minutes}:${seconds}`
+
                 this.setState(prevState => ({
-                    dateTimeStamp: message
+                    timeLeftInLevel: timeLeftInLevel
                 }))
                 break;
 
@@ -66,7 +71,7 @@ class TournamentClock extends Component {
 
                 <Card>
                     <Card.Body>
-                        <Card.Text className='clock'>{this.state.dateTimeStamp}</Card.Text>
+                        <Card.Text className='clock'>{this.state.timeLeftInLevel}</Card.Text>
                     </Card.Body>
                 </Card>
 
