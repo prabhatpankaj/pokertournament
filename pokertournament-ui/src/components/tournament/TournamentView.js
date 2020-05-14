@@ -8,6 +8,8 @@ import TournamentViewCard from './TournamentViewCard'
 import TournamentPayouts from './TournamentPayouts'
 import SockJsClient from "react-stomp";
 import { setMenus, clearMenus } from '../../actions';
+import Logger from 'js-logger'
+import fetch from "node-fetch";
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentView.css";
 
@@ -32,11 +34,51 @@ class TournamentView extends Component {
                 ]
             }
         ]
+        this.mapEventKeyToDispatch = {
+            "start": this.startTournament,
+            "pause": this.pauseTournament,
+            "stop": this.stopTournament
+        }
+        this.topics = {
+            clock: `/topic/${props.tournament.id}/clock`, 
+            event: `/topic/${props.tournament.id}/event`
+        }
+    }
+
+    startTournament = (tournament) => {
+        // alert(`startTournament ${tournament.id}`)
+        // http://localhost:8080/tournaments/6?action=START
+
+        const url = `${process.env.REACT_APP_API_PATH}/tournaments/${tournament.id}?action=START`
+        fetch(url, {
+            method: 'PUT'
+        })
+            .then((response) => {
+                if (response.ok) {
+                    Logger.info(`Tournament ${tournament.id} started`);
+                } else {
+                    throw response.statusText
+                }
+            })
+            .catch(error => {
+                Logger.error('Tournament start error');
+                Logger.error(error);
+            });
+
+    }
+
+    pauseTournament = (tournament) => {
+        alert(`pauseTournament ${tournament.id}`)
+    }
+
+    stopTournament = (tournament) => {
+        alert(`stopTournament ${tournament.id}`)
     }
 
     onSelect = (eventKey, event) => {
         event.preventDefault()
-        alert(`Tournament ${eventKey}`)
+
+        this.mapEventKeyToDispatch[eventKey](this.props.tournament)
     }
 
     componentDidMount = () => {
@@ -49,13 +91,13 @@ class TournamentView extends Component {
 
     onMessageReceive = (message, topic) => {
         switch (topic) {
-            case "/topic/all":
+            case this.topics.clock:
                 this.setState(prevState => ({
                     dateTimeStamp: message
                 }))
                 break;
             
-            case "/topic/7":
+            case this.topics.event:
                 this.setState(prevState => ({
                     statusMessage: message
                 }))
@@ -94,13 +136,15 @@ class TournamentView extends Component {
         const poolDisplay = `$${pool}`
         const currentLevel = 3
 
+        const topics = [this.topics.clock, this.topics.event]
+
         // TODO: May be better with Card Decks and Card Columns rather than Rows and Columns
 
         return (
             <div className="TournamentView">
                 <SockJsClient
                     url={wsSourceUrl}
-                    topics={["/topic/all", "/topic/7"]}
+                    topics={topics}
                     onMessage={this.onMessageReceive}
                     ref={(client) => {
                         this.clientRef = client
@@ -111,7 +155,7 @@ class TournamentView extends Component {
                     onDisconnect={() => {
                         this.setState({ clientConnected: false })
                     }}
-                    debug={false} />
+                    debug={true} />
 
                 <Row>
                     <Col sm="12">
@@ -161,7 +205,7 @@ const mapDispatchToProps = dispatch => {
         setMenus: menus => {
             dispatch(setMenus(menus))
         },
-        clearMenus: menus => {
+        clearMenus: () => {
             dispatch(clearMenus())
         }
     }
