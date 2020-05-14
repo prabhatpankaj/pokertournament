@@ -26,15 +26,24 @@ public class TournamentDirector {
     private int remainingSeconds = levelSeconds;
 
     public void startTournament(Tournament tournament) {
-        log.info(String.format("Starting tournament %d", tournament.getId()));
+        log.info(String.format("startTournament %d", tournament.getId()));
 
-        if (tournamentService == null) {
-            log.error("tournamentService IS NULL!");
+        if (tournament.getStatusCode() != TournamentStatusCode.SCHEDULED) {
+            String errorMessage = String.format("Tournament %d cannot be started because it is not in scheduled status.", tournament.getId());
+            log.error(errorMessage);
+            return;
+        }
+
+        if (tournamentInProgressRepository.containsKey(tournament.getId())) {
+            log.debug(String.format("Tournament %d already exists in repository", tournament.getId()));
+        } else {
+            tournamentInProgressRepository.put(tournament.getId(), tournament);
+            log.debug(String.format("Added tournament %d to repository", tournament.getId()));
         }
 
         // Set the tounament to in-progress
         tournament.setStatusCode(TournamentStatusCode.IN_PROGRESS);
-        // tournamentService.save(tournament);
+        tournamentService.save(tournament);
 
         // Start the clock
         Timer timer = new Timer();
@@ -46,13 +55,9 @@ public class TournamentDirector {
                     remainingSeconds--;
                 }
 
-                int minutes = remainingSeconds / 60;
-                int seconds = remainingSeconds - (minutes * 60);
-
-                // TODO: Just send seconds. Let UI convert
-                String countdown = String.format("%2d:%02d", minutes, seconds);
+                String message = String.format("%2d", remainingSeconds);
                 String topic = String.format("/topic/%d/clock", tournament.getId());
-                template.convertAndSend(topic, countdown);
+                template.convertAndSend(topic, message);
             }
         }, 0, 1000);
 
