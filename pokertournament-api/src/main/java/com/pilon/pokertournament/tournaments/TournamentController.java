@@ -20,49 +20,31 @@ import lombok.extern.slf4j.Slf4j;
 public class TournamentController {
 
     @Autowired
-    private TournamentService tournamentService;
-
-    @Autowired
-    private TournamentDirector tournamentDirector;
+    private TournamentManager tournamentManager;
 
     @RequestMapping(method = RequestMethod.GET)
     Iterable<Tournament> getTournamentsByStatus(@RequestParam Optional<TournamentStatusCode> statusCode) {
         if (statusCode.isPresent()) {
-            return tournamentService.findAllByStatusCode(statusCode.get());
+            return tournamentManager.findAllByStatusCode(statusCode.get());
         } else {
-            return tournamentService.findAll();
+            return tournamentManager.findAll();
         }
     }
 
     @RequestMapping(path = "/{tournamentId}", method = RequestMethod.GET)
     Optional<Tournament> getTournament(@PathVariable(name = "tournamentId") Long tournamentId) {
-        return tournamentService.findById(tournamentId);
+        return tournamentManager.findById(tournamentId);
     }
 
-    // TODO: Can make action case-insensitve and handle conversion exceptions: https://www.baeldung.com/spring-enum-request-param
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(path = "/{tournamentId}", method = RequestMethod.PUT)
     ResponseEntity<TournamentActionResponse> actionTournament(@PathVariable(name = "tournamentId") Long tournamentId, @RequestParam TournamentActions action) {
         log.info(String.format("Tournament: %d %s", tournamentId, action));
-
-        // Load Tournament
-        Tournament tournament = tournamentService.findById(tournamentId).get();
-        if (tournament == null) {
+        try {
+            tournamentManager.performTournamentAction(tournamentId, action);
+            return new ResponseEntity<TournamentActionResponse>(HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<TournamentActionResponse>(HttpStatus.BAD_REQUEST);
-        }
-
-        switch (action) {
-            case START:
-                tournamentDirector.startTournament(tournament);
-                return new ResponseEntity<TournamentActionResponse>(HttpStatus.OK);
-
-            case PAUSE:
-            case COMPLETE:
-            case CANCEL:
-                return new ResponseEntity<TournamentActionResponse>(HttpStatus.OK);
-            
-            default:
-                return new ResponseEntity<TournamentActionResponse>(HttpStatus.BAD_REQUEST);
         }
     }
 }

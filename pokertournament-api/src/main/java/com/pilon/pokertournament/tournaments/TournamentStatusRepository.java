@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TournamentInProgressRepository extends HashMap<Long, Tournament> {
+public class TournamentStatusRepository extends HashMap<Long, TournamentStatus> {
 
     private static final long serialVersionUID = 1L;
     

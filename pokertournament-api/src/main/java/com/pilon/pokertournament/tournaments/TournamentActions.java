@@ -4,5 +4,6 @@ public enum TournamentActions {
     START,
     PAUSE,
     COMPLETE,
-    CANCEL
+    CANCEL,
+    RESCHEDULE
 }
