@@ -30,14 +30,16 @@ class TournamentView extends Component {
                 items: [
                     { eventKey: 'start', text: 'Start', onSelect: this.onSelect },
                     { eventKey: 'pause', text: 'Pause', onSelect: this.onSelect },
-                    { eventKey: 'stop', text: 'Stop', onSelect: this.onSelect }
+                    { eventKey: 'stop', text: 'Stop', onSelect: this.onSelect },
+                    { eventKey: 'reschedule', text: 'Reschedule', onSelect: this.onSelect }
                 ]
             }
         ]
         this.mapEventKeyToDispatch = {
             "start": this.startTournament,
             "pause": this.pauseTournament,
-            "stop": this.stopTournament
+            "stop": this.stopTournament,
+            "reschedule": this.rescheduleTournament,
         }
         this.topics = {
             clock: `/topic/${props.tournament.id}/clock`, 
@@ -46,9 +48,6 @@ class TournamentView extends Component {
     }
 
     startTournament = (tournament) => {
-        // alert(`startTournament ${tournament.id}`)
-        // http://localhost:8080/tournaments/6?action=START
-
         const url = `${process.env.REACT_APP_API_PATH}/tournaments/${tournament.id}?action=START`
         fetch(url, {
             method: 'PUT'
@@ -62,6 +61,25 @@ class TournamentView extends Component {
             })
             .catch(error => {
                 Logger.error('Tournament start error');
+                Logger.error(error);
+            });
+
+    }
+
+    rescheduleTournament = (tournament) => {
+        const url = `${process.env.REACT_APP_API_PATH}/tournaments/${tournament.id}?action=RESCHEDULE`
+        fetch(url, {
+            method: 'PUT'
+        })
+            .then((response) => {
+                if (response.ok) {
+                    Logger.info(`Tournament ${tournament.id} rescheduled`);
+                } else {
+                    throw response.statusText
+                }
+            })
+            .catch(error => {
+                Logger.error('Tournament reschedule error');
                 Logger.error(error);
             });
 
