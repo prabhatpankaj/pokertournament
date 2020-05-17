@@ -8,8 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.pilon.pokertournament.tournamentState.TournamentCurrentState;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -59,10 +63,15 @@ public class Tournament {
 
     @OneToMany
     @JoinColumn(name="tournamentId")
+    @OrderBy("level")
     private List<TournamentLevel> levels;
 
     @OneToMany
     @JoinColumn(name="tournamentId")
+    @OrderBy("afterLevel")
     private List<TournamentBreak> breaks;
 
+    @OneToOne
+    @JoinColumn(name="id")
+    private TournamentCurrentState currentState;
 }

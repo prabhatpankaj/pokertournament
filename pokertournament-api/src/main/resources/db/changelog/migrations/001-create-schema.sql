@@ -74,3 +74,25 @@ CREATE TABLE tournament_breaks (
     PRIMARY KEY (id),
     FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
 );
+
+CREATE TABLE tournament_current_state (
+    tournament_id INT NOT NULL,
+    level_status_code INT NOT NULL,
+    current_level SMALLINT,
+    duration_remaining_seconds INT,
+    timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    PRIMARY KEY (tournament_id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
+);
+
+CREATE TABLE tournament_state_history (
+    id SERIAL,
+    tournament_id INT NOT NULL,
+    level_status_code INT NOT NULL,
+    current_level SMALLINT,
+    duration_remaining_seconds INT,
+    timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
+);
+

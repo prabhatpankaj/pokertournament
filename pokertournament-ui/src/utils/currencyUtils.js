@@ -2,4 +2,4 @@ function toUSCurrencyFormat(amount) {
     return `$${amount}`
 }
 
-export default toUSCurrencyFormat
+module.exports = toUSCurrencyFormat;

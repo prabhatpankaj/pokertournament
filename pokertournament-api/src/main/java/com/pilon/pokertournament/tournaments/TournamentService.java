@@ -20,7 +20,7 @@ public class TournamentService {
     }
 
     public Iterable<Tournament> findAllByStatusCode(TournamentStatusCode statusCode) {
-        return tournamentRepository.findAllByStatusCode(statusCode);
+        return tournamentRepository.findAllByStatusCodeOrderByScheduledStartAsc(statusCode);
     }
 
     public Tournament save(Tournament tournament) {

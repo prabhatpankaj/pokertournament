@@ -23,7 +23,7 @@ public class TournamentController {
     private TournamentManager tournamentManager;
 
     @RequestMapping(method = RequestMethod.GET)
-    Iterable<Tournament> getTournamentsByStatus(@RequestParam Optional<TournamentStatusCode> statusCode) {
+    public Iterable<Tournament> getTournamentsByStatus(@RequestParam Optional<TournamentStatusCode> statusCode) {
         if (statusCode.isPresent()) {
             return tournamentManager.findAllByStatusCode(statusCode.get());
         } else {
@@ -32,13 +32,13 @@ public class TournamentController {
     }
 
     @RequestMapping(path = "/{tournamentId}", method = RequestMethod.GET)
-    Optional<Tournament> getTournament(@PathVariable(name = "tournamentId") Long tournamentId) {
+    public Optional<Tournament> getTournament(@PathVariable(name = "tournamentId") Long tournamentId) {
         return tournamentManager.findById(tournamentId);
     }
 
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(path = "/{tournamentId}", method = RequestMethod.PUT)
-    ResponseEntity<TournamentActionResponse> actionTournament(@PathVariable(name = "tournamentId") Long tournamentId, @RequestParam TournamentActions action) {
+    public ResponseEntity<TournamentActionResponse> actionTournament(@PathVariable(name = "tournamentId") Long tournamentId, @RequestParam TournamentActions action) {
         log.info(String.format("Tournament: %d %s", tournamentId, action));
         try {
             tournamentManager.performTournamentAction(tournamentId, action);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TournamentManager {
+
     @Autowired
     private TournamentService tournamentService;
 
@@ -26,11 +27,22 @@ public class TournamentManager {
         }
 
         switch (action) {
+            case PRESTART:
+                tournamentDirector.prestartTournament(tournament);
+                break;
+
             case START:
                 tournamentDirector.startTournament(tournament);
                 break;
 
             case PAUSE:
+                tournamentDirector.pauseTournament(tournament);
+                break;
+
+            case RESUME:
+                tournamentDirector.resumeTournament(tournament);
+                break;
+
             case COMPLETE:
             case CANCEL:
                 break;
