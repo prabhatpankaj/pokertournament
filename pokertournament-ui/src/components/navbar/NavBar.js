@@ -26,7 +26,6 @@ class NavBar extends Component {
                         <BootstrapNavBar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
                                 <LinkContainer exact to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
-                                <LinkContainer to="/players"><Nav.Link>Players</Nav.Link></LinkContainer>
                                 {this.props.menus.map((menuItem, menuIndex) => {
                                     return <NavDropdown key={menuIndex} title={menuItem.name} id="basic-nav-dropdown">
                                         {menuItem.items.map((value, itemIndex) => {

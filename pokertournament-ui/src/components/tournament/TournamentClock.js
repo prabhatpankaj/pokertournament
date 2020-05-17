@@ -65,7 +65,7 @@ class TournamentClock extends Component {
                     onDisconnect={() => {
                         this.setState({ clientConnected: false })
                     }}
-                    debug={true} />
+                    debug={false} />
 
 
                 <Card>

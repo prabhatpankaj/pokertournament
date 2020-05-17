@@ -9,8 +9,8 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
-    public Iterable<Player> findAll() {
-        return playerRepository.findAll();
+    public Iterable<Player> findAllByOrderByLastNameAscFirstNameAsc() {
+        return playerRepository.findAllByOrderByLastNameAscFirstNameAsc();
     }
 
 }

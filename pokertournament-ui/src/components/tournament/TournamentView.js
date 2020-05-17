@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Tabs, Tab } from 'react-bootstrap';
+import PlayersView from '../players/PlayersView';
 import TournamentClock from './TournamentClock'
 import TournamentLevel from './TournamentLevel'
 import TournamentViewCard from './TournamentViewCard'
@@ -219,43 +220,56 @@ class TournamentView extends Component {
                     onDisconnect={() => {
                         this.setState({ clientConnected: false })
                     }}
-                    debug={true} />
+                    debug={false} />
 
-                <Row>
-                    <Col sm="12">
-                        <h1>{name}</h1>
-                        <h2>{description}</h2>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm="2">
-                        <TournamentViewCard title='Entries' text={entries} />
-                        <TournamentViewCard title='Remaining' text={remaining} />
-                        <TournamentViewCard title='Rebuys' text={rebuys} />
-                        <TournamentViewCard title='Chip Count' text={chipCountDisplay} />
-                        <TournamentViewCard title='Average Stack' text={averageChipStackDisplay} />
-                        <TournamentViewCard title='Pool' text={poolDisplay} />
-                    </Col>
-                    <Col sm="8">
-                        <TournamentClock />
-                        {currentLevel === 0
-                            ? <TournamentPreStart />
-                            : <TournamentLevel level={currentLevel} />
-                        }
-                        <TournamentLevel level={currentLevel + 1} />
-                    </Col>
-                    <Col sm="2">
-                        <TournamentViewCard title='Current Time' text='1:47:55 PM' />
-                        <TournamentViewCard title='Elapsed Time' text='1:20:55' />
-                        <TournamentViewCard title='Next Break' text='20:12' />
-                        <TournamentViewCard title='Server Status' text={connectionStatus} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm="12">
-                        <TournamentPayouts />
-                    </Col>
-                </Row>
+                <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
+                    <Tab eventKey="home" title="Home">
+                        <Row>
+                            <Col sm="12">
+                                <h1>{name}</h1>
+                                <h2>{description}</h2>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm="2">
+                                <TournamentViewCard title='Entries' text={entries} />
+                                <TournamentViewCard title='Remaining' text={remaining} />
+                                <TournamentViewCard title='Rebuys' text={rebuys} />
+                                <TournamentViewCard title='Chip Count' text={chipCountDisplay} />
+                                <TournamentViewCard title='Average Stack' text={averageChipStackDisplay} />
+                                <TournamentViewCard title='Pool' text={poolDisplay} />
+                            </Col>
+                            <Col sm="8">
+                                <TournamentClock />
+                                {currentLevel === 0
+                                    ? <TournamentPreStart />
+                                    : <TournamentLevel level={currentLevel} />
+                                }
+                                <TournamentLevel level={currentLevel + 1} />
+                            </Col>
+                            <Col sm="2">
+                                <TournamentViewCard title='Current Time' text='1:47:55 PM' />
+                                <TournamentViewCard title='Elapsed Time' text='1:20:55' />
+                                <TournamentViewCard title='Next Break' text='20:12' />
+                                <TournamentViewCard title='Server Status' text={connectionStatus} />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm="12">
+                                <TournamentPayouts />
+                            </Col>
+                        </Row>
+                    </Tab>
+                    <Tab eventKey="reservations" title="Reservations">
+                        <PlayersView />
+                    </Tab>
+                    <Tab eventKey="buyins" title="Players">
+                        <PlayersView />
+                    </Tab>
+                    <Tab eventKey="tables" title="Tables">
+                    </Tab>
+                </Tabs>
+
             </div>
         )
     }
