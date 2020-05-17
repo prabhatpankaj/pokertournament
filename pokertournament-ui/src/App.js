@@ -4,7 +4,6 @@ import PrivateRoute from './components/privateRoute/PrivateRoute';
 import NavBar from './components/navbar/NavBar'
 import LoginView from './components/login/LoginView';
 import HomeView from './components/home/HomeView';
-import PlayersView from './components/players/PlayersView';
 import TournamentView from './components/tournament/TournamentView'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Logger from "js-logger";
@@ -23,7 +22,7 @@ class App extends Component {
     render() {
 
         return (
-            <div>
+            <div className="App">
                 <BrowserRouter>
 
                     <NavBar />
@@ -36,10 +35,6 @@ class App extends Component {
                         <Route path='/login'>
                             <LoginView />
                         </Route>
-
-                        <PrivateRoute authed={this.props.user.enabled} path='/players'>
-                            <PlayersView />
-                        </PrivateRoute>
 
                         <PrivateRoute authed={this.props.user.enabled} path='/tournament'>
                             <TournamentView />

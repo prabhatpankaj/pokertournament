@@ -24,6 +24,8 @@ CREATE TABLE players (
     PRIMARY KEY (id)
 );
 
+CREATE INDEX players_idx_name ON players (last_name ASC, first_name ASC);
+
 CREATE TABLE leagues (
     id SERIAL,
     name VARCHAR(50) NOT NULL,

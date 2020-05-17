@@ -13,8 +13,8 @@ public class PlayerController {
     private PlayerService playerService;
 
     @GetMapping
-    Iterable<Player> getUsers() {
-        return playerService.findAll();
+    Iterable<Player> getPlayers() {
+        return playerService.findAllByOrderByLastNameAscFirstNameAsc();
     }
 
 }
