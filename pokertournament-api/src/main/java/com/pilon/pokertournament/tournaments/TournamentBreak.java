@@ -31,7 +31,7 @@ public class TournamentBreak {
 
     @Column
     @NotNull
-    private Short afterLevel;
+    private Integer afterLevel;
 
     @Column
     @NotNull

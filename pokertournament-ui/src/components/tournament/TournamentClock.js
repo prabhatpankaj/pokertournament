@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { Card } from 'react-bootstrap';
 import SockJsClient from "react-stomp";
 // import Logger from 'js-logger'
+import formatSeconds  from '../../utils/clockUtils'
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentClock.css";
 
@@ -26,9 +27,7 @@ class TournamentClock extends Component {
         switch (topic) {
             case this.topics.clock:
                 const remainingSeconds = parseInt(message)
-                const minutes = Math.floor(remainingSeconds / 60)
-                const seconds = remainingSeconds - (minutes * 60)
-                const timeLeftInLevel = `${minutes}:${seconds}`
+                const timeLeftInLevel = formatSeconds(remainingSeconds)
 
                 this.setState(prevState => ({
                     timeLeftInLevel: timeLeftInLevel

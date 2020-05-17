@@ -4,4 +4,4 @@ function toLocaleDateTime(dateString) {
         + new Date(dateString).toLocaleTimeString()
 }
 
-export default toLocaleDateTime
+module.exports = toLocaleDateTime;
