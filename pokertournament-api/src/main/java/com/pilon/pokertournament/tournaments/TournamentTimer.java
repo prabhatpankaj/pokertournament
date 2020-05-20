@@ -26,7 +26,7 @@ public class TournamentTimer {
 
     public void startTimer() {
         tournament.getCurrentState().setCurrentLevel(1);
-        TournamentLevel tournamentLevel = tournament.getLevels().get(1);
+        TournamentLevel tournamentLevel = tournament.getStructure().getLevels().get(1);
         startNewTimer(tournamentLevel.getDurationSeconds());
     }
 
@@ -74,7 +74,7 @@ public class TournamentTimer {
                         log.info(String.format("Tournament %d, level %d", tournament.getId(), newLevel));
                         tournament.getCurrentState().setCurrentLevel(newLevel);
 
-                        TournamentLevel tournamentLevel = tournament.getLevels().get(newLevel);
+                        TournamentLevel tournamentLevel = tournament.getStructure().getLevels().get(newLevel);
                         long durationSeconds = tournamentLevel.getDurationSeconds();
 
                         String message = String.format("%d", durationSeconds);

@@ -16,13 +16,13 @@ class TournamentLevel extends Component {
 
     render() {
 
-        const { tournament, level } = this.props
-        const levelInfo = tournament.levels[level]
+        const { tournament, level, title } = this.props
+        const levelInfo = tournament.structure.levels[level]
 
         return (
             <Card>
                 <Card.Body>
-                    <Card.Title>Level {level}</Card.Title>
+                    <Card.Title>{title} Level {level}</Card.Title>
                     <Card.Text>Small Blind: {toUSCurrencyFormat(levelInfo.smallBlind)}</Card.Text>
                     <Card.Text>Big Blind: {toUSCurrencyFormat(levelInfo.bigBlind)}</Card.Text>
                     <Card.Text>Ante: {toUSCurrencyFormat(levelInfo.ante)}</Card.Text>

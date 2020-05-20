@@ -37,7 +37,9 @@ VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket 
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
 VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 6', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-05-15 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 4);
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 6*', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-05-17 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 6*', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-05-20 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+
+INSERT INTO tournament_structures (tournament_id) VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')));
 
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 1, 60, 5, 10, 0, null);
@@ -82,9 +84,6 @@ INSERT INTO tournament_breaks (tournament_id, after_level, duration_seconds, mes
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 12, 600, 'Chip up $100 & $500');
 INSERT INTO tournament_breaks (tournament_id, after_level, duration_seconds, message)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 17, 300, 'Chip up $500');
-
-INSERT INTO tournament_current_state (tournament_id, level_status_code, current_level, duration_remaining_seconds, timestamp)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 0, 0, 3600, '2020-06-05 18:00:00');
 
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
 VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 7', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-06-05 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);

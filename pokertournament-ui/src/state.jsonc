@@ -1,127 +1,225 @@
 {
-    // Set when a user logs in
-    // Actions:
-    //      SET_USER
-    //      CLEAR_USER
-    "user": {
-        "authorities": [
-            {
-                "authority": "ROLE_ADMIN"
-            }
+    "user":{
+        "authorities":[
+            "ROLE_ADMIN",
+            "ROLE_USER"
         ],
-        "details": {
-            "remoteAddress": "0:0:0:0:0:0:0:1",
-            "sessionId": "06419137C965EDCC0C3D4B87ACA454CD"
-        },
-        "authenticated": true,
-        "principal": {
-            "password": null,
-            "username": "chuck.pilon@gmail.com",
-            "authorities": [
+        "enabled":true,
+        "firstName":"Chuck",
+        "lastName":"Pilon",
+        "username":"chuck.pilon@gmail.com"
+    },
+    "view":"TABLE_VIEW",
+    "tournament":{
+        "id":7,
+        "leagueId":3,
+        "name":"2020 Pocket Aces Event 6*",
+        "description":"$40 Buy-in, $40 Rebuy (through level 4)",
+        "hostedBy":"Pocket Aces",
+        "scheduledStart":"2020-05-20T19:00:00",
+        "location":"Mike Lutz - 8216 125th Street Savage, MN 55378",
+        "statusCode":"SCHEDULED",
+        "structure":{
+            "tournamentId":7,
+            "levels":[
                 {
-                    "authority": "ROLE_ADMIN"
+                    "id":1,
+                    "tournamentId":7,
+                    "level":1,
+                    "durationSeconds":60,
+                    "smallBlind":5,
+                    "bigBlind":10,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":2,
+                    "tournamentId":7,
+                    "level":2,
+                    "durationSeconds":60,
+                    "smallBlind":10,
+                    "bigBlind":20,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":3,
+                    "tournamentId":7,
+                    "level":3,
+                    "durationSeconds":60,
+                    "smallBlind":15,
+                    "bigBlind":30,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":4,
+                    "tournamentId":7,
+                    "level":4,
+                    "durationSeconds":60,
+                    "smallBlind":25,
+                    "bigBlind":50,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":5,
+                    "tournamentId":7,
+                    "level":5,
+                    "durationSeconds":60,
+                    "smallBlind":50,
+                    "bigBlind":100,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":6,
+                    "tournamentId":7,
+                    "level":6,
+                    "durationSeconds":60,
+                    "smallBlind":75,
+                    "bigBlind":150,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":7,
+                    "tournamentId":7,
+                    "level":7,
+                    "durationSeconds":60,
+                    "smallBlind":100,
+                    "bigBlind":200,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":8,
+                    "tournamentId":7,
+                    "level":8,
+                    "durationSeconds":60,
+                    "smallBlind":150,
+                    "bigBlind":300,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":9,
+                    "tournamentId":7,
+                    "level":9,
+                    "durationSeconds":60,
+                    "smallBlind":200,
+                    "bigBlind":400,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":10,
+                    "tournamentId":7,
+                    "level":10,
+                    "durationSeconds":60,
+                    "smallBlind":300,
+                    "bigBlind":600,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":11,
+                    "tournamentId":7,
+                    "level":11,
+                    "durationSeconds":60,
+                    "smallBlind":500,
+                    "bigBlind":1000,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":12,
+                    "tournamentId":7,
+                    "level":12,
+                    "durationSeconds":60,
+                    "smallBlind":700,
+                    "bigBlind":1400,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":13,
+                    "tournamentId":7,
+                    "level":13,
+                    "durationSeconds":60,
+                    "smallBlind":1000,
+                    "bigBlind":2000,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":14,
+                    "tournamentId":7,
+                    "level":14,
+                    "durationSeconds":60,
+                    "smallBlind":1500,
+                    "bigBlind":2000,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":15,
+                    "tournamentId":7,
+                    "level":15,
+                    "durationSeconds":60,
+                    "smallBlind":2000,
+                    "bigBlind":4000,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":16,
+                    "tournamentId":7,
+                    "level":16,
+                    "durationSeconds":60,
+                    "smallBlind":3000,
+                    "bigBlind":6000,
+                    "ante":0,
+                    "message":null
+                },
+                {
+                    "id":17,
+                    "tournamentId":7,
+                    "level":17,
+                    "durationSeconds":60,
+                    "smallBlind":5000,
+                    "bigBlind":10000,
+                    "ante":0,
+                    "message":null
                 }
             ],
-            "accountNonExpired": true,
-            "accountNonLocked": true,
-            "credentialsNonExpired": true,
-            "enabled": true
-        },
-        "credentials": null,
-        "name": "chuck.pilon@gmail.com"
-    },
-    "view": "TABLE_VIEW",
-    // Set when a tournament is selected (though not necessarily started)
-    "tournament": {
-        "league": "Pocket Aces",
-        "name": "Pocket Aces Event 4",
-        "start": "2020-03-27T19:00:00.000Z",
-        "location": "Mike's Warehouse",
-        "structure": {
-            "levels": [
+            "breaks":[
                 {
-                    "break": false,
-                    "smallBlind": 25,
-                    "bigBlind": 50,
-                    "ante": 0,
-                    "durationSeconds": 1200
+                    "id":1,
+                    "tournamentId":7,
+                    "afterLevel":4,
+                    "message":"Chip up $5 (End Rebuy)"
                 },
                 {
-                    "break": false,
-                    "smallBlind": 50,
-                    "bigBlind": 100,
-                    "ante": 0,
-                    "durationSeconds": 1200
+                    "id":2,
+                    "tournamentId":7,
+                    "afterLevel":8,
+                    "message":"Chip up $25"
                 },
                 {
-                    "break": true,
-                    "durationSeconds": 600
+                    "id":3,
+                    "tournamentId":7,
+                    "afterLevel":12,
+                    "message":"Chip up $100 & $500"
+                },
+                {
+                    "id":4,
+                    "tournamentId":7,
+                    "afterLevel":17,
+                    "message":"Chip up $500"
                 }
             ]
         },
-        // Updated while a tournament is in progress
-        "status": {
-            "currentLevel": 1,
-            "timeRemainingInLevelSeconds": 485,
-            // Loaded from backend
-            "players": {
-                "1": {
-                    "firstName": "Chuck",
-                    "lastName": "Pilon"
-                },
-                "2": {
-                    "firstName": "Jerry",
-                    "lastName": "Hanson"
-                },
-                "3": {
-                    "firstName": "Rob",
-                    "lastName": "Belz"
-                },
-                "4": {
-                    "firstName": "Mark",
-                    "lastName": "Cotton"
-                }
-            },
-            "playersStatus": {
-                "1": {
-                    "active": true
-                },
-                "2": {
-                    "active": false,
-                    "bustedBy": "1",
-                    "place": 4
-                },
-                "3": {
-                    "active": true
-                },
-                "4": {
-                    "active": true
-                }
-            },
-            "tableMap": {
-                "1": {
-                    "name": "Spades",
-                    "seats": 10,
-                    // Ids of players
-                    "seating": [
-                        "1",
-                        null,
-                        "4",
-                        "3",
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                    ]
-                }
-            }
-        }
+        "currentState":null
     }
 }
-
-// Should probably have things like 
-// playersById: { id -> player }
-// players: array<id>
-// How would I normalize the runtime state of the application to store in a database?

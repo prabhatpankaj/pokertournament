@@ -54,6 +54,12 @@ CREATE TABLE tournaments (
     FOREIGN KEY (status_code) REFERENCES tournament_status (code)
 );
 
+CREATE TABLE tournament_structures (
+    tournament_id INT NOT NULL,
+    PRIMARY KEY (tournament_id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
+);
+
 CREATE TABLE tournament_levels (
     id SERIAL,
     tournament_id INT NOT NULL,
@@ -64,7 +70,7 @@ CREATE TABLE tournament_levels (
     ante INT,
     message VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
+    FOREIGN KEY (tournament_id) REFERENCES tournament_structures (tournament_id)
 );
 
 CREATE TABLE tournament_breaks (
@@ -74,7 +80,7 @@ CREATE TABLE tournament_breaks (
     duration_seconds SMALLINT,
     message VARCHAR(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
+    FOREIGN KEY (tournament_id) REFERENCES tournament_structures (tournament_id)
 );
 
 CREATE TABLE tournament_current_state (

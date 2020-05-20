@@ -198,7 +198,7 @@ class TournamentView extends Component {
         const averageChipStackDisplay = `$${averageChipStack}`
         const pool = 40 * (entries + rebuys)
         const poolDisplay = `$${pool}`
-        const currentLevel = this.props.tournament.currentState.currentLevel
+        const currentLevel = this.props.tournament.currentState ? this.props.tournament.currentState.currentLevel : 0
 
         const topics = [this.topics.event]
 
@@ -243,9 +243,9 @@ class TournamentView extends Component {
                                 <TournamentClock />
                                 {currentLevel === 0
                                     ? <TournamentPreStart />
-                                    : <TournamentLevel level={currentLevel} />
+                                    : <TournamentLevel title="Current" level={currentLevel} />
                                 }
-                                <TournamentLevel level={currentLevel + 1} />
+                                <TournamentLevel title="Next" level={currentLevel + 1} />
                             </Col>
                             <Col sm="2">
                                 <TournamentViewCard title='Current Time' text='1:47:55 PM' />
