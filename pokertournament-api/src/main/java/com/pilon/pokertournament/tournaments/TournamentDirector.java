@@ -1,5 +1,9 @@
 package com.pilon.pokertournament.tournaments;
 
+import java.time.LocalDateTime;
+
+import com.pilon.pokertournament.tournamentState.TournamentCurrentState;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +15,9 @@ public class TournamentDirector {
 
     @Autowired
     private TournamentService tournamentService;
+
+    @Autowired
+    private TournamentCurrentStateService tournamentCurrentStateService;
 
     @Autowired
     private TournamentTimerRepository tournamentTimerRepository;
@@ -31,6 +38,21 @@ public class TournamentDirector {
             tournamentTimer = new TournamentTimer(tournament);
             tournamentTimerRepository.put(tournament.getId(), tournamentTimer);
         }
+
+        // tournament.getCurrentState()
+        TournamentCurrentState currentState = tournament.getCurrentState();
+        if (currentState == null) {
+            currentState = new TournamentCurrentState(); 
+        }
+
+        currentState.setTournamentId(tournament.getId());
+        currentState.setLevelStatusCode(TournamentLevelStatusCode.PRESTARTED);
+        currentState.setCurrentLevel(0);
+        currentState.setDurationRemainingSeconds(1110); // FIXIT
+        currentState.setTimestamp(LocalDateTime.now());
+        tournament.setCurrentState(currentState);
+        // tournamentCurrentStateService.save(currentState);
+        tournamentService.save(tournament);
 
         tournamentTimer.startPrestartTimer();
         tournament.getCurrentState().setLevelStatusCode(TournamentLevelStatusCode.ACTIVE);

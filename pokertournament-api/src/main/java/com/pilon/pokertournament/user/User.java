@@ -2,6 +2,7 @@ package com.pilon.pokertournament.user;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -40,7 +41,7 @@ public class User {
     @NotNull
     private boolean enabled;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="username")
     private List<Authority> authorities;
 

@@ -4,9 +4,10 @@ import { withRouter } from 'react-router-dom'
 import { Card } from 'react-bootstrap';
 import SockJsClient from "react-stomp";
 // import Logger from 'js-logger'
-import formatSeconds  from '../../utils/clockUtils'
+import formatSeconds from '../../utils/clockUtils'
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentClock.css";
+var dateFormat = require('dateformat');
 
 class TournamentClock extends Component {
 
@@ -18,7 +19,7 @@ class TournamentClock extends Component {
             statusMessage: ""
         }
         this.topics = {
-            clock: `/topic/${props.tournament.id}/clock`, 
+            clock: `/topic/${props.tournament.id}/clock`,
             event: `/topic/${props.tournament.id}/event`
         }
     }
@@ -49,8 +50,12 @@ class TournamentClock extends Component {
     render() {
         const wsSourceUrl = "/handler";
         const topics = [this.topics.clock, this.topics.event]
+        const currentLevel = this.props.tournament.currentState ? this.props.tournament.currentState.currentLevel : 0
+        const scheduledStart = dateFormat(this.props.tournament.scheduledStart, "dddd, mmmm d, yyyy	h:MM TT")
 
+        // TODO: Showschedule started time of tournament if not started yet and not in pre-start
         return (
+
             <div className="TournamentClock">
                 <SockJsClient
                     url={wsSourceUrl}
@@ -70,7 +75,10 @@ class TournamentClock extends Component {
 
                 <Card>
                     <Card.Body>
-                        <Card.Text className='clock'>{this.state.timeLeftInLevel}</Card.Text>
+                        {currentLevel === 0
+                            ? <h2>{scheduledStart}</h2>
+                            : <React.Fragment><Card.Text className='clock'>{this.state.timeLeftInLevel}</Card.Text></React.Fragment>
+                        }
                     </Card.Body>
                 </Card>
 

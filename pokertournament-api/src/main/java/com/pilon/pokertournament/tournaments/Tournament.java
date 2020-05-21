@@ -2,6 +2,7 @@ package com.pilon.pokertournament.tournaments;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -58,11 +59,11 @@ public class Tournament {
     @NotNull
     private TournamentStatusCode statusCode;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id")
     private TournamentStructure structure;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id")
     private TournamentCurrentState currentState;
 }

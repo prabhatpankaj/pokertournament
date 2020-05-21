@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
 import PlayersView from '../players/PlayersView';
-import TournamentClock from './TournamentClock'
-import TournamentLevel from './TournamentLevel'
+import TournamentInProgress from './TournamentInProgress';
 import TournamentViewCard from './TournamentViewCard'
 import TournamentPayouts from './TournamentPayouts'
 import SockJsClient from "react-stomp";
@@ -15,15 +14,13 @@ import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentView.css";
 import TournamentPreStart from "./TournamentPreStart";
 
-// TODO: Use tabs for the different views: Clock, Players, Registration, Tables
-
 class TournamentView extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             clientConnected: false,
-            statusMessage: ""
+            statusMessage: "No Status"
         }
         this.tournamentMenus = [
             {
@@ -240,12 +237,10 @@ class TournamentView extends Component {
                                 <TournamentViewCard title='Pool' text={poolDisplay} />
                             </Col>
                             <Col sm="8">
-                                <TournamentClock />
                                 {currentLevel === 0
                                     ? <TournamentPreStart />
-                                    : <TournamentLevel title="Current" level={currentLevel} />
+                                    : <TournamentInProgress />
                                 }
-                                <TournamentLevel title="Next" level={currentLevel + 1} />
                             </Col>
                             <Col sm="2">
                                 <TournamentViewCard title='Current Time' text='1:47:55 PM' />
@@ -257,6 +252,11 @@ class TournamentView extends Component {
                         <Row>
                             <Col sm="12">
                                 <TournamentPayouts />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <h3>{this.state.statusMessage}</h3>
                             </Col>
                         </Row>
                     </Tab>
