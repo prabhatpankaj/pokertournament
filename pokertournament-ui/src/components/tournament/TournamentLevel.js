@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { Card } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
+import Logger from 'js-logger'
 import toUSCurrencyFormat from '../../utils/currencyUtils'
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentLevel.css";
@@ -15,14 +16,14 @@ class TournamentLevel extends Component {
     }
 
     render() {
-
-        const { tournament, level } = this.props
-        const levelInfo = tournament.levels[level]
+        const { tournament, level, title } = this.props
+        Logger.info(`TournamentLevel.render level=${level} title=${title}`)
+        const levelInfo = tournament.structure.levels[level]
 
         return (
             <Card>
                 <Card.Body>
-                    <Card.Title>Level {level}</Card.Title>
+                    <Card.Title>{title} Level {levelInfo.level}</Card.Title>
                     <Card.Text>Small Blind: {toUSCurrencyFormat(levelInfo.smallBlind)}</Card.Text>
                     <Card.Text>Big Blind: {toUSCurrencyFormat(levelInfo.bigBlind)}</Card.Text>
                     <Card.Text>Ante: {toUSCurrencyFormat(levelInfo.ante)}</Card.Text>
@@ -36,7 +37,8 @@ class TournamentLevel extends Component {
 
 const mapStateToProps = state => {
     return {
-        tournament: state.tournament
+        tournament: state.tournament,
+        tournamentState: state.tournamentState
     }
 }
 

@@ -1,5 +1,11 @@
 package com.pilon.pokertournament.tournaments;
 
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pilon.pokertournament.tournamentState.TournamentCurrentState;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,13 +30,24 @@ public class TournamentDirector {
             return;
         }
 
-        TournamentTimer tournamentTimer;
+        TournamentClock tournamentTimer;
         if (tournamentTimerRepository.containsKey(tournament.getId())) {
             tournamentTimer = tournamentTimerRepository.get(tournament.getId());
         } else {
-            tournamentTimer = new TournamentTimer(tournament);
+            tournamentTimer = new TournamentClock(tournament);
             tournamentTimerRepository.put(tournament.getId(), tournamentTimer);
         }
+
+        // TODO: This needs work
+        // tournament.getCurrentState()
+        TournamentCurrentState currentState = tournament.getCurrentState();
+        currentState.setTournamentId(tournament.getId());
+        currentState.setLevelStatusCode(TournamentLevelStatusCode.PRESTARTED);
+        currentState.setCurrentLevel(0);
+        currentState.setDurationRemainingSeconds(1110); // FIXIT
+        currentState.setTimestamp(LocalDateTime.now());
+        tournament.setCurrentState(currentState);
+        tournamentService.save(tournament);
 
         tournamentTimer.startPrestartTimer();
         tournament.getCurrentState().setLevelStatusCode(TournamentLevelStatusCode.ACTIVE);
@@ -48,17 +65,26 @@ public class TournamentDirector {
             return;
         }
 
-        TournamentTimer tournamentTimer;
+        TournamentClock tournamentTimer;
         if (tournamentTimerRepository.containsKey(tournament.getId())) {
             tournamentTimer = tournamentTimerRepository.get(tournament.getId());
         } else {
-            tournamentTimer = new TournamentTimer(tournament);
+            tournamentTimer = new TournamentClock(tournament);
             tournamentTimerRepository.put(tournament.getId(), tournamentTimer);
         }
 
         tournamentTimer.startTimer();
         tournament.getCurrentState().setLevelStatusCode(TournamentLevelStatusCode.ACTIVE);
-        TournamentMessenger.sendEventMessage(tournament.getId(), "started");
+        // TournamentMessenger.sendEventMessage(tournament.getId(), "started");
+
+        // TODO: Send the tournament as JSON over the websocket
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String tournamentJSON = objectMapper.writeValueAsString(tournament.getCurrentState());
+            TournamentMessenger.sendEventMessage(tournament.getId(), tournamentJSON);
+        } catch (JsonProcessingException jpe) {
+            // TODO: Something
+        }
 
         tournament.setStatusCode(TournamentStatusCode.IN_PROGRESS);
         tournamentService.save(tournament);
@@ -77,12 +103,12 @@ public class TournamentDirector {
             return;
         }
 
-        TournamentTimer tournamentTimer;
+        TournamentClock tournamentTimer;
         if (tournamentTimerRepository.containsKey(tournament.getId())) {
             tournamentTimer = tournamentTimerRepository.get(tournament.getId());
         } else {
             log.error(String.format("pauseTournament: Tournament %d was not found in tournamentTimerRepository!", tournament.getId()));
-            tournamentTimer = new TournamentTimer(tournament);
+            tournamentTimer = new TournamentClock(tournament);
             tournamentTimerRepository.put(tournament.getId(), tournamentTimer);
         }
 
@@ -107,12 +133,12 @@ public class TournamentDirector {
             return;
         }
 
-        TournamentTimer tournamentTimer;
+        TournamentClock tournamentTimer;
         if (tournamentTimerRepository.containsKey(tournament.getId())) {
             tournamentTimer = tournamentTimerRepository.get(tournament.getId());
         } else {
             log.error(String.format("resumeTournament: Tournament %d was not found in tournamentTimerRepository!", tournament.getId()));
-            tournamentTimer = new TournamentTimer(tournament);
+            tournamentTimer = new TournamentClock(tournament);
             tournamentTimerRepository.put(tournament.getId(), tournamentTimer);
         }
 
@@ -128,11 +154,11 @@ public class TournamentDirector {
         tournament.setStatusCode(TournamentStatusCode.SCHEDULED);
         tournamentService.save(tournament);
 
-        TournamentTimer tournamentTimer;
+        TournamentClock tournamentTimer;
         if (tournamentTimerRepository.containsKey(tournament.getId())) {
             tournamentTimer = tournamentTimerRepository.get(tournament.getId());
         } else {
-            tournamentTimer = new TournamentTimer(tournament);
+            tournamentTimer = new TournamentClock(tournament);
             tournamentTimerRepository.put(tournament.getId(), tournamentTimer);
         }
 

@@ -1,15 +1,13 @@
 package com.pilon.pokertournament.tournaments;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -61,17 +59,11 @@ public class Tournament {
     @NotNull
     private TournamentStatusCode statusCode;
 
-    @OneToMany
-    @JoinColumn(name="tournamentId")
-    @OrderBy("level")
-    private List<TournamentLevel> levels;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id")
+    private TournamentStructure structure;
 
-    @OneToMany
-    @JoinColumn(name="tournamentId")
-    @OrderBy("afterLevel")
-    private List<TournamentBreak> breaks;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id")
     private TournamentCurrentState currentState;
 }

@@ -1,4 +1,4 @@
-package com.pilon.pokertournament.user;
+package com.pilon.pokertournament.tournaments;
 
 import java.util.List;
 
@@ -8,48 +8,37 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pilon.pokertournament.authority.Authority;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Entity
-@Table(name="users")
-public class User {
+@Table(name="tournament_structures")
+public class TournamentStructure {
 
     @Id
-    @NotNull
-    @Column
-    private String username;
-
     @Column
     @NotNull
-    @JsonIgnore
-    private String password;
-
-    @Column
-    @NotNull
-    private boolean enabled;
+    private Long tournamentId;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="username")
-    private List<Authority> authorities;
+    @JoinColumn(name="tournamentId")
+    @OrderBy("level")
+    private List<TournamentLevel> levels;
 
-    @Column
-    @NotNull
-    private String firstName;
-
-    @Column
-    @NotNull
-    private String lastName;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="tournamentId")
+    @OrderBy("afterLevel")
+    private List<TournamentBreak> breaks; 
 }

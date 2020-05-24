@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import TournamentClock from './TournamentClock'
 import TournamentLevel from './TournamentLevel'
+// import Logger from 'js-logger'
 import "../../Bootstrap/css/bootstrap.min.css";
-import "./TournamentLevel.css";
 
-class TournamentPreStart extends Component {
+class TournamentInProgress extends Component {
 
     constructor(props) {
         super(props);
@@ -15,10 +15,14 @@ class TournamentPreStart extends Component {
     }
 
     render() {
+        // FIXIT: Make sure tournamentState is always set
+        const currentLevel = this.props.tournamentState ? this.props.tournamentState.currentLevel : 0
+
         return (
             <React.Fragment>
                 <TournamentClock />
-                <TournamentLevel title="Next" level={0} />
+                <TournamentLevel title="Current" level={currentLevel} />
+                <TournamentLevel title="Next" level={currentLevel+1} />
             </React.Fragment>
         )
     }
@@ -37,4 +41,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TournamentPreStart));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TournamentInProgress));
