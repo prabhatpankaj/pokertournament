@@ -51,7 +51,7 @@ class TournamentClock extends Component {
         const wsSourceUrl = "/handler";
         const topics = [this.topics.clock, this.topics.event]
         // FIXIT: Make sure I don't need to do this check. tournamentState should be set.
-        const currentLevel = this.props.tournamentState ? this.props.tournamentState.currentLevel : 0
+        const currentLevel = this.props.tournamentState && this.props.tournamentState.currentLevel ? this.props.tournamentState.currentLevel : -1
         const scheduledStart = dateFormat(this.props.tournament.scheduledStart, "dddd, mmmm d, yyyy	h:MM TT")
 
         // TODO: Showschedule started time of tournament if not started yet and not in pre-start
