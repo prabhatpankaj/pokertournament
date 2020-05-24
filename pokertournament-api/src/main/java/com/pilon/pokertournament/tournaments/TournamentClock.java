@@ -5,17 +5,20 @@ import java.time.temporal.ChronoUnit;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TournamentTimer {
+public class TournamentClock {
     private Tournament tournament;
     private Timer timer;
     private LocalDateTime expiration;
     private long remainingSeconds;
     private boolean timerInitialized;
 
-    public TournamentTimer(Tournament tournament) {
+    public TournamentClock(Tournament tournament) {
         this.tournament = tournament;
     }
 
@@ -25,7 +28,7 @@ public class TournamentTimer {
     }
 
     public void startTimer() {
-        tournament.getCurrentState().setCurrentLevel(1);
+        tournament.getCurrentState().setCurrentLevel(0);
         TournamentLevel tournamentLevel = tournament.getStructure().getLevels().get(1);
         startNewTimer(tournamentLevel.getDurationSeconds());
     }
@@ -70,10 +73,18 @@ public class TournamentTimer {
                     if (remainingMilliseconds < 500) {
                         log.debug("remainingMilliseconds=" + remainingMilliseconds);
                         int currentLevel = tournament.getCurrentState().getCurrentLevel();
-                        int newLevel = currentLevel + 1;
+                        int newLevel = ((currentLevel + 1) < tournament.getStructure().getLevels().size()) ? currentLevel + 1 : currentLevel;
+
                         log.info(String.format("Tournament %d, level %d", tournament.getId(), newLevel));
                         tournament.getCurrentState().setCurrentLevel(newLevel);
-
+                        try {
+                            ObjectMapper objectMapper = new ObjectMapper();
+                            String tournamentJSON = objectMapper.writeValueAsString(tournament.getCurrentState());
+                            TournamentMessenger.sendEventMessage(tournament.getId(), tournamentJSON);
+                        } catch (JsonProcessingException jpe) {
+                            // TODO: Something
+                        }
+                
                         TournamentLevel tournamentLevel = tournament.getStructure().getLevels().get(newLevel);
                         long durationSeconds = tournamentLevel.getDurationSeconds();
 

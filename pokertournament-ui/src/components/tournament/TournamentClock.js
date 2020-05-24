@@ -50,7 +50,8 @@ class TournamentClock extends Component {
     render() {
         const wsSourceUrl = "/handler";
         const topics = [this.topics.clock, this.topics.event]
-        const currentLevel = this.props.tournament.currentState ? this.props.tournament.currentState.currentLevel : 0
+        // FIXIT: Make sure I don't need to do this check. tournamentState should be set.
+        const currentLevel = this.props.tournamentState ? this.props.tournamentState.currentLevel : 0
         const scheduledStart = dateFormat(this.props.tournament.scheduledStart, "dddd, mmmm d, yyyy	h:MM TT")
 
         // TODO: Showschedule started time of tournament if not started yet and not in pre-start
@@ -75,7 +76,7 @@ class TournamentClock extends Component {
 
                 <Card>
                     <Card.Body>
-                        {currentLevel === 0
+                        {currentLevel === -1
                             ? <h2>{scheduledStart}</h2>
                             : <React.Fragment><Card.Text className='clock'>{this.state.timeLeftInLevel}</Card.Text></React.Fragment>
                         }
@@ -90,7 +91,8 @@ class TournamentClock extends Component {
 
 const mapStateToProps = state => {
     return {
-        tournament: state.tournament
+        tournament: state.tournament,
+        tournamentState: state.tournamentState
     }
 }
 

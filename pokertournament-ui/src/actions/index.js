@@ -16,6 +16,10 @@ export const MenuAction = {
     CLEAR_MENUS: 'CLEAR_MENUS'
 }
 
+export const TournamentStateAction = {
+    SET_TOURNAMENT_STATE: 'SET_TOURNAMENT_STATE'
+}
+
 export const SET_TOURNAMENT_VIEW = 'SET_TOURNAMENT_VIEW'
 
 // Action Creators (https://redux.js.org/basics/actions#action-creators)
@@ -44,6 +48,11 @@ export const setMenus = menus => ({
 
 export const clearMenus = () => ({
     type: MenuAction.CLEAR_MENUS,
+})
+
+export const setTournamentState = tournamentState => ({
+    type: TournamentStateAction.SET_TOURNAMENT_STATE,
+    tournamentState
 })
 
 export const setTournamentView = view => ({

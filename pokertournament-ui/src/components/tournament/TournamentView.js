@@ -7,12 +7,17 @@ import TournamentInProgress from './TournamentInProgress';
 import TournamentViewCard from './TournamentViewCard'
 import TournamentPayouts from './TournamentPayouts'
 import SockJsClient from "react-stomp";
-import { setMenus, clearMenus } from '../../actions';
+import { setMenus, clearMenus, setTournamentState } from '../../actions';
 import Logger from 'js-logger'
 import fetch from "node-fetch";
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentView.css";
 import TournamentPreStart from "./TournamentPreStart";
+
+
+
+// FIXIT: The subcomponents aren't getting the new currentState when it is set. Need to so the whole reducer
+// thing or add it to the tournament or something
 
 class TournamentView extends Component {
 
@@ -81,6 +86,7 @@ class TournamentView extends Component {
             .catch(error => {
                 Logger.error('Tournament start error');
                 Logger.error(error);
+                alert(error)
             });
     }
 
@@ -159,11 +165,14 @@ class TournamentView extends Component {
     onMessageReceive = (message, topic) => {
         switch (topic) {
             case this.topics.event:
+                const tournamentState = message
+                Logger.info("TournamentView.onMessageReceive event")
+                this.props.setTournamentState(tournamentState)
                 this.setState(prevState => ({
-                    statusMessage: message
+                    statusMessage: tournamentState.levelStatusCode,
+                    tournamentState: tournamentState
                 }))
                 break;
-
             default:
                 break;
         }
@@ -195,7 +204,13 @@ class TournamentView extends Component {
         const averageChipStackDisplay = `$${averageChipStack}`
         const pool = 40 * (entries + rebuys)
         const poolDisplay = `$${pool}`
-        const currentLevel = this.props.tournament.currentState ? this.props.tournament.currentState.currentLevel : 0
+
+        // TODO: When the tournament is started, the current state needs to be updated.
+        // Do I hit the service again or push on the websocket?
+        // 
+        // FIXIT: Make sure tournamentState is always set
+        const currentLevel = this.state.tournamentState ? this.state.tournamentState.currentLevel : -1
+        Logger.info(`TournamentView.render currentLevel=${currentLevel}`)
 
         const topics = [this.topics.event]
 
@@ -237,7 +252,7 @@ class TournamentView extends Component {
                                 <TournamentViewCard title='Pool' text={poolDisplay} />
                             </Col>
                             <Col sm="8">
-                                {currentLevel === 0
+                                {currentLevel === -1
                                     ? <TournamentPreStart />
                                     : <TournamentInProgress />
                                 }
@@ -277,7 +292,8 @@ class TournamentView extends Component {
 
 const mapStateToProps = state => {
     return {
-        tournament: state.tournament
+        tournament: state.tournament,
+        tournamentState: state.tournamentState
     }
 }
 
@@ -288,6 +304,9 @@ const mapDispatchToProps = dispatch => {
         },
         clearMenus: () => {
             dispatch(clearMenus())
+        },
+        setTournamentState: tournamentState => {
+            dispatch(setTournamentState(tournamentState))
         }
     }
 }

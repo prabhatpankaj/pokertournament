@@ -15,12 +15,10 @@ class TournamentPreStart extends Component {
     }
 
     render() {
-        const currentLevel = this.props.tournament.currentState ? this.props.tournament.currentState.currentLevel : 0
-
         return (
             <React.Fragment>
                 <TournamentClock />
-                <TournamentLevel title="Next" level={currentLevel + 1} />
+                <TournamentLevel title="Next" level={0} />
             </React.Fragment>
         )
     }
@@ -29,7 +27,8 @@ class TournamentPreStart extends Component {
 
 const mapStateToProps = state => {
     return {
-        tournament: state.tournament
+        tournament: state.tournament,
+        tournamentState: state.tournamentState
     }
 }
 

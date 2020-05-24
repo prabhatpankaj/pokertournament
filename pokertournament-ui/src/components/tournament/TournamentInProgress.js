@@ -15,12 +15,14 @@ class TournamentInProgress extends Component {
     }
 
     render() {
-        const currentLevel = this.props.tournament.currentState ? this.props.tournament.currentState.currentLevel : 0
+        // FIXIT: Make sure tournamentState is always set
+        const currentLevel = this.props.tournamentState ? this.props.tournamentState.currentLevel : 0
 
         return (
             <React.Fragment>
                 <TournamentClock />
                 <TournamentLevel title="Current" level={currentLevel} />
+                <TournamentLevel title="Next" level={currentLevel+1} />
             </React.Fragment>
         )
     }
@@ -29,7 +31,8 @@ class TournamentInProgress extends Component {
 
 const mapStateToProps = state => {
     return {
-        tournament: state.tournament
+        tournament: state.tournament,
+        tournamentState: state.tournamentState
     }
 }
 

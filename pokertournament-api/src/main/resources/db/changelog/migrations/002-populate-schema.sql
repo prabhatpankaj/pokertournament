@@ -85,6 +85,11 @@ VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 12, 600, 'Chip up 
 INSERT INTO tournament_breaks (tournament_id, after_level, duration_seconds, message)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 17, 300, 'Chip up $500');
 
+-- Not sure if this should be an insert into tournament_current_state when a tournament is created
+-- or something enforced in code.
+INSERT INTO tournament_current_state (tournament_id, level_status_code, current_level, duration_remaining_seconds, timestamp)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 0, -1, 0, NOW());
+
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
 VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 7', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-06-05 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
