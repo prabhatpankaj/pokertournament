@@ -7,17 +7,12 @@ import TournamentInProgress from './TournamentInProgress';
 import TournamentViewCard from './TournamentViewCard'
 import TournamentPayouts from './TournamentPayouts'
 import SockJsClient from "react-stomp";
-import { setMenus, clearMenus, setTournamentState } from '../../actions';
+import { setMenus, clearMenus, setTournamentState, setRemainingSeconds } from '../../actions';
 import Logger from 'js-logger'
 import fetch from "node-fetch";
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentView.css";
 import TournamentPreStart from "./TournamentPreStart";
-
-
-
-// FIXIT: The subcomponents aren't getting the new currentState when it is set. Need to so the whole reducer
-// thing or add it to the tournament or something
 
 class TournamentView extends Component {
 
@@ -49,7 +44,8 @@ class TournamentView extends Component {
             "reschedule": this.rescheduleTournament,
         }
         this.topics = {
-            event: `/topic/${props.tournament.id}/event`
+            event: `/topic/${props.tournament.id}/event`,
+            clock: `/topic/${props.tournament.id}/clock`
         }
     }
 
@@ -172,6 +168,12 @@ class TournamentView extends Component {
                     tournamentState: tournamentState
                 }))
                 break;
+
+            case this.topics.clock:
+                const remainingSeconds = parseInt(message)
+                this.props.setRemainingSeconds(remainingSeconds)
+                break;
+                    
             default:
                 break;
         }
@@ -205,7 +207,7 @@ class TournamentView extends Component {
         const poolDisplay = `$${pool}`
 
         const currentLevel = this.props.tournamentState ? this.props.tournamentState.currentLevel : -1
-        const topics = [this.topics.event]
+        const topics = [this.topics.event, this.topics.clock]
 
         return (
             <div className="TournamentView">
@@ -297,6 +299,9 @@ const mapDispatchToProps = dispatch => {
         },
         setTournamentState: tournamentState => {
             dispatch(setTournamentState(tournamentState))
+        },
+        setRemainingSeconds: remainingSeconds => {
+            dispatch(setRemainingSeconds(remainingSeconds))
         }
     }
 }
