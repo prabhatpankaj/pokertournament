@@ -166,7 +166,6 @@ class TournamentView extends Component {
         switch (topic) {
             case this.topics.event:
                 const tournamentState = message
-                Logger.info("TournamentView.onMessageReceive event")
                 this.props.setTournamentState(tournamentState)
                 this.setState(prevState => ({
                     statusMessage: tournamentState.levelStatusCode,
@@ -205,17 +204,8 @@ class TournamentView extends Component {
         const pool = 40 * (entries + rebuys)
         const poolDisplay = `$${pool}`
 
-        // TODO: When the tournament is started, the current state needs to be updated.
-        // Do I hit the service again or push on the websocket?
-        // 
-        // FIXIT: Make sure tournamentState is always set
-        const currentLevel = this.state.tournamentState ? this.state.tournamentState.currentLevel : -1
-        Logger.info(`TournamentView.render currentLevel=${currentLevel}`)
-
+        const currentLevel = this.props.tournamentState ? this.props.tournamentState.currentLevel : -1
         const topics = [this.topics.event]
-
-
-        // TODO: May be better with Card Decks and Card Columns rather than Rows and Columns
 
         return (
             <div className="TournamentView">

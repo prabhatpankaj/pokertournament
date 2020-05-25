@@ -13,9 +13,6 @@ class NavBar extends Component {
         }
     }
 
-
-    // TODO: Add name to NavBar <h3>{this.props.user.firstName} {this.props.user.lastName}</h3>
-
     render() {
         if (this.props.user.enabled) {
             return (

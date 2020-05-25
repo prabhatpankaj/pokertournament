@@ -40,7 +40,7 @@ public class TournamentCurrentState {
 
     @Column
     @NotNull
-    private Integer durationRemainingSeconds;
+    private Long durationRemainingSeconds;
 
     @Column
     @NotNull
