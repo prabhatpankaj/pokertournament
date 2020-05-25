@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import TournamentClock from './TournamentClock'
 import TournamentLevel from './TournamentLevel'
-// import Logger from 'js-logger'
 import "../../Bootstrap/css/bootstrap.min.css";
 
 class TournamentInProgress extends Component {
@@ -15,8 +14,7 @@ class TournamentInProgress extends Component {
     }
 
     render() {
-        // FIXIT: Make sure tournamentState is always set
-        const currentLevel = this.props.tournamentState ? this.props.tournamentState.currentLevel : 0
+        const currentLevel = this.props.tournamentState.currentLevel
 
         return (
             <React.Fragment>

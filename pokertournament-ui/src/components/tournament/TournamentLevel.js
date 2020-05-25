@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { Card } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
-import Logger from 'js-logger'
 import toUSCurrencyFormat from '../../utils/currencyUtils'
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentLevel.css";
@@ -17,7 +16,6 @@ class TournamentLevel extends Component {
 
     render() {
         const { tournament, level, title } = this.props
-        Logger.info(`TournamentLevel.render level=${level} title=${title}`)
         const levelInfo = tournament.structure.levels[level]
 
         return (

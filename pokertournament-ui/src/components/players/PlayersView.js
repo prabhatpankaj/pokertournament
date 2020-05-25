@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Dropdown } from 'react-bootstrap';
-import Logger from 'js-logger'
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./PlayersView.css";
 
@@ -34,17 +33,14 @@ class PlayersView extends Component {
 
     onPlayerReserveSeat = (eventKey, event) => {
         event.preventDefault()
-        Logger.info(`onPlayerReserveSeat eventKey=${eventKey} event=?`)
     }
 
     onPlayerBuyin = (eventKey, event) => {
         event.preventDefault()
-        Logger.info(`onPlayerBuyin eventKey=${eventKey} event=?`)
     }
 
     onPlayerSeat = (eventKey, event) => {
         event.preventDefault()
-        Logger.info(`onPlayerSeat eventKey=${eventKey} event=?`)
     }
 
     render() {
@@ -71,7 +67,6 @@ class PlayersView extends Component {
                 </tr>)
         }
 
-        // TODO: Maybe react-data-grid instead of React Bootstrap Table 
         return (
             <div className="PlayersView">
                 <Row>

@@ -2,8 +2,6 @@ package com.pilon.pokertournament.tournaments;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pilon.pokertournament.tournamentState.TournamentCurrentState;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,20 +36,18 @@ public class TournamentDirector {
             tournamentTimerRepository.put(tournament.getId(), tournamentTimer);
         }
 
-        // TODO: This needs work
-        // tournament.getCurrentState()
         TournamentCurrentState currentState = tournament.getCurrentState();
         currentState.setTournamentId(tournament.getId());
         currentState.setLevelStatusCode(TournamentLevelStatusCode.PRESTARTED);
         currentState.setCurrentLevel(0);
-        currentState.setDurationRemainingSeconds(1110); // FIXIT
+        currentState.setDurationRemainingSeconds(1110L); // FIXIT
         currentState.setTimestamp(LocalDateTime.now());
         tournament.setCurrentState(currentState);
         tournamentService.save(tournament);
 
         tournamentTimer.startPrestartTimer();
         tournament.getCurrentState().setLevelStatusCode(TournamentLevelStatusCode.ACTIVE);
-        TournamentMessenger.sendEventMessage(tournament.getId(), "prestarted");
+        TournamentMessenger.sendCurrentStateMessage(tournament.getId(), tournament.getCurrentState());
 
         tournamentService.save(tournament);
     }
@@ -75,16 +71,7 @@ public class TournamentDirector {
 
         tournamentTimer.startTimer();
         tournament.getCurrentState().setLevelStatusCode(TournamentLevelStatusCode.ACTIVE);
-        // TournamentMessenger.sendEventMessage(tournament.getId(), "started");
-
-        // TODO: Send the tournament as JSON over the websocket
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String tournamentJSON = objectMapper.writeValueAsString(tournament.getCurrentState());
-            TournamentMessenger.sendEventMessage(tournament.getId(), tournamentJSON);
-        } catch (JsonProcessingException jpe) {
-            // TODO: Something
-        }
+        TournamentMessenger.sendCurrentStateMessage(tournament.getId(), tournament.getCurrentState());
 
         tournament.setStatusCode(TournamentStatusCode.IN_PROGRESS);
         tournamentService.save(tournament);
@@ -112,9 +99,16 @@ public class TournamentDirector {
             tournamentTimerRepository.put(tournament.getId(), tournamentTimer);
         }
 
-        tournamentTimer.pauseTimer();
+        long remainingSeconds = tournamentTimer.pauseTimer();
         tournament.getCurrentState().setLevelStatusCode(TournamentLevelStatusCode.PAUSED);
-        TournamentMessenger.sendEventMessage(tournament.getId(), "paused");
+        TournamentMessenger.sendCurrentStateMessage(tournament.getId(), tournament.getCurrentState());
+        tournamentService.save(tournament);
+
+        TournamentCurrentState currentState = tournament.getCurrentState();
+        currentState.setLevelStatusCode(TournamentLevelStatusCode.PAUSED);
+        currentState.setDurationRemainingSeconds(remainingSeconds);
+        currentState.setTimestamp(LocalDateTime.now());
+        tournament.setCurrentState(currentState);
         tournamentService.save(tournament);
     }
 
@@ -142,9 +136,9 @@ public class TournamentDirector {
             tournamentTimerRepository.put(tournament.getId(), tournamentTimer);
         }
 
-        tournamentTimer.resumeTimer();
+        tournamentTimer.resumeTimer(tournament.getCurrentState().getDurationRemainingSeconds());
         tournament.getCurrentState().setLevelStatusCode(TournamentLevelStatusCode.ACTIVE);
-        TournamentMessenger.sendEventMessage(tournament.getId(), "resumed");
+        TournamentMessenger.sendCurrentStateMessage(tournament.getId(), tournament.getCurrentState());
         tournamentService.save(tournament);
     }
 
@@ -164,7 +158,7 @@ public class TournamentDirector {
 
         tournamentTimer.rescheduleTimer();
         tournament.getCurrentState().setLevelStatusCode(TournamentLevelStatusCode.NOT_STARTED);
-        TournamentMessenger.sendEventMessage(tournament.getId(), "rescheduled");
+        TournamentMessenger.sendCurrentStateMessage(tournament.getId(), tournament.getCurrentState());
         tournamentService.save(tournament);
     }
 }

@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Card } from 'react-bootstrap';
 import SockJsClient from "react-stomp";
-// import Logger from 'js-logger'
+import Logger from 'js-logger'
 import formatSeconds from '../../utils/clockUtils'
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentClock.css";
+// import Logger from "js-logger";
 var dateFormat = require('dateformat');
 
 class TournamentClock extends Component {
@@ -15,12 +16,10 @@ class TournamentClock extends Component {
         super(props);
         this.state = {
             clientConnected: false,
-            timeLeftInLevel: "",
-            statusMessage: ""
+            timeLeftInLevel: ""
         }
         this.topics = {
-            clock: `/topic/${props.tournament.id}/clock`,
-            event: `/topic/${props.tournament.id}/event`
+            clock: `/topic/${props.tournament.id}/clock`
         }
     }
 
@@ -35,12 +34,6 @@ class TournamentClock extends Component {
                 }))
                 break;
 
-            case this.topics.event:
-                this.setState(prevState => ({
-                    statusMessage: message
-                }))
-                break;
-
             default:
                 break;
         }
@@ -49,30 +42,33 @@ class TournamentClock extends Component {
 
     render() {
         const wsSourceUrl = "/handler";
-        const topics = [this.topics.clock, this.topics.event]
-        // FIXIT: Make sure I don't need to do this check. tournamentState should be set.
-        const currentLevel = this.props.tournamentState && this.props.tournamentState.currentLevel ? this.props.tournamentState.currentLevel : -1
+        const topics = [this.topics.clock]
+        const currentLevel = this.props.tournamentState.currentLevel
         const scheduledStart = dateFormat(this.props.tournament.scheduledStart, "dddd, mmmm d, yyyy	h:MM TT")
 
-        // TODO: Showschedule started time of tournament if not started yet and not in pre-start
+        Logger.debug(`TournamentClock.render timeLeftInLevel=${this.state.timeLeftInLevel} currentLevel=${currentLevel}`)
+
         return (
 
             <div className="TournamentClock">
-                <SockJsClient
-                    url={wsSourceUrl}
-                    topics={topics}
-                    onMessage={this.onMessageReceive}
-                    ref={(client) => {
-                        this.clientRef = client
-                    }}
-                    onConnect={() => {
-                        this.setState({ clientConnected: true })
-                    }}
-                    onDisconnect={() => {
-                        this.setState({ clientConnected: false })
-                    }}
-                    debug={false} />
-
+                {currentLevel >= 0
+                    ?
+                    <SockJsClient
+                        url={wsSourceUrl}
+                        topics={topics}
+                        onMessage={this.onMessageReceive}
+                        ref={(client) => {
+                            this.clientRef = client
+                        }}
+                        onConnect={() => {
+                            this.setState({ clientConnected: true })
+                        }}
+                        onDisconnect={() => {
+                            this.setState({ clientConnected: false })
+                        }}
+                        debug={false} />
+                    : <React.Fragment />
+                }
 
                 <Card>
                     <Card.Body>
@@ -83,7 +79,7 @@ class TournamentClock extends Component {
                     </Card.Body>
                 </Card>
 
-            </div>
+            </div >
         )
     }
 

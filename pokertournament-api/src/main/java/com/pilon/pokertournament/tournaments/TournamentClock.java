@@ -5,9 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -15,7 +12,6 @@ public class TournamentClock {
     private Tournament tournament;
     private Timer timer;
     private LocalDateTime expiration;
-    private long remainingSeconds;
     private boolean timerInitialized;
 
     public TournamentClock(Tournament tournament) {
@@ -33,15 +29,16 @@ public class TournamentClock {
         startNewTimer(tournamentLevel.getDurationSeconds());
     }
 
-    public void pauseTimer() {
+    public long pauseTimer() {
         if (timer != null) {
             timer.cancel();
         }
         
-        remainingSeconds = LocalDateTime.now().until(expiration, ChronoUnit.SECONDS);
+        long remainingSeconds = LocalDateTime.now().until(expiration, ChronoUnit.SECONDS);
+        return remainingSeconds;
     }
 
-    public void resumeTimer() {
+    public void resumeTimer(long remainingSeconds) {
         startNewTimer(remainingSeconds);
     }
 
@@ -77,13 +74,7 @@ public class TournamentClock {
 
                         log.info(String.format("Tournament %d, level %d", tournament.getId(), newLevel));
                         tournament.getCurrentState().setCurrentLevel(newLevel);
-                        try {
-                            ObjectMapper objectMapper = new ObjectMapper();
-                            String tournamentJSON = objectMapper.writeValueAsString(tournament.getCurrentState());
-                            TournamentMessenger.sendEventMessage(tournament.getId(), tournamentJSON);
-                        } catch (JsonProcessingException jpe) {
-                            // TODO: Something
-                        }
+                        TournamentMessenger.sendCurrentStateMessage(tournament.getId(), tournament.getCurrentState());
                 
                         TournamentLevel tournamentLevel = tournament.getStructure().getLevels().get(newLevel);
                         long durationSeconds = tournamentLevel.getDurationSeconds();

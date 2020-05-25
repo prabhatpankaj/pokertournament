@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { Row, Col, Table } from 'react-bootstrap';
 import { TournamentStatusDescription } from '../../constants';
-import { setTournament } from '../../actions';
+import { setTournament, setTournamentState } from '../../actions';
 import toLocaleDateTime from '../../utils/dateUtils';
 import Logger from "js-logger";
 import "../../Bootstrap/css/bootstrap.min.css";
@@ -44,9 +44,11 @@ class TournamentsTable extends Component {
             .then(response => response.json())
             .then(tournament => {
                 that.props.setTournament(tournament)
+                that.props.setTournamentState(tournament.currentState)
 
                 that.setState({
                     tournament: tournament,
+                    tournamentState: tournament.currentState,
                     redirectToTournament: true
                 });
             })
@@ -117,7 +119,8 @@ class TournamentsTable extends Component {
 
 const mapStateToProps = state => {
     return {
-        tournament: state.tournament
+        tournament: state.tournament,
+        tournamentState: state.tournamentState
     }
 }
 
@@ -125,6 +128,9 @@ const mapDispatchToProps = dispatch => {
     return {
         setTournament: tournament => {
             dispatch(setTournament(tournament))
+        },
+        setTournamentState: tournamentState => {
+            dispatch(setTournamentState(tournamentState))
         }
     }
 }
