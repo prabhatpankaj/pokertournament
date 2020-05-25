@@ -20,6 +20,11 @@ export const TournamentStateAction = {
     SET_TOURNAMENT_STATE: 'SET_TOURNAMENT_STATE'
 }
 
+// FIXIT: Have a more granular SET_SECONDS_REMAINING
+export const TournamentClockAction = {
+    SET_REMAINING_SECONDS: 'SET_REMAINING_SECONDS'
+}
+
 export const SET_TOURNAMENT_VIEW = 'SET_TOURNAMENT_VIEW'
 
 // Action Creators (https://redux.js.org/basics/actions#action-creators)
@@ -53,6 +58,11 @@ export const clearMenus = () => ({
 export const setTournamentState = tournamentState => ({
     type: TournamentStateAction.SET_TOURNAMENT_STATE,
     tournamentState
+})
+
+export const setRemainingSeconds = remainingSeconds => ({
+    type: TournamentClockAction.SET_REMAINING_SECONDS,
+    remainingSeconds: remainingSeconds
 })
 
 export const setTournamentView = view => ({
