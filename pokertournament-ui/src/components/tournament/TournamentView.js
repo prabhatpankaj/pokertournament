@@ -2,17 +2,18 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Tabs, Tab } from 'react-bootstrap';
+import ReservationsView from '../reservations/ReservationsView';
 import PlayersView from '../players/PlayersView';
 import TournamentInProgress from './TournamentInProgress';
 import TournamentViewCard from './TournamentViewCard'
 import TournamentPayouts from './TournamentPayouts'
+import TournamentPreStart from "./TournamentPreStart";
 import SockJsClient from "react-stomp";
 import { setMenus, clearMenus, setTournamentState, setRemainingSeconds } from '../../actions';
 import Logger from 'js-logger'
 import fetch from "node-fetch";
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentView.css";
-import TournamentPreStart from "./TournamentPreStart";
 
 class TournamentView extends Component {
 
@@ -268,7 +269,7 @@ class TournamentView extends Component {
                         </Row>
                     </Tab>
                     <Tab eventKey="reservations" title="Reservations">
-                        <PlayersView />
+                        <ReservationsView />
                     </Tab>
                     <Tab eventKey="buyins" title="Players">
                         <PlayersView />

@@ -221,5 +221,67 @@
             ]
         },
         "currentState":null
+    },
+    "tournamentState": {
+        "tournamentId":14,
+        "levelStatusCode":"ACTIVE",
+        "currentLevel":1,
+        "durationRemainingSeconds":0,
+        "timestamp":{
+            "nano":145021000,
+            "year":2020,
+            "monthValue":5,
+            "dayOfMonth":25,
+            "hour":16,
+            "minute":49,
+            "second":59,
+            "month":"MAY",
+            "dayOfWeek":"MONDAY",
+            "dayOfYear":146,
+            "chronology":{
+                "id":"ISO",
+                "calendarType":"iso8601"
+            }
+        }
+    },
+    "players": {
+        // Player information map by Player Id
+        "playersById": {
+            "1": { "firstName": "Chuck", "lastName": "Pilon" },
+            "2": { "firstName": "Rob", "lastName": "Belz" },
+            "3": { "firstName": "Mark", "lastName": "Cotton" },
+            "4": { "firstName": "Mitch", "lastName": "Martin" },
+            "5": { "firstName": "Jerry", "lastName": "Hanson" },
+            "6": { "firstName": "Tom", "lastName": "Lutz" },
+            "7": { "firstName": "Mike", "lastName": "Lutz" },
+            "8": { "firstName": "Mike", "lastName": "Motzko" }
+        },
+        // Reserved
+        "reserved": [
+            { "playerId": "1", "timestamp": "2020-05-20 18:30:00"},
+            { "playerId": "3", "timestamp": "2020-05-20 18:35:00"},
+            { "playerId": "4", "timestamp": "2020-05-20 18:40:00"},
+            { "playerId": "2", "timestamp": "2020-05-20 18:45:00"},
+            { "playerId": "4", "timestamp": "2020-05-20 18:50:00"},
+            { "playerId": "7", "timestamp": "2020-05-20 18:55:00"}
+        ],
+        // All players that have bought in. Ordered by time bought in.
+        "boughtIn": [
+            { "playerId": "1", "buyin": 40.00, "timestamp": "2020-05-20 18:30:00"},
+            { "playerId": "3", "buyin": 40.00, "timestamp": "2020-05-20 18:35:00"},
+            { "playerId": "4", "buyin": 40.00, "timestamp": "2020-05-20 18:40:00"},
+            { "playerId": "2", "buyin": 40.00, "timestamp": "2020-05-20 18:45:00"},
+            { "playerId": "4", "buyin": 40.00, "timestamp": "2020-05-20 18:50:00"}
+        ],
+        // Players still in the tournament.
+        "active": [
+            { "playerId": "1" },
+            { "playerId": "3" },
+            { "playerId": "2" },
+        ],
+        "busted": [
+            { "playerId": "5", "timestamp": "2020-05-20 19:45:00"},
+            { "playerId": "4", "timestamp": "2020-05-20 19:45:00"}
+        ]
     }
 }
