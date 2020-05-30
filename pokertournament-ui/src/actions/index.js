@@ -20,12 +20,16 @@ export const TournamentStateAction = {
     SET_TOURNAMENT_STATE: 'SET_TOURNAMENT_STATE'
 }
 
-// FIXIT: Have a more granular SET_SECONDS_REMAINING
 export const TournamentClockAction = {
     SET_REMAINING_SECONDS: 'SET_REMAINING_SECONDS'
 }
 
-export const SET_TOURNAMENT_VIEW = 'SET_TOURNAMENT_VIEW'
+export const PlayerAction = {
+    ADD_PLAYER: 'ADD_PLAYER',
+    RESERVE_PLAYER: 'RESERVE_PLAYER',
+    BUYIN_PLAYER: 'ADD_PLAYER_BUYIN',
+    BUST_PLAYER: 'BUST_PLAYER'
+}
 
 // Action Creators (https://redux.js.org/basics/actions#action-creators)
 export const setUser = user => ({
@@ -65,12 +69,22 @@ export const setRemainingSeconds = remainingSeconds => ({
     remainingSeconds: remainingSeconds
 })
 
-export const setTournamentView = view => ({
-    type: SET_TOURNAMENT_VIEW,
-    view
+export const addPlayer = player => ({
+    type: PlayerAction.ADD_PLAYER,
+    player
 })
 
-export const TournamentViews = {
-    TABLE_VIEW: 'TABLE_VIEW',
-    REGISTRATION_VIEW: 'REGISTRATION_VIEW'
-}
+export const reservePlayer = player => ({
+    type: PlayerAction.RESERVE_PLAYER,
+    player
+})
+
+export const buyinPlayer = player => ({
+    type: PlayerAction.BUYIN_PLAYER,
+    player
+})
+
+export const bustPlayer = player => ({
+    type: PlayerAction.BUST_PLAYER,
+    player
+})

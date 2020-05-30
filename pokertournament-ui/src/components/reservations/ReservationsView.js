@@ -2,30 +2,64 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Dropdown } from 'react-bootstrap';
-import { buyinPlayer } from '../../actions';
+import { addPlayer, reservePlayer } from '../../actions';
 import "../../Bootstrap/css/bootstrap.min.css";
-import "./PlayersView.css";
+import "./ReservationsView.css";
 
-class PlayersView extends Component {
+class ReservationsView extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            leaguePlayers: []
+        }
+    }
+
+    componentDidMount() {
+        this.fetchPlayers()
+    }
+
+    fetchPlayers() {
+        const url = `${process.env.REACT_APP_API_PATH}/players`
+        const that = this
+
+        fetch(url)
+            .then(response => response.json())
+            .then(players => {
+                let leaguePlayersById = {}
+                players.forEach(player => {
+                    leaguePlayersById[player.id] = player
+                })
+
+                that.setState({
+                    leaguePlayers: players,
+                    leaguePlayersById: leaguePlayersById
+                });
+            });
+    }
+
+    onPlayerReserveSeat = (eventKey, event) => {
+        event.preventDefault()
+
+        // TODO: Where do I save the registration?
+        const player = this.state.leaguePlayersById[eventKey]
+        if (player) {
+            this.props.addPlayer(player)
+            this.props.reservePlayer(player)
+        }
     }
 
     onPlayerBuyin = (eventKey, event) => {
         event.preventDefault()
+    }
 
-        // TODO: Where do I save the buyin?
-        const player = this.props.players.byPlayerId[eventKey]
-        if (player) {
-            this.props.buyinPlayer(player)
-        }
+    onPlayerSeat = (eventKey, event) => {
+        event.preventDefault()
     }
 
     render() {
         const playerRows = []
-        for (const [index, playerId] of this.props.players.reserved.entries()) {
-            const player = this.props.players.byPlayerId[playerId]
+        for (const [index, player] of this.state.leaguePlayers.entries()) {
             playerRows.push(
                 <tr key={index}>
                     <td>
@@ -34,7 +68,7 @@ class PlayersView extends Component {
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item eventKey={player.id} onSelect={this.onPlayerBuyin}>Buy-In</Dropdown.Item>
+                                <Dropdown.Item eventKey={player.id} onSelect={this.onPlayerReserveSeat}>Reserve Seat</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </td>
@@ -81,16 +115,21 @@ class PlayersView extends Component {
 
 const mapStateToProps = state => {
     return {
-        players: state.players   
+        tournament: state.tournament,
+        tournamentState: state.tournamentState,
+        players: state.players
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        buyinPlayer: player => {
-            dispatch(buyinPlayer(player))
+        addPlayer: player => {
+            dispatch(addPlayer(player))
+        },
+        reservePlayer: player => {
+            dispatch(reservePlayer(player))
         }
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PlayersView));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReservationsView));
