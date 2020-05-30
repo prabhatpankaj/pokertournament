@@ -8,6 +8,7 @@ import "./PlayersView.css";
 
 class PlayersView extends Component {
 
+    // eslint-disable-next-line
     constructor(props) {
         super(props);
     }

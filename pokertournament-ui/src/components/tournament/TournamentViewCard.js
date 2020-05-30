@@ -14,8 +14,8 @@ class TournamentViewCard extends Component {
     render() {
         return (
             <Card>
+                <Card.Header>{this.props.title}</Card.Header>
                 <Card.Body>
-                    <Card.Title>{this.props.title}</Card.Title>
                     <Card.Text>{this.props.text}</Card.Text>
                 </Card.Body>
             </Card>

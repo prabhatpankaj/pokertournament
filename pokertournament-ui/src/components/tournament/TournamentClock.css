@@ -1,5 +1,6 @@
 .TournamentClock .clock {
     text-align: center;
-    font-size: 16em;
+    font-size: 16vw;
     line-height: 0.8;
+    padding: 2rem;
 }
