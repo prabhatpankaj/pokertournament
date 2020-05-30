@@ -20,7 +20,7 @@ services:
         -Xdebug 
         -Xrunjdwp:transport=dt_socket,server=y,address=*:5000,suspend=n
       - APPLICATION_OPTS=
-        --spring.datasource.url=jdbc:postgresql://pokertournament-db/postgres
+        --spring.datasource.url=jdbc:postgresql://pokertournament-db:5432/postgres
         --spring.datasource.username=postgres
         --spring.datasource.password=Passw0rd!
         --logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter=DEBUG
