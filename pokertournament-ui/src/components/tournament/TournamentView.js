@@ -200,6 +200,7 @@ class TournamentView extends Component {
         const entries = 44
         const remaining = 42
         const rebuys = 6
+        const entriesText = `${entries} with ${rebuys} rebuys`
         const chipCount = 3000 * (entries + rebuys)
         const chipCountDisplay = chipCount.toLocaleString()
         const averageChipStack = Math.round(chipCount / remaining)
@@ -229,7 +230,7 @@ class TournamentView extends Component {
 
                 <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
                     <Tab eventKey="home" title="Home">
-                        <Row>
+                        <Row className="tournamentNameRow">
                             <Col sm="12">
                                 <h1>{name}</h1>
                                 <h2>{description}</h2>
@@ -237,9 +238,8 @@ class TournamentView extends Component {
                         </Row>
                         <Row>
                             <Col sm="2">
-                                <TournamentViewCard title='Entries' text={entries} />
+                                <TournamentViewCard title='Entries' text={entriesText} />
                                 <TournamentViewCard title='Remaining' text={remaining} />
-                                <TournamentViewCard title='Rebuys' text={rebuys} />
                                 <TournamentViewCard title='Chip Count' text={chipCountDisplay} />
                                 <TournamentViewCard title='Average Stack' text={averageChipStackDisplay} />
                                 <TournamentViewCard title='Pool' text={poolDisplay} />

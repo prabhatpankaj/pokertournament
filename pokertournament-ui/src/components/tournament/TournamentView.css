@@ -9,3 +9,25 @@
 .TournamentView h2 {
     text-align: center;
 }
+
+.card {
+    box-shadow: 0 1px 1px rgba(0,0,0,0.11), 
+                0 2px 2px rgba(0,0,0,0.11), 
+                0 4px 4px rgba(0,0,0,0.11), 
+                0 6px 8px rgba(0,0,0,0.11),
+                0 8px 16px rgba(0,0,0,0.11);
+    margin-bottom: 16px;
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 16px;
+}
+
+.tournamentNameRow {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

@@ -20,8 +20,8 @@ class TournamentLevel extends Component {
 
         return (
             <Card>
+                <Card.Header>{title} Level {levelInfo.level}</Card.Header>
                 <Card.Body>
-                    <Card.Title>{title} Level {levelInfo.level}</Card.Title>
                     <Card.Text>Small Blind: {toUSCurrencyFormat(levelInfo.smallBlind)}</Card.Text>
                     <Card.Text>Big Blind: {toUSCurrencyFormat(levelInfo.bigBlind)}</Card.Text>
                     <Card.Text>Ante: {toUSCurrencyFormat(levelInfo.ante)}</Card.Text>

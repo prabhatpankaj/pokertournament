@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { Row, Col } from 'react-bootstrap';
 import TournamentClock from './TournamentClock'
 import TournamentLevel from './TournamentLevel'
 import "../../Bootstrap/css/bootstrap.min.css";
@@ -19,8 +20,14 @@ class TournamentInProgress extends Component {
         return (
             <React.Fragment>
                 <TournamentClock />
-                <TournamentLevel title="Current" level={currentLevel} />
-                <TournamentLevel title="Next" level={currentLevel+1} />
+                <Row>
+                    <Col>
+                        <TournamentLevel title="Current" level={currentLevel} />
+                    </Col>
+                    <Col>
+                        <TournamentLevel title="Next" level={currentLevel+1} />
+                    </Col>
+                </Row>
             </React.Fragment>
         )
     }
