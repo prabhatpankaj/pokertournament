@@ -194,7 +194,7 @@ class TournamentView extends Component {
             return (<div />)
         }
 
-        const wsSourceUrl = "/handler";
+        const wsSourceUrl = "/wsapp/handler";
         const connectionStatus = this.state.clientConnected ? "Connected" : "Disconnected"
         const { name, description } = this.props.tournament
         const entries = 44
