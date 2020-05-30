@@ -25,7 +25,7 @@ public class TournamentClock {
 
     public void startTimer() {
         tournament.getCurrentState().setCurrentLevel(0);
-        TournamentLevel tournamentLevel = tournament.getStructure().getLevels().get(1);
+        TournamentLevel tournamentLevel = tournament.getStructure().getLevels().get(0);
         startNewTimer(tournamentLevel.getDurationSeconds());
     }
 
