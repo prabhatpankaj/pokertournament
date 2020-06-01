@@ -8,6 +8,12 @@ const clock = (state = {}, action) => {
                 remainingSeconds: action.remainingSeconds
             }
 
+        case TournamentClockAction.SET_REMAINING_SECONDS_UNTIL_BREAK:
+            return {
+                ...state,
+                remainingSecondsUntilBreak: action.remainingSecondsUntilBreak
+            }
+    
         default:
             return state
     }

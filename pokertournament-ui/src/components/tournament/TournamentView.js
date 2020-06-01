@@ -8,8 +8,9 @@ import TournamentInProgress from './TournamentInProgress';
 import TournamentViewCard from './TournamentViewCard'
 import TournamentPayouts from './TournamentPayouts'
 import TournamentPreStart from "./TournamentPreStart";
+import TournamentNextBreak from "./TournamentNextBreak";
 import SockJsClient from "react-stomp";
-import { setMenus, clearMenus, setTournamentState, setRemainingSeconds } from '../../actions';
+import { setMenus, clearMenus, setTournamentState, setRemainingSeconds, setRemainingSecondsUntilBreak } from '../../actions';
 import Logger from 'js-logger'
 import fetch from "node-fetch";
 import "../../Bootstrap/css/bootstrap.min.css";
@@ -171,8 +172,9 @@ class TournamentView extends Component {
                 break;
 
             case this.topics.clock:
-                const remainingSeconds = parseInt(message)
-                this.props.setRemainingSeconds(remainingSeconds)
+                const clockMessage = message
+                this.props.setRemainingSeconds(clockMessage.remainingSecondsInLevel)
+                this.props.setRemainingSecondsUntilBreak(clockMessage.remainingSecondsUntilBreak)
                 break;
                     
             default:
@@ -253,7 +255,7 @@ class TournamentView extends Component {
                             <Col sm="2">
                                 <TournamentViewCard title='Current Time' text='1:47:55 PM' />
                                 <TournamentViewCard title='Elapsed Time' text='1:20:55' />
-                                <TournamentViewCard title='Next Break' text='20:12' />
+                                <TournamentNextBreak />
                                 <TournamentViewCard title='Server Status' text={connectionStatus} />
                             </Col>
                         </Row>
@@ -303,6 +305,9 @@ const mapDispatchToProps = dispatch => {
         },
         setRemainingSeconds: remainingSeconds => {
             dispatch(setRemainingSeconds(remainingSeconds))
+        },
+        setRemainingSecondsUntilBreak: remainingSecondsUntilBreak => {
+            dispatch(setRemainingSecondsUntilBreak(remainingSecondsUntilBreak))
         }
     }
 }
