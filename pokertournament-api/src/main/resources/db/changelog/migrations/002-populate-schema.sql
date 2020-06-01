@@ -57,39 +57,39 @@ VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket 
 INSERT INTO tournament_structures (tournament_id) VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')));
 
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 1, 60, 5, 10, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 1, 30, 5, 10, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 2, 60, 10, 20, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 2, 30, 10, 20, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 3, 60, 15, 30, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 3, 30, 15, 30, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 4, 60, 25, 50, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 4, 30, 25, 50, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 5, 60, 50, 100, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 5, 30, 50, 100, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 6, 60, 75, 150, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 6, 30, 75, 150, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 7, 60, 100, 200, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 7, 30, 100, 200, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 8, 60, 150, 300, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 8, 30, 150, 300, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 9, 60, 200, 400, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 9, 30, 200, 400, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 10, 60, 300, 600, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 10, 30, 300, 600, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 11, 60, 500, 1000, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 11, 30, 500, 1000, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 12, 60, 700, 1400, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 12, 30, 700, 1400, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 13, 60, 1000, 2000, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 13, 30, 1000, 2000, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 14, 60, 1500, 2000, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 14, 30, 1500, 2000, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 15, 60, 2000, 4000, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 15, 30, 2000, 4000, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 16, 60, 3000, 6000, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 16, 30, 3000, 6000, 0, null);
 INSERT INTO tournament_levels (tournament_id, level, duration_seconds, small_blind, big_blind, ante, message)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 17, 60, 5000, 10000, 0, null);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 17, 30, 5000, 10000, 0, null);
 
 INSERT INTO tournament_breaks (tournament_id, after_level, duration_seconds, message)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 4, 900, 'Chip up $5 (End Rebuy)');
