@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Card } from 'react-bootstrap';
 import formatSeconds from '../../utils/clockUtils'
-import Logger from 'js-logger'
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentClock.css";
 var dateFormat = require('dateformat');
@@ -21,9 +20,7 @@ class TournamentClock extends Component {
     render() {
         const currentLevel = this.props.tournamentState.currentLevel
         const scheduledStart = dateFormat(this.props.tournament.scheduledStart, "dddd, mmmm d, yyyy	h:MM TT")
-        const timeLeftInLevel = formatSeconds(this.props.clock.remainingSeconds)
-
-        Logger.debug(`TournamentClock.render timeLeftInLevel=${timeLeftInLevel} currentLevel=${currentLevel}`)
+        const timeLeftInLevel = formatSeconds(this.props.clock.secondsLeftInLevel)
 
         return (
 

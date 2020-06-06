@@ -34,11 +34,6 @@ public class TournamentStructure {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="tournamentId")
-    @OrderBy("level")
-    private List<TournamentLevel> levels;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="tournamentId")
-    @OrderBy("afterLevel")
-    private List<TournamentBreak> breaks; 
+    @OrderBy("level_order")
+    private List<TournamentLevel> levels; 
 }

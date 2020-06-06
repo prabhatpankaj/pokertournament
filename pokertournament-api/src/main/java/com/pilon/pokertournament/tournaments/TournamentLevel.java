@@ -28,9 +28,17 @@ public class TournamentLevel {
     @NotNull
     private Long tournamentId;
 
+    @Column(name = "level_order")
+    @NotNull
+    private Integer order;
+
     @Column
     @NotNull
     private Integer level;
+
+    @Column
+    @NotNull
+    private Boolean isBreak;
 
     @Column
     @NotNull

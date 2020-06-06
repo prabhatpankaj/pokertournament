@@ -63,21 +63,13 @@ CREATE TABLE tournament_structures (
 CREATE TABLE tournament_levels (
     id SERIAL,
     tournament_id INT NOT NULL,
+    level_order SMALLINT,
     level SMALLINT,
+    is_break BOOLEAN,
     duration_seconds INT,
     small_blind INT,
     big_blind INT,
     ante INT,
-    message VARCHAR(255),
-    PRIMARY KEY (id),
-    FOREIGN KEY (tournament_id) REFERENCES tournament_structures (tournament_id)
-);
-
-CREATE TABLE tournament_breaks (
-    id SERIAL,
-    tournament_id INT NOT NULL,
-    after_level SMALLINT,
-    duration_seconds SMALLINT,
     message VARCHAR(255),
     PRIMARY KEY (id),
     FOREIGN KEY (tournament_id) REFERENCES tournament_structures (tournament_id)
