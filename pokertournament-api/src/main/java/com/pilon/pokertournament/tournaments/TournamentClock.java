@@ -5,6 +5,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.pilon.pokertournament.clock.ClockMessage;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -19,8 +21,8 @@ public class TournamentClock {
     }
 
     public void startPrestartTimer() {
-        long durationSeconds = LocalDateTime.now().until(tournament.getScheduledStart(), ChronoUnit.SECONDS);
-        startNewTimer(durationSeconds);
+        long secondsUntilScheduledStart = LocalDateTime.now().until(tournament.getScheduledStart(), ChronoUnit.SECONDS);
+        startNewTimer(secondsUntilScheduledStart);
     }
 
     public void startTimer() {
@@ -48,7 +50,23 @@ public class TournamentClock {
         }
     }
 
-    private void startNewTimer(long durationSeconds) {
+    private long getSecondsLeftUntilBreak(Tournament tournament, long secondsLeftInLevel) {
+        int currentLevel = tournament.getCurrentState().getCurrentLevel();
+
+        long secondsLeftUntilBreak = secondsLeftInLevel;
+        for (int level = currentLevel + 1; level < tournament.getStructure().getLevels().size(); ++level) {
+            TournamentLevel tournamentLevel = tournament.getStructure().getLevels().get(level);
+            if (tournamentLevel.getIsBreak()) {
+                return secondsLeftUntilBreak;
+            }
+
+            secondsLeftUntilBreak += tournamentLevel.getDurationSeconds();
+        }
+
+        return secondsLeftUntilBreak;
+    }
+
+    private void startNewTimer(long secondsLeftInLevel) {
         timer = new Timer();
         timerInitialized = false;
         
@@ -60,10 +78,10 @@ public class TournamentClock {
                 if (!timerInitialized) {
                     timerInitialized = true;
 
-                    String message = String.format("%d", durationSeconds);
-                    TournamentMessenger.sendClockMessage(tournament.getId(), message);
+                    ClockMessage clockMessage = new ClockMessage(secondsLeftInLevel, getSecondsLeftUntilBreak(tournament, secondsLeftInLevel));
+                    TournamentMessenger.sendClockMessage(tournament.getId(), clockMessage);
 
-                    expiration = LocalDateTime.now().plus(durationSeconds * 1000 + 500, ChronoUnit.MILLIS);
+                    expiration = LocalDateTime.now().plus(secondsLeftInLevel * 1000 + 500, ChronoUnit.MILLIS);
                     log.debug("expiration=" + expiration);
                 } else {
                     long remainingMilliseconds = LocalDateTime.now().until(expiration, ChronoUnit.MILLIS);
@@ -77,17 +95,17 @@ public class TournamentClock {
                         TournamentMessenger.sendCurrentStateMessage(tournament.getId(), tournament.getCurrentState());
                 
                         TournamentLevel tournamentLevel = tournament.getStructure().getLevels().get(newLevel);
-                        long durationSeconds = tournamentLevel.getDurationSeconds();
+                        long secondsLeftInLevel = tournamentLevel.getDurationSeconds();
 
-                        String message = String.format("%d", durationSeconds);
-                        TournamentMessenger.sendClockMessage(tournament.getId(), message);
+                        ClockMessage clockMessage = new ClockMessage(secondsLeftInLevel, getSecondsLeftUntilBreak(tournament,secondsLeftInLevel));
+                        TournamentMessenger.sendClockMessage(tournament.getId(), clockMessage);
     
-                        expiration = LocalDateTime.now().plus(durationSeconds * 1000 + 500, ChronoUnit.MILLIS);
+                        expiration = LocalDateTime.now().plus(secondsLeftInLevel * 1000 + 500, ChronoUnit.MILLIS);
                         log.debug("expiration=" + expiration);
                     } else {
-                        log.debug("remainingMilliseconds=" + remainingMilliseconds);
-                        String message = String.format("%d", Math.round(remainingMilliseconds / 1000));
-                        TournamentMessenger.sendClockMessage(tournament.getId(), message);
+                        long secondsLeftInLevel = Math.round(remainingMilliseconds / 1000);
+                        ClockMessage clockMessage = new ClockMessage(secondsLeftInLevel, getSecondsLeftUntilBreak(tournament,secondsLeftInLevel));
+                        TournamentMessenger.sendClockMessage(tournament.getId(), clockMessage);
                     }
                 }
             }

@@ -21,7 +21,7 @@ export const TournamentStateAction = {
 }
 
 export const TournamentClockAction = {
-    SET_REMAINING_SECONDS: 'SET_REMAINING_SECONDS'
+    SET_CLOCK: 'SET_CLOCK'
 }
 
 export const PlayerAction = {
@@ -64,9 +64,9 @@ export const setTournamentState = tournamentState => ({
     tournamentState
 })
 
-export const setRemainingSeconds = remainingSeconds => ({
-    type: TournamentClockAction.SET_REMAINING_SECONDS,
-    remainingSeconds: remainingSeconds
+export const setClock = clock => ({
+    type: TournamentClockAction.SET_CLOCK,
+    clock: clock
 })
 
 export const addPlayer = player => ({
