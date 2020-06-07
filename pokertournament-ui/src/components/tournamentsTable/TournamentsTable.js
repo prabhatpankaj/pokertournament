@@ -4,7 +4,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { Row, Col, Table } from 'react-bootstrap';
 import { TournamentStatusDescription } from '../../constants';
 import { setTournament, setTournamentState } from '../../actions';
-import toLocaleDateTime from '../../utils/dateUtils';
+import { toLocaleDateTime } from '../../utils/dateUtils';
 import Logger from "js-logger";
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentsTable.css";

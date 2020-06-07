@@ -6,6 +6,7 @@ import ReservationsView from '../reservations/ReservationsView';
 import PlayersView from '../players/PlayersView';
 import TournamentInProgress from './TournamentInProgress';
 import TournamentViewCard from './TournamentViewCard'
+import TournamentCurrentTime from './TournamentCurrentTime'
 import TournamenNextBreak from './TournamentNextBreak'
 import TournamentPayouts from './TournamentPayouts'
 import TournamentPreStart from "./TournamentPreStart";
@@ -251,7 +252,7 @@ class TournamentView extends Component {
                                 }
                             </Col>
                             <Col sm="2">
-                                <TournamentViewCard title='Current Time' text='1:47:55 PM' />
+                                <TournamentCurrentTime />
                                 <TournamentViewCard title='Elapsed Time' text='1:20:55' />
                                 <TournamenNextBreak />
                                 <TournamentViewCard title='Server Status' text={connectionStatus} />

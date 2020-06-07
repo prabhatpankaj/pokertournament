@@ -29,9 +29,6 @@ class TournamentLevel extends Component {
                 {ante}
             </React.Fragment>
 
-        // <Card.Text>Small Blind: {toUSCurrencyFormat(levelInfo.smallBlind)}</Card.Text>
-        // <Card.Text>Big Blind: {toUSCurrencyFormat(levelInfo.bigBlind)}</Card.Text>
-
         return (
             <Card>
                 <Card.Header>{title} {levelInfo.name}</Card.Header>
