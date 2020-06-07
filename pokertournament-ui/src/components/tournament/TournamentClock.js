@@ -20,7 +20,9 @@ class TournamentClock extends Component {
     render() {
         const currentLevel = this.props.tournamentState.currentLevel
         const scheduledStart = dateFormat(this.props.tournament.scheduledStart, "dddd, mmmm d, yyyy	h:MM TT")
-        const timeLeftInLevel = formatSeconds(this.props.clock.secondsLeftInLevel)
+        const timeLeftInLevel = this.props.clock.secondsLeftInLevel > 0 
+            ? formatSeconds(this.props.clock.secondsLeftInLevel)
+            : ''
 
         return (
 

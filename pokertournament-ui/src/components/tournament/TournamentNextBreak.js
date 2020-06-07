@@ -14,7 +14,9 @@ class TournamentNextBreak extends Component {
     }
 
     render() {
-        const timeUntilNextBreak = formatSeconds(this.props.clock.secondsLeftUntilBreak)
+        const timeUntilNextBreak = this.props.clock.secondsLeftUntilBreak > 0
+            ? formatSeconds(this.props.clock.secondsLeftUntilBreak)
+            : ''
 
         return (
             <Card>

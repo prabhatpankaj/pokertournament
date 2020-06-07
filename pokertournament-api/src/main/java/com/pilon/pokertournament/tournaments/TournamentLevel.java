@@ -34,7 +34,7 @@ public class TournamentLevel {
 
     @Column
     @NotNull
-    private Integer level;
+    private String name;
 
     @Column
     @NotNull

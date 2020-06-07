@@ -262,11 +262,11 @@ class TournamentView extends Component {
                                 <TournamentPayouts />
                             </Col>
                         </Row>
-                        <Row>
+                        {/* <Row>
                             <Col>
                                 <h3>{this.state.statusMessage}</h3>
                             </Col>
-                        </Row>
+                        </Row> */}
                     </Tab>
                     <Tab eventKey="reservations" title="Reservations">
                         <ReservationsView />

@@ -17,14 +17,24 @@ class TournamentLevel extends Component {
     render() {
         const { tournament, level, title } = this.props
         const levelInfo = tournament.structure.levels[level]
+        const blinds = levelInfo.isBreak
+            ? <React.Fragment></React.Fragment>
+            :
+                <React.Fragment>
+                    <Card.Text>Small Blind: {toUSCurrencyFormat(levelInfo.smallBlind)}</Card.Text>
+                    <Card.Text>Big Blind: {toUSCurrencyFormat(levelInfo.bigBlind)}</Card.Text>
+                </React.Fragment>
+        const ante = levelInfo.ante > 0
+            ? <Card.Text>Ante: {toUSCurrencyFormat(levelInfo.ante)}</Card.Text>
+            : <React.Fragment></React.Fragment>
 
         return (
             <Card>
-                <Card.Header>{title} Level {levelInfo.level}</Card.Header>
+                <Card.Header>{title} {levelInfo.name}</Card.Header>
                 <Card.Body>
                     <Card.Text>Small Blind: {toUSCurrencyFormat(levelInfo.smallBlind)}</Card.Text>
                     <Card.Text>Big Blind: {toUSCurrencyFormat(levelInfo.bigBlind)}</Card.Text>
-                    <Card.Text>Ante: {toUSCurrencyFormat(levelInfo.ante)}</Card.Text>
+                    {ante}
                     <Card.Text>{levelInfo.message}</Card.Text>
                 </Card.Body>
             </Card>

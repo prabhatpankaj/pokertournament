@@ -64,7 +64,7 @@ CREATE TABLE tournament_levels (
     id SERIAL,
     tournament_id INT NOT NULL,
     level_order SMALLINT,
-    level SMALLINT,
+    name VARCHAR(50),
     is_break BOOLEAN,
     duration_seconds INT,
     small_blind INT,
