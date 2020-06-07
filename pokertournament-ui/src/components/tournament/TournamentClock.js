@@ -12,8 +12,6 @@ class TournamentClock extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            clientConnected: false,
-            timeLeftInLevel: ""
         }
     }
 
@@ -31,7 +29,7 @@ class TournamentClock extends Component {
                     <Card.Body>
                         {currentLevel === -1
                             ? <h2>{scheduledStart}</h2>
-                            : <React.Fragment><Card.Text className='clock'>{timeLeftInLevel}</Card.Text></React.Fragment>
+                            : <Card.Text className='clock'>{timeLeftInLevel}</Card.Text>
                         }
                     </Card.Body>
                 </Card>
