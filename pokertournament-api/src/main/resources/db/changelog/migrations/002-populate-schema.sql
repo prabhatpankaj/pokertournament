@@ -52,7 +52,9 @@ INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_star
 VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Final Event', null, 'Pocket Aces', '2020-11-14 17:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
 
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Test Event', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-06-12 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Test Event', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', 
+DATE_TRUNC('day', now() + interval '1 day') + interval '19 hours', 
+'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
 
 INSERT INTO tournament_structures (tournament_id) VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')));
 
