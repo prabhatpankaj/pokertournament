@@ -5,6 +5,7 @@ import tournament from './tournament'
 import tournamentState from './tournamentState'
 import clock from './clock'
 import players from './players'
+import tables from './tables'
 
 export default combineReducers({
     menus,
@@ -12,5 +13,6 @@ export default combineReducers({
     tournament,
     tournamentState,
     clock,
-    players
+    players,
+    tables
 })

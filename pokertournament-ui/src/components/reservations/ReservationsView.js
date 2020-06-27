@@ -42,6 +42,7 @@ class ReservationsView extends Component {
         event.preventDefault()
 
         // TODO: Where do I save the registration?
+        // TODO: Need to make backend calls
         const player = this.state.leaguePlayersById[eventKey]
         if (player) {
             this.props.addPlayer(player)

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Dropdown } from 'react-bootstrap';
-import { buyinPlayer } from '../../actions';
+import { buyinPlayer, seatPlayer } from '../../actions';
 import "../../Bootstrap/css/bootstrap.min.css";
 import "./PlayersView.css";
 
@@ -17,9 +17,12 @@ class PlayersView extends Component {
         event.preventDefault()
 
         // TODO: Where do I save the buyin?
+        // TODO: Where do I seat the player?
+        // TODO: Need to make this a backend call. 
         const player = this.props.players.byPlayerId[eventKey]
         if (player) {
             this.props.buyinPlayer(player)
+            this.props.seatPlayer(player)
         }
     }
 
@@ -90,6 +93,13 @@ const mapDispatchToProps = dispatch => {
     return {
         buyinPlayer: player => {
             dispatch(buyinPlayer(player))
+        },
+        seatPlayer: player => {
+            // TODO: Get randpm table and seat
+            const tableId = "1"
+            const seat = 3
+            dispatch(seatPlayer(player, tableId, seat))
+            // TODO: dispatch(seatPlayerAtTable)
         }
     }
 }

@@ -10,6 +10,7 @@ import TournamentCurrentTime from './TournamentCurrentTime'
 import TournamenNextBreak from './TournamentNextBreak'
 import TournamentPayouts from './TournamentPayouts'
 import TournamentPreStart from "./TournamentPreStart";
+import TablesView from "../tables/TablesView";
 import SockJsClient from "react-stomp";
 import { setMenus, clearMenus, setTournamentState, setClock } from '../../actions';
 import Logger from 'js-logger'
@@ -276,6 +277,7 @@ class TournamentView extends Component {
                         <PlayersView />
                     </Tab>
                     <Tab eventKey="tables" title="Tables">
+                        <TablesView />
                     </Tab>
                 </Tabs>
 

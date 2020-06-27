@@ -244,6 +244,14 @@
             }
         }
     },
+    "tables": {
+        "tablesById": {
+            "1": { "name": "Table 1", "seats": 10, "players": ["1", "4", "8", null, "6", "2", "3", "7", "5", null] },
+            "2": { "name": "Table 2", "seats": 9, "players": [null, null, null, null, null, null, null, null, null] },
+            "3": { "name": "Table 3", "seats": 9, "players": [null, null, null, null, null, null, null, null, null ] },
+            "4": { "name": "Table 4",  "seats": 10, "players": [null, null, null, null, null, null, null, null, null, null ] }
+        }
+    },
     "players": {
         // Player information map by Player Id
         "playersById": {
@@ -275,9 +283,9 @@
         ],
         // Players still in the tournament.
         "active": [
-            { "playerId": "1" },
-            { "playerId": "3" },
-            { "playerId": "2" },
+            { "playerId": "1", "tableId": "1", "seat": 1 },
+            { "playerId": "3", "tableId": "3", "seat": 9 },
+            { "playerId": "2", "tableId": "2", "seat": 4 }
         ],
         "busted": [
             { "playerId": "5", "timestamp": "2020-05-20 19:45:00"},
