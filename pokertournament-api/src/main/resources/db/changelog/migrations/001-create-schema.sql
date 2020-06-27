@@ -34,6 +34,15 @@ CREATE TABLE leagues (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE tables (
+    id SERIAL,
+    league_id INT NOT NULL,
+    name VARCHAR(20),
+    seats SMALLINT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (league_id) REFERENCES leagues (id)
+);
+
 CREATE TABLE tournament_status (
     code SMALLINT NOT NULL,
     description VARCHAR(50) NOT NULL,
@@ -96,3 +105,47 @@ CREATE TABLE tournament_state_history (
     FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
 );
 
+CREATE TABLE table_status (
+    id SERIAL,
+    tournament_id INT,
+    table_id INT NOT NULL,
+    active BOOLEAN NOT NULL,
+    open_seats SMALLINT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
+    FOREIGN KEY (table_id) REFERENCES tables (id)
+);
+
+CREATE TABLE seating (
+    id SERIAL,
+    tournament_id INT,
+    table_id INT NOT NULL,
+    player_id INT,
+    seat SMALLINT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
+    FOREIGN KEY (table_id) REFERENCES tables (id),
+    FOREIGN KEY (player_id) REFERENCES players (id),
+    UNIQUE (tournament_id, player_id)
+);
+
+CREATE TABLE reservations (
+    id SERIAL,
+    tournament_id INT NOT NULL,
+    player_id INT NOT NULL,
+    timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
+    FOREIGN KEY (player_id) REFERENCES players (id)
+);
+
+CREATE TABLE buyins (
+    id SERIAL,
+    tournament_id INT NOT NULL,
+    player_id INT NOT NULL,
+    amount MONEY NOT NULL,
+    timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
+    FOREIGN KEY (player_id) REFERENCES players (id)
+);

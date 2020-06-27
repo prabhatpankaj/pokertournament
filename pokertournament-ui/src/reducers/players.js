@@ -25,10 +25,25 @@ const players = (state = initialPlayers, action) => {
         case PlayerAction.BUYIN_PLAYER:
             return  {
                 ...state,
+                // TODO: Add buyin amount and timestamp
                 boughtIn: [...state.boughtIn, action.player.id]
             }
 
+        case PlayerAction.SEAT_PLAYER:
+            // TODO: Add table and seat
+            const seating = {
+                playerId: action.player.id,
+                tableId: action.tableId,
+                seat: action.seat
+            }
+            return {
+                ...state,
+                active: [...state.active, seating]
+            }
+            return state
+
         case PlayerAction.BUST_PLAYER:
+            // TODO: Remove from active
             return  {
                 ...state,
                 busted: [...state.busted, action.player.id]

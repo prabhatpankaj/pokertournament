@@ -38,7 +38,7 @@ public class TournamentController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping(path = "/{tournamentId}", method = RequestMethod.PUT)
-    public ResponseEntity<TournamentActionResponse> actionTournament(@PathVariable(name = "tournamentId") Long tournamentId, @RequestParam TournamentActions action) {
+    public ResponseEntity<TournamentActionResponse> tournamentAction(@PathVariable(name = "tournamentId") Long tournamentId, @RequestParam TournamentActions action) {
         log.info(String.format("Tournament: %d %s", tournamentId, action));
         try {
             tournamentManager.performTournamentAction(tournamentId, action);
@@ -47,4 +47,5 @@ public class TournamentController {
             return new ResponseEntity<TournamentActionResponse>(HttpStatus.BAD_REQUEST);
         }
     }
+
 }

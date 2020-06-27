@@ -6,18 +6,78 @@ INSERT INTO authorities (authority, username) VALUES ('ROLE_USER', 'chuck.pilon@
 INSERT INTO users (username, enabled, password, first_name, last_name) VALUES ('jerry.hanson@gmail.com', true, '{bcrypt}$2a$10$Ntihf6TA.pbNJu5NFgRhzuEruJ2dXwFIkBTu/TkP/1K3ZBwHklLym', 'Jerry', 'Hanson');
 INSERT INTO authorities (authority, username) VALUES ('ROLE_USER', 'jerry.hanson@gmail.com');
 
-INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Chuck', 'Pilon', 'chuck.pilom@gmail.com', '+1 (651) 246-9625');
-INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Rob', 'Belz', 'whiteyp@yahoo.com', '‭+1 (651) 829-0921');
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Tim', 'Abbs', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Kyle', 'Anderson', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Douglas', 'Becker', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Whitey', 'Belz', 'whiteyp@yahoo.com', '‭+1 (651) 829-0921');
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Dave', 'Bennett', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Cameron', 'Boyd', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Bruce', 'Brunner', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Roger', 'Burgwald', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('John', 'Chaney', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Rick', 'Cheeseman', NULL, NULL);
 INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Mark', 'Cotton', 'cotton6@comcast.net', '‭+1 (651) 324-8812‬');
-INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Mitch', 'Martin', 'mitch24@gmail.com', '‭+1 (612) 810-7813‬');
-INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Jerry', 'Hanson', '', '+‭1 (612) 220-8714');
-INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Tom', 'Lutz', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Bryce', 'Cruey', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Tim', 'Culbertson', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Erik', 'Erdell', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Erik', 'Ganeles', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Dan', 'Goettl', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Aleksey', 'Gonikman', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Anatoliy', 'Gonikman', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Johannes', 'Grosen', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Jerry', 'Hanson', NULL, '+‭1 (612) 220-8714');
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Swede', 'Hanson', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Joe', 'Hart', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Rian', 'Heaslip', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Adam', 'Hendrickson', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Aaron', 'Hushagen', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Andy', 'Huttner', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Mike', 'Isabella', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Tim', 'Jarvis', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Don', 'Kessler', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Jerry', 'Knutson', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Tyler', 'Knutson', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Everett', 'Larson', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Brad', 'Lein', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Brian', 'Lunseth', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('John', 'Lutz', NULL, NULL);
 INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Mike', 'Lutz', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Ron', 'Lutz', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Tom', 'Lutz', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Joe', 'Marrs', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Mitch', 'Martin', 'mitch24@gmail.com', '‭+1 (612) 810-7813‬');
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Casey', 'Mereness', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Jim', 'Morgan', NULL, NULL);
 INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Mike', 'Motzko', NULL, '+‭1 (651) 491-2908');
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Troy', 'Pfeifer', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Chuck', 'Pilon', 'chuck.pilon@gmail.com', '+1 (651) 246-9625');
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Brad', 'Raymer', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Corey', 'Risty', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Dean', 'Running', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Dave', 'Schmaltz', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Dmitry', 'Sonkin', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Greg', 'Strantz', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Carter', 'Swenson', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Matt', 'Trok', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Kurt', 'Trushenski', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Roger', 'Walsh', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('David', 'Weinard', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Seth', 'Weisinger', NULL, NULL);
+INSERT INTO players (first_name, last_name, email, mobile_phone) VALUES ('Chad', 'Zabel', NULL, NULL);
+
 
 INSERT INTO leagues (name, location, email) VALUES ('2018 Pocket Aces', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 'pocket.aces.mn@gmail.com');
 INSERT INTO leagues (name, location, email) VALUES ('2019 Pocket Aces', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 'pocket.aces.mn@gmail.com');
 INSERT INTO leagues (name, location, email) VALUES ('2020 Pocket Aces', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 'pocket.aces.mn@gmail.com');
+
+INSERT INTO TABLES (league_id, name, seats) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), 'Spades', 10);
+INSERT INTO TABLES (league_id, name, seats) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), 'Diamonds', 9);
+INSERT INTO TABLES (league_id, name, seats) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), 'Clubs', 8);
+INSERT INTO TABLES (league_id, name, seats) 
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), 'Hearts', 10);
 
 INSERT INTO tournament_status (code, description) VALUES (1, 'Scheduled');
 INSERT INTO tournament_status (code, description) VALUES (2, 'In Progress');
@@ -106,3 +166,51 @@ VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 20, TRUE, 'Fourth 
 INSERT INTO tournament_current_state (tournament_id, level_status_code, current_level, duration_remaining_seconds, timestamp)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 0, -1, 0, NOW());
 
+INSERT INTO table_status (tournament_id, table_id, active, open_seats)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), TRUE, 3);
+INSERT INTO table_status (tournament_id, table_id, active, open_seats)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), TRUE, 4);
+INSERT INTO table_status (tournament_id, table_id, active, open_seats)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Clubs'), FALSE, 0);
+INSERT INTO table_status (tournament_id, table_id, active, open_seats)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Hearts'), FALSE, 0);
+
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 36, 1);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 37, 2);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), null, 3);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 40, 4);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 54, 5);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 43, 6);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), null, 7);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 38, 8);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 45, 9);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), null, 10);
+
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), 18, 1);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), null, 2);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), 4, 3);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), null, 4);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), 17, 5);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), 11, 6);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), null, 7);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), 20, 8);
+INSERT INTO seating (tournament_id, table_id, player_id, seat)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), null, 9);
