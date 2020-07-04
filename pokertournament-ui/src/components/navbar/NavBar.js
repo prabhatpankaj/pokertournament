@@ -22,14 +22,15 @@ class NavBar extends Component {
                         <BootstrapNavBar.Toggle aria-controls="basic-navbar-nav" />
                         <BootstrapNavBar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
-                                <LinkContainer exact to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
-                                {this.props.menus.map((menuItem, menuIndex) => {
-                                    return <NavDropdown key={menuIndex} title={menuItem.name} id="basic-nav-dropdown">
-                                        {menuItem.items.map((value, itemIndex) => {
-                                            return <NavDropdown.Item key={itemIndex} eventKey={value.eventKey} onSelect={value.onSelect}>{value.text}</NavDropdown.Item>
-                                        })}
-                                    </NavDropdown>
-                                })}
+                            <LinkContainer exact to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
+                            <LinkContainer exact to="/logout"><Nav.Link>Logout</Nav.Link></LinkContainer>
+                            {this.props.menus.map((menuItem, menuIndex) => {
+                                return <NavDropdown key={menuIndex} title={menuItem.name} id="basic-nav-dropdown">
+                                    {menuItem.items.map((value, itemIndex) => {
+                                        return <NavDropdown.Item key={itemIndex} eventKey={value.eventKey} onSelect={value.onSelect}>{value.text}</NavDropdown.Item>
+                                    })}
+                                </NavDropdown>
+                            })}
                             </Nav>
                         </BootstrapNavBar.Collapse>
                     </BootstrapNavBar>
@@ -43,7 +44,7 @@ class NavBar extends Component {
                         <BootstrapNavBar.Toggle aria-controls="basic-navbar-nav" />
                         <BootstrapNavBar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
-                                <LinkContainer to="/login"><Nav.Link>Login</Nav.Link></LinkContainer>
+                                {/* <LinkContainer to="/login"><Nav.Link>Login</Nav.Link></LinkContainer> */}
                             </Nav>
                         </BootstrapNavBar.Collapse>
                     </BootstrapNavBar>

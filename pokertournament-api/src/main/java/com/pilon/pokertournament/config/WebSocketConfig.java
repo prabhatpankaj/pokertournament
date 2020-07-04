@@ -10,12 +10,12 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    // Then your controller should look like this. When your React app will open connection on '/handler' and send subscription to this channel 
+    // Then your controller should look like this. When your React app will open connection on '/websocket' and send subscription to this channel 
     // /topic/all you will receive this in controller and respond to all subscribed users.
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/handler").withSockJS();
+        registry.addEndpoint("/websocket").setAllowedOrigins("*").withSockJS();
     }
 
     @Override

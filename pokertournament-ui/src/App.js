@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import NavBar from './components/navbar/NavBar'
 import LoginView from './components/login/LoginView';
+import LogoutView from './components/logout/LogoutView';
 import HomeView from './components/home/HomeView';
 import TournamentView from './components/tournament/TournamentView'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -34,6 +35,10 @@ class App extends Component {
 
                         <Route path='/login'>
                             <LoginView />
+                        </Route>
+
+                        <Route path='/logout'>
+                            <LogoutView />
                         </Route>
 
                         <PrivateRoute authed={this.props.user.enabled} path='/tournament'>
