@@ -28,11 +28,15 @@ public class SecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
             .and().authorizeRequests().regexMatchers("/").permitAll()
             .and().authorizeRequests().anyRequest().authenticated()
             .and().formLogin()
-            // .defaultSuccessUrl("/login_success")
-            .and().logout().permitAll();
+            .and().logout().permitAll().logoutSuccessUrl("/logout_success").deleteCookies("JSESSIONID");
         // @formatter:
         // .failureForwardUrl("/login_failure")
 
+        // .and()
+        // .logout()
+        // .logoutUrl("/perform_logout")
+        // .deleteCookies("JSESSIONID")
+        // .logoutSuccessHandler(logoutSuccessHandler());        
     }
 
     @Bean

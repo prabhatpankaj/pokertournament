@@ -40,7 +40,6 @@ const players = (state = initialPlayers, action) => {
                 ...state,
                 active: [...state.active, seating]
             }
-            return state
 
         case PlayerAction.BUST_PLAYER:
             // TODO: Remove from active

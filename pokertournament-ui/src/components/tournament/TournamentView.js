@@ -28,6 +28,10 @@ class TournamentView extends Component {
         }
         this.tournamentMenus = [
             {
+                name: 'Home',
+                to: '/'
+            },
+            {
                 name: 'Tournament',
                 items: [
                     { eventKey: 'prestart', text: 'Start Countdown', onSelect: this.onSelect },
@@ -196,7 +200,7 @@ class TournamentView extends Component {
             return (<div />)
         }
 
-        const wsSourceUrl = `${process.env.REACT_APP_WS_PATH}/handler`
+        const wsSourceUrl = `${process.env.REACT_APP_WS_PATH}/websocket`
         const connectionStatus = this.state.clientConnected ? "Connected" : "Disconnected"
         const { name, description } = this.props.tournament
         const entries = 44
@@ -228,7 +232,7 @@ class TournamentView extends Component {
                     onDisconnect={() => {
                         this.setState({ clientConnected: false })
                     }}
-                    debug={false} />
+                    debug={true} />
 
                 <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
                     <Tab eventKey="home" title="Home">

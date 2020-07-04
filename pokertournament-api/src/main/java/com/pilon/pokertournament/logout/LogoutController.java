@@ -1,4 +1,4 @@
-package com.pilon.pokertournament.login;
+package com.pilon.pokertournament.logout;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin
 @RestController
 @Slf4j
-public class LoginController {
+public class LogoutController {
 
-    @GetMapping(path = "/")
-    public void loginSuccess() {
-        log.info("loginSuccess");
+    @GetMapping(path = "/logout_success")
+    public void logoutSuccess() {
+        log.info("logoutSuccess");
     }
     
 }
