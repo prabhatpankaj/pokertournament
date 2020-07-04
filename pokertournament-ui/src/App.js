@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import PrivateRoute from './components/privateRoute/PrivateRoute';
-import NavBar from './components/navbar/NavBar'
+import NavBarView from './components/navbar/NavBarView'
 import LoginView from './components/login/LoginView';
 import LogoutView from './components/logout/LogoutView';
 import HomeView from './components/home/HomeView';
@@ -26,7 +26,7 @@ class App extends Component {
             <div className="App">
                 <BrowserRouter>
 
-                    <NavBar />
+                    <NavBarView />
 
                     <Switch>
                         <Route exact path="/">
