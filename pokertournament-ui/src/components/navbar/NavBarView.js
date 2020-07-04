@@ -24,13 +24,16 @@ class NavBarView extends Component {
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
-                                <LinkContainer exact to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
                                 {this.props.menus.map((menuItem, menuIndex) => {
-                                    return <NavDropdown key={menuIndex} title={menuItem.name} id="basic-nav-dropdown">
+                                    if (menuItem.items) {
+                                        return <NavDropdown key={menuIndex} title={menuItem.name} id="basic-nav-dropdown">
                                         {menuItem.items.map((value, itemIndex) => {
                                             return <NavDropdown.Item key={itemIndex} eventKey={value.eventKey} onSelect={value.onSelect}>{value.text}</NavDropdown.Item>
                                         })}
-                                    </NavDropdown>
+                                        </NavDropdown>
+                                    } else {
+                                        return <LinkContainer exact to={menuItem.to}><Nav.Link>{menuItem.name}</Nav.Link></LinkContainer>
+                                    }
                                 })}
                             </Nav>
                         </Navbar.Collapse>

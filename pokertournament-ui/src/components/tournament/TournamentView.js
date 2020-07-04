@@ -28,6 +28,10 @@ class TournamentView extends Component {
         }
         this.tournamentMenus = [
             {
+                name: 'Home',
+                to: '/'
+            },
+            {
                 name: 'Tournament',
                 items: [
                     { eventKey: 'prestart', text: 'Start Countdown', onSelect: this.onSelect },
