@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { Row, Col, Table } from 'react-bootstrap';
 import { TournamentStatusDescription } from '../../constants';
-import { setTournament, setTournamentState } from '../../actions';
+import { API } from '../../constants'
+import { setTournament, setTournamentState, setSeating, setTables, setPlayers } from '../../actions';
 import { toLocaleDateTime } from '../../utils/dateUtils';
 import Logger from "js-logger";
-import "../../Bootstrap/css/bootstrap.min.css";
-import "./TournamentsTable.css";
+import "./Tournaments.css";
 
-class TournamentsTable extends Component {
+class Tournaments extends Component {
 
     constructor(props) {
         super(props);
@@ -36,8 +36,12 @@ class TournamentsTable extends Component {
             });
     }
 
+    /**
+     * Reads a tournament from the backend and stores it into state.
+     * @param {*} tournamentId 
+     */
     fetchTournament(tournamentId) {
-        const url = `${process.env.REACT_APP_API_PATH}/tournaments/${tournamentId}`
+        const url = `${process.env.REACT_APP_API_PATH}${API.TOURNAMENTS_URL}/${tournamentId}`
         const that = this
 
         fetch(url)
@@ -45,10 +49,7 @@ class TournamentsTable extends Component {
             .then(tournament => {
                 that.props.setTournament(tournament)
                 that.props.setTournamentState(tournament.currentState)
-
                 that.setState({
-                    tournament: tournament,
-                    tournamentState: tournament.currentState,
                     redirectToTournament: true
                 });
             })
@@ -56,11 +57,58 @@ class TournamentsTable extends Component {
                 Logger.error('Error getting tournament');
                 Logger.error(error);
             });
+    }
 
+    fetchSeating(tournamentId) {
+        const url = `${process.env.REACT_APP_API_PATH}${API.SEATING_URL}/${tournamentId}`
+        const that = this
+
+        fetch(url)
+            .then(response => response.json())
+            .then(seating => {
+                that.props.setSeating(seating)
+            })
+            .catch(error => {
+                Logger.error('Error getting seating');
+                Logger.error(error);
+            });
+    }
+
+    fetchTables(tournamentId) {
+        const url = `${process.env.REACT_APP_API_PATH}${API.TABLES_URL}/${tournamentId}`
+        const that = this
+
+        fetch(url)
+            .then(response => response.json())
+            .then(tables => {
+                that.props.setTables(tables)
+                that.fetchSeating(tournamentId)
+            })
+            .catch(error => {
+                Logger.error('Error getting tables');
+                Logger.error(error);
+            })
+    }
+
+    fetchPlayers() {
+        const url = `${process.env.REACT_APP_API_PATH}${API.PLAYERS_URL}`
+        const that = this
+
+        fetch(url)
+            .then(response => response.json())
+            .then(players => {
+                that.props.setPlayers(players)
+            })
+            .catch(error => {
+                Logger.error('Error getting players');
+                Logger.error(error);
+            })
     }
 
     onClick = tournament => {
         this.fetchTournament(tournament.id)
+        this.fetchPlayers(tournament.id)
+        this.fetchTables(tournament.id)
     }
 
     getTournamentRows(tournaments) {
@@ -119,8 +167,6 @@ class TournamentsTable extends Component {
 
 const mapStateToProps = state => {
     return {
-        tournament: state.tournament,
-        tournamentState: state.tournamentState
     }
 }
 
@@ -131,8 +177,17 @@ const mapDispatchToProps = dispatch => {
         },
         setTournamentState: tournamentState => {
             dispatch(setTournamentState(tournamentState))
-        }
+        },
+        setPlayers: players => {
+            dispatch(setPlayers(players))
+        },
+        setTables: tables => {
+            dispatch(setTables(tables))
+        },
+        setSeating: seating => {
+            dispatch(setSeating(seating))
+        }        
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TournamentsTable));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Tournaments));

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
-import "../../Bootstrap/css/bootstrap.min.css";
 import "./NavBarView.css";
 
 class NavBarView extends Component {

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { Card } from 'react-bootstrap';
-import "../../Bootstrap/css/bootstrap.min.css";
 
 class TournamentViewCard extends Component {
 

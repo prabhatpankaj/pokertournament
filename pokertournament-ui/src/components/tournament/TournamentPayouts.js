@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import ScrollText from 'react-scroll-text'
-import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentPayout.css"
 
 class TournamentPayouts extends Component {

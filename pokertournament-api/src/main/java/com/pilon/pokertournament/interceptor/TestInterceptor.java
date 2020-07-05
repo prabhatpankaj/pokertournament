@@ -1,8 +1,5 @@
 package com.pilon.pokertournament.interceptor;
 
-import java.util.Arrays;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,33 +16,33 @@ public class TestInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        log.info("TestInterceptor.preHandle: {}", request.getRequestURL());
-        Cookie[] cookies =  request.getCookies();
-        if (cookies != null) {
-            Arrays.stream(cookies).forEach(cookie -> {
-                log.info("{}: {}", cookie.getName(), cookie.getValue());
-            });
-        }
+        // log.info("TestInterceptor.preHandle: {}", request.getRequestURL());
+        // Cookie[] cookies =  request.getCookies();
+        // if (cookies != null) {
+        //     Arrays.stream(cookies).forEach(cookie -> {
+        //         log.info("{}: {}", cookie.getName(), cookie.getValue());
+        //     });
+        // }
         return super.preHandle(request, response, handler);
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
             ModelAndView modelAndView) throws Exception {
-        log.info("TestInterceptor.postHandle: {}", request.getRequestURL());
+        // log.info("TestInterceptor.postHandle: {}", request.getRequestURL());
         super.postHandle(request, response, handler, modelAndView);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        log.info("TestInterceptor.postHandle: {}", response.toString());
-        Cookie[] cookies =  request.getCookies();
-        if (cookies != null) {
-            Arrays.stream(cookies).forEach(cookie -> {
-                log.info("{}: {}", cookie.getName(), cookie.getValue());
-            });
-        }
+        // log.info("TestInterceptor.postHandle: {}", response.toString());
+        // Cookie[] cookies =  request.getCookies();
+        // if (cookies != null) {
+        //     Arrays.stream(cookies).forEach(cookie -> {
+        //         log.info("{}: {}", cookie.getName(), cookie.getValue());
+        //     });
+        // }
         super.afterCompletion(request, response, handler, ex);
     }
 

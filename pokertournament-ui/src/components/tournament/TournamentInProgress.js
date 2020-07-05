@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap';
 import TournamentClock from './TournamentClock'
 import TournamentLevel from './TournamentLevel'
-import "../../Bootstrap/css/bootstrap.min.css";
 
 class TournamentInProgress extends Component {
 

@@ -25,6 +25,7 @@ export const TournamentClockAction = {
 }
 
 export const PlayerAction = {
+    SET_PLAYERS: 'SET_PLAYERS',
     ADD_PLAYER: 'ADD_PLAYER',
     RESERVE_PLAYER: 'RESERVE_PLAYER',
     BUYIN_PLAYER: 'BUYIN_PLAYER',
@@ -33,7 +34,9 @@ export const PlayerAction = {
 }
 
 export const TableAction = {
-    SEAT_PLAYER: 'SEAT_PLAYER'
+    SET_TABLES: 'SET_TABLES',
+    SEAT_PLAYER: 'SEAT_PLAYER',
+    SET_SEATING: 'SET_SEATING'
 }
 
 // Action Creators (https://redux.js.org/basics/actions#action-creators)
@@ -69,9 +72,24 @@ export const setTournamentState = tournamentState => ({
     tournamentState
 })
 
+export const setSeating = seating => ({
+    type: TableAction.SET_SEATING,
+    seating
+})
+
+export const setTables = tables => ({
+    type: TableAction.SET_TABLES,
+    tables
+})
+
 export const setClock = clock => ({
     type: TournamentClockAction.SET_CLOCK,
     clock: clock
+})
+
+export const setPlayers = players => ({
+    type: PlayerAction.SET_PLAYERS,
+    players
 })
 
 export const addPlayer = player => ({

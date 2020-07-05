@@ -9,7 +9,7 @@ public class PokerTableManager {
     @Autowired
     private PokerTableService pokerTableService;
 
-    public Iterable<PokerTable> findAllByLeagueId(Long leagueId) {
-        return pokerTableService.findAllByLeagueId(leagueId);
+    public Iterable<PokerTable> findAllByTournamentId(Long tournamentId) {
+        return pokerTableService.findAllByTournamentId(tournamentId);
     }
 }

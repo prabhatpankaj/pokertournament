@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './reducers'
 import Logger from 'js-logger'
+import 'bootstrap/dist/css/bootstrap.css';
 
 Logger.useDefaults();
 

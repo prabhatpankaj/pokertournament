@@ -15,7 +15,6 @@ import SockJsClient from "react-stomp";
 import { setMenus, clearMenus, setTournamentState, setClock } from '../../actions';
 import Logger from 'js-logger'
 import fetch from "node-fetch";
-import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentView.css";
 
 class TournamentView extends Component {
@@ -232,7 +231,7 @@ class TournamentView extends Component {
                     onDisconnect={() => {
                         this.setState({ clientConnected: false })
                     }}
-                    debug={true} />
+                    debug={false} />
 
                 <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
                     <Tab eventKey="home" title="Home">

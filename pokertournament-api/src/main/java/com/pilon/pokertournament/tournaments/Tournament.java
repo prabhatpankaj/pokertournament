@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name="tournaments")
+@Table(name = "tournaments")
 public class Tournament {
 
     @Id
@@ -59,11 +59,14 @@ public class Tournament {
     @NotNull
     private TournamentStatusCode statusCode;
 
+    // FIXIT: Maybe take this out. Make separate fetch.
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="id")
+    @JoinColumn(name = "id")
     private TournamentStructure structure;
 
+    // FIXIT: Take this out. Make separate fetch.
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="id")
+    @JoinColumn(name = "id")
     private TournamentCurrentState currentState;
+
 }
