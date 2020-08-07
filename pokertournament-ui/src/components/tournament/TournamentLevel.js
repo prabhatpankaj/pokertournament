@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Card } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import toUSCurrencyFormat from '../../utils/currencyUtils'
-import "../../Bootstrap/css/bootstrap.min.css";
 import "./TournamentLevel.css";
 
 class TournamentLevel extends Component {

@@ -25,7 +25,7 @@ public class PokerTable {
     @Column
     @NotNull
     @NonNull
-    private Long leagueId;
+    private Long tournamentId;
    
     @Column
     @NotNull

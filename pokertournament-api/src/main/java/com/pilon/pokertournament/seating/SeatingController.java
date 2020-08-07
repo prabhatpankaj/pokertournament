@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +30,10 @@ public class SeatingController {
         return seatingManager.findAllByTournamentIdAndTableId(tournamentId, tableId);
     }
 
-    @RequestMapping(path = "/random", method = RequestMethod.PUT)
-    public ResponseEntity<Seating> updateSeatRandom(@RequestParam Long playerId) throws Exception {
+    @RequestMapping(path = "/tournament/{tournamentId}/player/{playerId}/random", method = RequestMethod.PUT)
+    public ResponseEntity<Seating> updateSeatRandom(@PathVariable Long tournamentId, @PathVariable Long playerId) throws Exception {
         log.info(String.format("updateSeatRandom:%d", playerId));
-        Optional<Seating> seating = seatingManager.updateSeatRandom(playerId);
+        Optional<Seating> seating = seatingManager.updateSeatRandom(tournamentId, playerId);
         if (seating.isPresent()) {
             return new ResponseEntity<Seating>(seating.get(), HttpStatus.OK);
         } else {

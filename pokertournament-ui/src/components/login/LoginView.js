@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { setUser } from '../../actions';
+import { API } from '../../constants'
 import Logger from 'js-logger'
 import fetch from "node-fetch";
-import "../../Bootstrap/css/bootstrap.min.css";
 import "./LoginView.css";
 
 const FormData = require('form-data');
@@ -23,7 +23,7 @@ class LoginView extends Component {
     }
 
     onSubmit = event => {
-        const url = `${process.env.REACT_APP_API_PATH}/login`
+        const url = `${process.env.REACT_APP_API_PATH}${API.LOGIN_URL}`
 
         event.preventDefault();
 

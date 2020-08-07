@@ -3,9 +3,9 @@ import { Redirect } from "react-router-dom";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { setUser } from '../../actions';
+import { API } from '../../constants'
 import Logger from 'js-logger'
 import fetch from "node-fetch";
-import "../../Bootstrap/css/bootstrap.min.css";
 
 class LogoutView extends Component {
 
@@ -15,7 +15,7 @@ class LogoutView extends Component {
     }
 
     componentDidMount() {
-        const url = `${process.env.REACT_APP_API_PATH}/logout`
+        const url = `${process.env.REACT_APP_API_PATH}${API.LOGOUT_URL}`
         fetch(url, {
             method: 'POST'
         })

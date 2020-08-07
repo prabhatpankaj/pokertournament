@@ -19,8 +19,8 @@ public class SeatingService {
         return seatingRepository.findAllByTournamentIdAndTableIdOrderBySeat(tournamentId, tableId);
     }
 
-    public Optional<Seating> updateSeatRandom(Long playerId) {
-        return seatingRepository.updateSeatRandom(playerId);
+    public Optional<Seating> updateSeatRandom(Long tournamentId, Long playerId) {
+        return seatingRepository.updateSeatRandom(tournamentId, playerId);
     }
     
 }

@@ -16,10 +16,10 @@ public class PokerTableController {
     @Autowired
     private PokerTableManager pokerTableManager;
 
-    @RequestMapping(value="/league/{leagueId}", method=RequestMethod.GET)
-    public Iterable<PokerTable> getPokerTablesByLeagueId(@PathVariable Long leagueId) {
-        log.info("getPokerTablesByLeagueId:%d", leagueId);
-        return pokerTableManager.findAllByLeagueId(leagueId);
+    @RequestMapping(value="/tournament/{tournamentId}", method=RequestMethod.GET)
+    public Iterable<PokerTable> getPokerTablesByTournamentId(@PathVariable Long tournamentId) {
+        log.info("getPokerTablesByTournamentId:%d", tournamentId);
+        return pokerTableManager.findAllByTournamentId(tournamentId);
     }
     
 }

@@ -11,3 +11,12 @@ export const TournamentStatusDescription = {
     "COMPLETED": 'Completed',
     "CANCELED": 'Canceled'
 }
+
+export const API =  {
+    LOGIN_URL: '/login',
+    LOGOUT_URL: '/logout',
+    TOURNAMENTS_URL: '/tournaments',
+    SEATING_URL: '/seating/tournament',
+    TABLES_URL: '/tables/tournament',
+    PLAYERS_URL: '/players'
+}

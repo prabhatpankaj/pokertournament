@@ -2,55 +2,55 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { Row, Col, Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
-import "../../Bootstrap/css/bootstrap.min.css";
 
 class TablesView extends Component {
 
-    // eslint-disable-next-line
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const table = this.props.tables.tablesById["1"]
-        const tableRows = []
-        for (var index = 0; index < table.seats; ++index) {
-            const playerId = table.players[index]
-            const player = playerId ? this.props.players.byPlayerId[playerId] : null
-            const playerName = player ? `${player.firstName} ${player.lastName}` : ''
+        let tables = []
+        this.props.tables.tableIds.forEach(tableId => {
+            const tableRows = []
+            const table = this.props.tables.tablesById[tableId]
 
-            tableRows.push(
-                <tr key={index}>
-                    <td>{index+1}</td>
-                    <td>{playerName}</td>
-                </tr>
-            )
-        }
+            table.players.forEach((playerId, seatIndex) => {
+                const player = playerId ? this.props.players.byPlayerId[playerId] : null
+                const playerName = player ? `${player.firstName} ${player.lastName}` : ''
 
+                tableRows.push(
+                    <tr key={seatIndex}>
+                        <td>{seatIndex + 1}</td>
+                        <td>{playerName}</td>
+                    </tr>
+                )
+            })
+
+            tables.push(<Col sm="2">
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th colSpan="2" style={{ textAlign: "center" }}>{table.name}</th>
+                        </tr>
+                        <tr>
+                            <th>Seat</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tableRows}
+                    </tbody>
+                </Table>
+            </Col>)
+
+        })
 
         return (
             <div className="TablesView">
                 <Row>
-                    <Col sm="4" />
-                    <Col sm="4">
+                    <Col>
                         <h1>Tables</h1>
                     </Col>
-                    <Col sm="4" />
                 </Row>
                 <Row>
-                    <Col sm="2">
-                        <Table striped bordered hover>
-                            <thead>
-                                <tr>
-                                    <th>Seat</th>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {tableRows}
-                            </tbody>
-                        </Table>
-                    </Col>
+                    {tables}
                 </Row>
             </div>
         )
@@ -61,7 +61,7 @@ class TablesView extends Component {
 const mapStateToProps = state => {
     return {
         tables: state.tables,
-        players: state.players   
+        players: state.players
     }
 }
 

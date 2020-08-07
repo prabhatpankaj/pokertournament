@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Card } from 'react-bootstrap';
 import formatSeconds from '../../utils/clockUtils'
-import "../../Bootstrap/css/bootstrap.min.css";
 
 class TournamentNextBreak extends Component {
 

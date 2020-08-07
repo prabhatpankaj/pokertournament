@@ -10,6 +10,17 @@ const initialPlayers = {
 
 const players = (state = initialPlayers, action) => {
     switch (action.type) {
+        case PlayerAction.SET_PLAYERS:
+                var byPlayerId = {}
+                action.players.forEach(player => {
+                    byPlayerId[player.id] = player
+                });
+
+                return {
+                ...state,
+                byPlayerId: Object.assign({}, byPlayerId)
+            }
+
         case PlayerAction.ADD_PLAYER:
             return {
                 ...state,

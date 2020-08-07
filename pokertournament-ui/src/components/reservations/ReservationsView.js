@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Dropdown } from 'react-bootstrap';
 import { addPlayer, reservePlayer } from '../../actions';
-import "../../Bootstrap/css/bootstrap.min.css";
 import "./ReservationsView.css";
 
 class ReservationsView extends Component {

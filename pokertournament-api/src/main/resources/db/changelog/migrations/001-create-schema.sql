@@ -1,4 +1,9 @@
 --changeset author:chuckpilon id:create-schema
+
+-- TODO: Usee league-based tables (e.g. tables) as templates that must be copied over when creating a tournament.
+-- For example, Pocket Aces 2020 has tables defined. When  a new Pocket Aces 2020 tournament is created, the league
+-- tables for the basis for the tournament tables
+
 CREATE TABLE users (
     username VARCHAR(255) NOT NULL,
     enabled BOOLEAN NOT NULL,
@@ -32,15 +37,6 @@ CREATE TABLE leagues (
     location VARCHAR(100),
     email VARCHAR(75),
     PRIMARY KEY (id)
-);
-
-CREATE TABLE tables (
-    id SERIAL,
-    league_id INT NOT NULL,
-    name VARCHAR(20),
-    seats SMALLINT,
-    PRIMARY KEY (id),
-    FOREIGN KEY (league_id) REFERENCES leagues (id)
 );
 
 CREATE TABLE tournament_status (
@@ -82,6 +78,15 @@ CREATE TABLE tournament_levels (
     message VARCHAR(255),
     PRIMARY KEY (id),
     FOREIGN KEY (tournament_id) REFERENCES tournament_structures (tournament_id)
+);
+
+CREATE TABLE tables (
+    id SERIAL,
+    tournament_id INT NOT NULL,
+    name VARCHAR(20),
+    seats SMALLINT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
 );
 
 CREATE TABLE tournament_current_state (

@@ -2,11 +2,18 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Dropdown } from 'react-bootstrap';
+import Overlay from 'react-bootstrap/Overlay'
 import { buyinPlayer, seatPlayer } from '../../actions';
-import "../../Bootstrap/css/bootstrap.min.css";
+import fetch from "node-fetch";
 import "./PlayersView.css";
 
 class PlayersView extends Component {
+
+    state = {
+        showPlayer: null,
+        showSeating: null,
+        show: false
+    }
 
     // eslint-disable-next-line
     constructor(props) {
@@ -16,14 +23,41 @@ class PlayersView extends Component {
     onPlayerBuyin = (eventKey, event) => {
         event.preventDefault()
 
-        // TODO: Where do I save the buyin?
-        // TODO: Where do I seat the player?
-        // TODO: Need to make this a backend call. 
         const player = this.props.players.byPlayerId[eventKey]
         if (player) {
-            this.props.buyinPlayer(player)
-            this.props.seatPlayer(player)
+            this.buyinPlayer(this.props.tournament, player)
+            this.seatPlayer(this.props.tournament, player)
         }
+    }
+
+    buyinPlayer = (tournament, player) => {
+        // TODO: Where do I save the buyin?
+    } 
+
+    seatPlayer = (tournament, player) => {
+        const url = `${process.env.REACT_APP_API_PATH}/seating/tournament/${tournament.id}/player/${player.id}/random`
+        const that = this
+
+        fetch(url, { method: 'PUT' })
+            .then(response => response.json())
+            .then(seating => {
+                that.props.seatPlayer(player, seating.tableId, seating.seat)
+                that.setState(() => ({
+                    showPlayer: player,
+                    showSeating: seating,
+                    show: true
+                }))
+
+                setTimeout(() => {
+                    that.setState(() => ({
+                        show: false
+                    }))
+                }, 2000)
+            });
+    }
+
+    setShow = (show) => {
+        this.setState({ show: show })
     }
 
     render() {
@@ -49,12 +83,36 @@ class PlayersView extends Component {
                 </tr>)
         }
 
+        const showPlayerName = this.state.showPlayer ? `${this.state.showPlayer.firstName} ${this.state.showPlayer.lastName}` : null
+        const showPlayerSeating = this.state.showSeating ? `Table ${this.props.tables.tablesById[this.state.showSeating.tableId].name}, Seat ${this.state.showSeating.seat + 1}` : null
+        const target = document.getElementById("heading1")
+
         return (
             <div className="PlayersView">
                 <Row>
+                    <Col>
+                        <>
+                            <Overlay target={target} show={this.state.show} placement="bottom">
+                                {({ placement, arrowProps, show: _show, popper, ...props }) => (
+                                    <div
+                                        {...props}
+                                        className="SeatingOverlay"
+                                        style={{
+                                            ...props.style
+                                        }}
+                                    >
+                                        <div className="PlayerName">{showPlayerName}</div>
+                                        <div className="PlayerSeating">{showPlayerSeating}</div>
+                                    </div>
+                                )}
+                            </Overlay>
+                        </>                    
+                    </Col>
+                </Row>
+                <Row>
                     <Col sm="4" />
                     <Col sm="4">
-                        <h1>Players</h1>
+                        <h1 id="heading1">Players</h1>
                     </Col>
                     <Col sm="4" />
                 </Row>
@@ -85,7 +143,9 @@ class PlayersView extends Component {
 
 const mapStateToProps = state => {
     return {
-        players: state.players   
+        tournament: state.tournament,
+        players: state.players,
+        tables: state.tables
     }
 }
 
@@ -94,12 +154,8 @@ const mapDispatchToProps = dispatch => {
         buyinPlayer: player => {
             dispatch(buyinPlayer(player))
         },
-        seatPlayer: player => {
-            // TODO: Get randpm table and seat
-            const tableId = "1"
-            const seat = 3
+        seatPlayer: (player, tableId, seat) => {
             dispatch(seatPlayer(player, tableId, seat))
-            // TODO: dispatch(seatPlayerAtTable)
         }
     }
 }
