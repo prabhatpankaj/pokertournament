@@ -11,30 +11,39 @@ const initialPlayers = {
 const players = (state = initialPlayers, action) => {
     switch (action.type) {
         case PlayerAction.SET_PLAYERS:
-                var byPlayerId = {}
-                action.players.forEach(player => {
-                    byPlayerId[player.id] = player
-                });
+            var byPlayerId = {}
+            action.players.forEach(player => {
+                byPlayerId[player.id] = player
+            });
 
-                return {
+            return {
                 ...state,
                 byPlayerId: Object.assign({}, byPlayerId)
             }
 
-        case PlayerAction.ADD_PLAYER:
+        case PlayerAction.SET_RESERVATIONS:
+            // var reservations = action.reservations.map(reservation => reservation.id)
+
             return {
                 ...state,
-                byPlayerId: Object.assign({}, state.byPlayerId, { [action.player.id]: action.player })
+                reserved: action.reservations
             }
 
+        // case PlayerAction.ADD_PLAYER:
+        //     return {
+        //         ...state,
+        //         byPlayerId: Object.assign({}, state.byPlayerId, { [action.player.id]: action.player })
+        //     }
+
         case PlayerAction.RESERVE_PLAYER:
-            return  {
+            return {
                 ...state,
+                byPlayerId: Object.assign({}, state.byPlayerId, { [action.player.id]: action.player }),
                 reserved: [...state.reserved, action.player.id]
             }
 
         case PlayerAction.BUYIN_PLAYER:
-            return  {
+            return {
                 ...state,
                 // TODO: Add buyin amount and timestamp
                 boughtIn: [...state.boughtIn, action.player.id]
@@ -54,7 +63,7 @@ const players = (state = initialPlayers, action) => {
 
         case PlayerAction.BUST_PLAYER:
             // TODO: Remove from active
-            return  {
+            return {
                 ...state,
                 busted: [...state.busted, action.player.id]
             }
@@ -63,7 +72,7 @@ const players = (state = initialPlayers, action) => {
             return state
     }
 }
-  
+
 export default players
 
 // function todos(state = [], action) {

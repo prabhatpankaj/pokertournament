@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Dropdown } from 'react-bootstrap';
-import { addPlayer, reservePlayer } from '../../actions';
+import { reservePlayer } from '../../actions';
+import fetch from "node-fetch";
 import "./ReservationsView.css";
+import Logger from "js-logger";
+
+// TODO: [PT-48] How do I load this page with players from the league that have not yet
+// reserved a spot? 
 
 class ReservationsView extends Component {
 
@@ -15,10 +20,31 @@ class ReservationsView extends Component {
     }
 
     componentDidMount() {
-        this.fetchPlayers()
+        // TODO: [PT-48] This should exclude those players that have already made reservations
+        // this.fetchPlayers()
+        this.getAvailablePlayers()
     }
 
-    fetchPlayers() {
+    getAvailablePlayers = () => {
+        // Logger.info(JSON.stringify(this.props.players))
+        // const initialPlayers = {
+        //     "byPlayerId": {},
+        //     "reserved": [],
+        //     "boughtIn": [],
+        //     "active": [],
+        //     "busted": []
+        // }
+
+        // TODO: [PT-48] At this point, byPlayerId is loaded, but the others are not. They should be loaded with
+        // the tournament. 
+        // TODO: [PT-48] Then, a list of available players (league players not already reserved) can be created in state
+        // here and rebuilt (or updated) on each reservation.
+        
+    }
+
+    fetchPlayers = () => {
+        // TODO: [PT-48] This should be by leagueId
+        // TODO: [PT-48] I think this is already done when the tournament is loaded.
         const url = `${process.env.REACT_APP_API_PATH}/players`
         const that = this
 
@@ -44,17 +70,20 @@ class ReservationsView extends Component {
         // TODO: Need to make backend calls
         const player = this.state.leaguePlayersById[eventKey]
         if (player) {
-            this.props.addPlayer(player)
-            this.props.reservePlayer(player)
+            this.reservePlayer(this.props.tournament, player)
         }
     }
 
-    onPlayerBuyin = (eventKey, event) => {
-        event.preventDefault()
-    }
+    reservePlayer = (tournament, player) => {
+        const url = `${process.env.REACT_APP_API_PATH}/reservations/tournament/${tournament.id}/player/${player.id}`
+        const that = this
 
-    onPlayerSeat = (eventKey, event) => {
-        event.preventDefault()
+        fetch(url, { method: 'POST' })
+            .then(response => response.json())
+            .then((reservation) => {
+                that.props.reservePlayer(player)
+            })
+
     }
 
     render() {
@@ -123,9 +152,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addPlayer: player => {
-            dispatch(addPlayer(player))
-        },
         reservePlayer: player => {
             dispatch(reservePlayer(player))
         }

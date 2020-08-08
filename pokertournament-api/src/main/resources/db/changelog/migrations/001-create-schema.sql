@@ -140,6 +140,7 @@ CREATE TABLE reservations (
     player_id INT NOT NULL,
     timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
     PRIMARY KEY (id),
+    UNIQUE (tournament_id, player_id),
     FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
     FOREIGN KEY (player_id) REFERENCES players (id)
 );

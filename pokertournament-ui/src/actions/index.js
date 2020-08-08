@@ -26,7 +26,8 @@ export const TournamentClockAction = {
 
 export const PlayerAction = {
     SET_PLAYERS: 'SET_PLAYERS',
-    ADD_PLAYER: 'ADD_PLAYER',
+    // ADD_PLAYER: 'ADD_PLAYER',
+    SET_RESERVATIONS: 'SET_RESERVATIONS',
     RESERVE_PLAYER: 'RESERVE_PLAYER',
     BUYIN_PLAYER: 'BUYIN_PLAYER',
     SEAT_PLAYER: 'SEAT_PLAYER',
@@ -92,10 +93,15 @@ export const setPlayers = players => ({
     players
 })
 
-export const addPlayer = player => ({
-    type: PlayerAction.ADD_PLAYER,
-    player
+export const setReservations = reservations => ({
+    type: PlayerAction.SET_RESERVATIONS,
+    reservations
 })
+
+// export const addPlayer = player => ({
+//     type: PlayerAction.ADD_PLAYER,
+//     player
+// })
 
 export const reservePlayer = player => ({
     type: PlayerAction.RESERVE_PLAYER,

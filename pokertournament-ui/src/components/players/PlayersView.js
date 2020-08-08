@@ -6,6 +6,9 @@ import Overlay from 'react-bootstrap/Overlay'
 import { buyinPlayer, seatPlayer } from '../../actions';
 import fetch from "node-fetch";
 import "./PlayersView.css";
+import Logger from "js-logger";
+
+// TODO: [PT-48] This should be reservations or something like that
 
 class PlayersView extends Component {
 
@@ -32,7 +35,7 @@ class PlayersView extends Component {
 
     buyinPlayer = (tournament, player) => {
         // TODO: Where do I save the buyin?
-    } 
+    }
 
     seatPlayer = (tournament, player) => {
         const url = `${process.env.REACT_APP_API_PATH}/seating/tournament/${tournament.id}/player/${player.id}/random`
@@ -62,8 +65,8 @@ class PlayersView extends Component {
 
     render() {
         const playerRows = []
-        for (const [index, playerId] of this.props.players.reserved.entries()) {
-            const player = this.props.players.byPlayerId[playerId]
+        for (const [index, reservation] of this.props.players.reserved.entries()) {
+            const player = this.props.players.byPlayerId[reservation.playerId]
             playerRows.push(
                 <tr key={index}>
                     <td>
@@ -106,7 +109,7 @@ class PlayersView extends Component {
                                     </div>
                                 )}
                             </Overlay>
-                        </>                    
+                        </>
                     </Col>
                 </Row>
                 <Row>

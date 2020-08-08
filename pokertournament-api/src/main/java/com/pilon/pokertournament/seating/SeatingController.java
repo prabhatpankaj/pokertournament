@@ -32,7 +32,7 @@ public class SeatingController {
 
     @RequestMapping(path = "/tournament/{tournamentId}/player/{playerId}/random", method = RequestMethod.PUT)
     public ResponseEntity<Seating> updateSeatRandom(@PathVariable Long tournamentId, @PathVariable Long playerId) throws Exception {
-        log.info(String.format("updateSeatRandom:%d", playerId));
+        log.info("updateSeatRandom:{}", playerId);
         Optional<Seating> seating = seatingManager.updateSeatRandom(tournamentId, playerId);
         if (seating.isPresent()) {
             return new ResponseEntity<Seating>(seating.get(), HttpStatus.OK);

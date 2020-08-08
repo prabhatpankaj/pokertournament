@@ -234,7 +234,7 @@ class TournamentView extends Component {
                     debug={false} />
 
                 <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
-                    <Tab eventKey="home" title="Home">
+                    <Tab eventKey="home" title="Dashboard">
                         <Row className="tournamentNameRow">
                             <Col sm="12">
                                 <h1>{name}</h1>
@@ -273,10 +273,10 @@ class TournamentView extends Component {
                             </Col>
                         </Row> */}
                     </Tab>
-                    <Tab eventKey="reservations" title="Reservations">
+                    <Tab eventKey="reservations" title="Players">
                         <ReservationsView />
                     </Tab>
-                    <Tab eventKey="buyins" title="Players">
+                    <Tab eventKey="buyins" title="Reservations">
                         <PlayersView />
                     </Tab>
                     <Tab eventKey="tables" title="Tables">

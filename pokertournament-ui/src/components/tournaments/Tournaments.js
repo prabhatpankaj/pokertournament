@@ -4,7 +4,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { Row, Col, Table } from 'react-bootstrap';
 import { TournamentStatusDescription } from '../../constants';
 import { API } from '../../constants'
-import { setTournament, setTournamentState, setSeating, setTables, setPlayers } from '../../actions';
+import { setTournament, setTournamentState, setSeating, setTables, setPlayers, setReservations } from '../../actions';
 import { toLocaleDateTime } from '../../utils/dateUtils';
 import Logger from "js-logger";
 import "./Tournaments.css";
@@ -91,6 +91,7 @@ class Tournaments extends Component {
     }
 
     fetchPlayers() {
+        // TODO: [PT-38] This should be players in league
         const url = `${process.env.REACT_APP_API_PATH}${API.PLAYERS_URL}`
         const that = this
 
@@ -105,9 +106,25 @@ class Tournaments extends Component {
             })
     }
 
+    fetchReservations(tournamentId) {
+        const url = `${process.env.REACT_APP_API_PATH}/reservations/tournament/${tournamentId}`
+        const that = this
+
+        fetch(url)
+            .then(response => response.json())
+            .then(reservations => {
+                that.props.setReservations(reservations)
+            })
+            .catch(error => {
+                Logger.error('Error getting reservations');
+                Logger.error(error);
+            })
+    }
+
     onClick = tournament => {
         this.fetchTournament(tournament.id)
-        this.fetchPlayers(tournament.id)
+        this.fetchPlayers()
+        this.fetchReservations(tournament.id)
         this.fetchTables(tournament.id)
     }
 
@@ -180,6 +197,9 @@ const mapDispatchToProps = dispatch => {
         },
         setPlayers: players => {
             dispatch(setPlayers(players))
+        },
+        setReservations: reservations => {
+            dispatch(setReservations(reservations))
         },
         setTables: tables => {
             dispatch(setTables(tables))

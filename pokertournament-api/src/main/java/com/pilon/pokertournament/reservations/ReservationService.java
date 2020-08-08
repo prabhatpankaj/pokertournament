@@ -13,6 +13,10 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    public Iterable<Reservation> findAllByTournamentId(Long tournamentId) {
+        return reservationRepository.findAllByTournamentId(tournamentId);
+    }
+
     public Iterable<Reservation> findAllByTournamentIdAndPlayerId(Long tournamentId, Long playerId) {
         return reservationRepository.findAllByTournamentIdAndPlayerId(tournamentId, playerId);
     }

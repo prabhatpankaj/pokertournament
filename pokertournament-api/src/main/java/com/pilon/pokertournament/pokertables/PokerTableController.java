@@ -18,7 +18,7 @@ public class PokerTableController {
 
     @RequestMapping(value="/tournament/{tournamentId}", method=RequestMethod.GET)
     public Iterable<PokerTable> getPokerTablesByTournamentId(@PathVariable Long tournamentId) {
-        log.info("getPokerTablesByTournamentId:%d", tournamentId);
+        log.info("getPokerTablesByTournamentId:tournamentId={}", tournamentId);
         return pokerTableManager.findAllByTournamentId(tournamentId);
     }
     
