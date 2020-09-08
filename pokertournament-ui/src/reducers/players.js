@@ -1,45 +1,59 @@
-import { PlayerAction } from '../actions'
+import { PlayerAction, TableAction } from '../actions'
+import Logger from 'js-logger'
 
+// E.g. reservedByPlayerId[10] = 4, reserved[4] = reservation information
 const initialPlayers = {
-    "byPlayerId": {},
-    "reserved": [],
-    "boughtIn": [],
-    "active": [],
-    "busted": []
+    info: [],                   // player information (first name, last name, email, etc.)
+    infoIndexByPlayerId: {},    // playerId => index into info
+    reserved: [],               // reserved information (tournamentId, playerId, timestamp)
+    reservedByPlayerId: {},     // playerId => index into reserved 
+    boughtIn: [],               // bought in information (tournamentId, playerId, timestamp)
+    boughtInByPlayerId: {},     // playerId => index into boughtIn
+    seating: [],                // seating information (tournamentId, playerId, timestamp, tableId, seat)
+    seatingByPlayerId: {}       // playerId => index into seating
 }
+
+// TODO: Do I need active and busted?
 
 const players = (state = initialPlayers, action) => {
     switch (action.type) {
         case PlayerAction.SET_PLAYERS:
-            var byPlayerId = {}
-            action.players.forEach(player => {
-                byPlayerId[player.id] = player
+            var infoIndexByPlayerId = {}
+            action.players.forEach((player, index) => {
+                infoIndexByPlayerId[player.id] = index
             });
 
             return {
                 ...state,
-                byPlayerId: Object.assign({}, byPlayerId)
+                info: action.players,
+                infoIndexByPlayerId: Object.assign({}, infoIndexByPlayerId)
             }
 
         case PlayerAction.SET_RESERVATIONS:
-            // var reservations = action.reservations.map(reservation => reservation.id)
+            Logger.info(`Array.isArray(action.reservations)=${Array.isArray(action.reservations)}`)
+
+            var reservedByPlayerId = {}
+            action.reservations.forEach((reservation, index) => {
+                reservedByPlayerId[reservation.playerId] = index
+            })
 
             return {
                 ...state,
-                reserved: action.reservations
+                reserved: action.reservations,
+                reservedByPlayerId: Object.assign({}, reservedByPlayerId)
             }
 
         // case PlayerAction.ADD_PLAYER:
         //     return {
         //         ...state,
-        //         byPlayerId: Object.assign({}, state.byPlayerId, { [action.player.id]: action.player })
+        //         infoIndexByPlayerId: Object.assign({}, state.infoIndexByPlayerId, { [action.player.id]: action.player })
         //     }
 
         case PlayerAction.RESERVE_PLAYER:
             return {
                 ...state,
-                byPlayerId: Object.assign({}, state.byPlayerId, { [action.player.id]: action.player }),
-                reserved: [...state.reserved, action.player.id]
+                reserved: [...state.reserved, action.reservation],
+                reservedByPlayerId: Object.assign({}, state.reservedByPlayerId, { [action.reservation.playerId]: state.reserved.length })
             }
 
         case PlayerAction.BUYIN_PLAYER:
@@ -49,16 +63,23 @@ const players = (state = initialPlayers, action) => {
                 boughtIn: [...state.boughtIn, action.player.id]
             }
 
-        case PlayerAction.SEAT_PLAYER:
-            // TODO: Add table and seat
-            const seating = {
-                playerId: action.player.id,
-                tableId: action.tableId,
-                seat: action.seat
-            }
+        case TableAction.SET_SEATING:
+            var seatingByPlayerId = {}
+            action.seating.forEach((seating, index) => {
+                seatingByPlayerId[seating.playerId] = index
+            })
+
             return {
                 ...state,
-                active: [...state.active, seating]
+                seating: action.seating,
+                seatingByPlayerId: Object.assign({}, seatingByPlayerId)
+            }
+    
+        case PlayerAction.SEAT_PLAYER:
+            return {
+                ...state,
+                seating: [...state.seating, action.seating],
+                seatingByPlayerId: Object.assign({}, state.seatingByPlayerId, { [action.seating.playerId]: state.seating.length })
             }
 
         case PlayerAction.BUST_PLAYER:

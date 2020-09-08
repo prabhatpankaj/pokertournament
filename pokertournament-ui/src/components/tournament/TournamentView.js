@@ -274,10 +274,10 @@ class TournamentView extends Component {
                         </Row> */}
                     </Tab>
                     <Tab eventKey="reservations" title="Players">
-                        <ReservationsView />
+                        <PlayersView />
                     </Tab>
                     <Tab eventKey="buyins" title="Reservations">
-                        <PlayersView />
+                        <ReservationsView />
                     </Tab>
                     <Tab eventKey="tables" title="Tables">
                         <TablesView />

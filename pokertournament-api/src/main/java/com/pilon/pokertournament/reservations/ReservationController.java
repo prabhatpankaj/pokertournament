@@ -29,7 +29,9 @@ public class ReservationController {
     public ResponseEntity<Reservation> createReservation(@PathVariable(name = "tournamentId") Long tournamentId, @PathVariable(name = "playerId") Long playerId) throws Exception {
         log.info("createReservation:tournamentId={}:playerId={}", tournamentId, playerId);
         Reservation reservation = reservationManager.createReservation(tournamentId, playerId);
-        return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+        ResponseEntity<Reservation> response = new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+        log.info("createReservation:tournamentId={}:playerId={}:response={}", tournamentId, playerId, response);
+        return response;
     } 
 
 }

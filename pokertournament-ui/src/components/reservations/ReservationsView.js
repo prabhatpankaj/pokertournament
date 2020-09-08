@@ -2,118 +2,131 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Dropdown } from 'react-bootstrap';
-import { reservePlayer } from '../../actions';
+import Overlay from 'react-bootstrap/Overlay'
+import { buyinPlayer, seatPlayer } from '../../actions';
 import fetch from "node-fetch";
 import "./ReservationsView.css";
-import Logger from "js-logger";
-
-// TODO: [PT-48] How do I load this page with players from the league that have not yet
-// reserved a spot? 
 
 class ReservationsView extends Component {
 
+    state = {
+        showPlayer: null,
+        showSeating: null,
+        show: false
+    }
+
+    // eslint-disable-next-line
     constructor(props) {
         super(props);
-        this.state = {
-            leaguePlayers: []
+    }
+
+    onPlayerBuyin = (eventKey, event) => {
+        event.preventDefault()
+
+        const playerIndex = this.props.players.infoIndexByPlayerId[eventKey]
+        const player = this.props.players.info[playerIndex]
+        if (player) {
+            this.buyinPlayer(this.props.tournament, player)
+            this.seatPlayer(this.props.tournament, player)
         }
     }
 
-    componentDidMount() {
-        // TODO: [PT-48] This should exclude those players that have already made reservations
-        // this.fetchPlayers()
-        this.getAvailablePlayers()
+    buyinPlayer = (tournament, player) => {
+        // TODO: Where do I save the buyin?
     }
 
-    getAvailablePlayers = () => {
-        // Logger.info(JSON.stringify(this.props.players))
-        // const initialPlayers = {
-        //     "byPlayerId": {},
-        //     "reserved": [],
-        //     "boughtIn": [],
-        //     "active": [],
-        //     "busted": []
-        // }
-
-        // TODO: [PT-48] At this point, byPlayerId is loaded, but the others are not. They should be loaded with
-        // the tournament. 
-        // TODO: [PT-48] Then, a list of available players (league players not already reserved) can be created in state
-        // here and rebuilt (or updated) on each reservation.
-        
-    }
-
-    fetchPlayers = () => {
-        // TODO: [PT-48] This should be by leagueId
-        // TODO: [PT-48] I think this is already done when the tournament is loaded.
-        const url = `${process.env.REACT_APP_API_PATH}/players`
+    seatPlayer = (tournament, player) => {
+        const url = `${process.env.REACT_APP_API_PATH}/seating/tournament/${tournament.id}/player/${player.id}/random`
         const that = this
 
-        fetch(url)
+        fetch(url, { method: 'PUT' })
             .then(response => response.json())
-            .then(players => {
-                let leaguePlayersById = {}
-                players.forEach(player => {
-                    leaguePlayersById[player.id] = player
-                })
+            .then(seating => {
+                that.props.seatPlayer(seating)
+                that.setState(() => ({
+                    showPlayer: player,
+                    showSeating: seating,
+                    show: true
+                }))
 
-                that.setState({
-                    leaguePlayers: players,
-                    leaguePlayersById: leaguePlayersById
-                });
+                setTimeout(() => {
+                    that.setState(() => ({
+                        show: false
+                    }))
+                }, 2000)
+            })
+            .catch(error => {
+                alert(error)
             });
     }
 
-    onPlayerReserveSeat = (eventKey, event) => {
-        event.preventDefault()
-
-        // TODO: Where do I save the registration?
-        // TODO: Need to make backend calls
-        const player = this.state.leaguePlayersById[eventKey]
-        if (player) {
-            this.reservePlayer(this.props.tournament, player)
-        }
+    setShow = (show) => {
+        this.setState({ show: show })
     }
 
-    reservePlayer = (tournament, player) => {
-        const url = `${process.env.REACT_APP_API_PATH}/reservations/tournament/${tournament.id}/player/${player.id}`
-        const that = this
+    showPlayer = (player) => {
+        if (this.props.players.seatingByPlayerId[player.id] !== undefined)
+            return false
 
-        fetch(url, { method: 'POST' })
-            .then(response => response.json())
-            .then((reservation) => {
-                that.props.reservePlayer(player)
-            })
-
+        return true
     }
 
     render() {
         const playerRows = []
-        for (const [index, player] of this.state.leaguePlayers.entries()) {
-            playerRows.push(
-                <tr key={index}>
-                    <td>
-                        <Dropdown>
-                            <Dropdown.Toggle size="sm" variant="secondary" id="dropdown-basic">
-                            </Dropdown.Toggle>
+        this.props.players.reserved.forEach((reservation, index) => {
+            const playerIndex = this.props.players.infoIndexByPlayerId[reservation.playerId]
+            const player = this.props.players.info[playerIndex]
+            if (this.showPlayer(player)) {
+                playerRows.push(
+                    <tr key={index}>
+                        <td>
+                            <Dropdown>
+                                <Dropdown.Toggle size="sm" variant="secondary" id="dropdown-basic">
+                                </Dropdown.Toggle>
 
-                            <Dropdown.Menu>
-                                <Dropdown.Item eventKey={player.id} onSelect={this.onPlayerReserveSeat}>Reserve Seat</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </td>
-                    <td>{player.firstName}</td>
-                    <td>{player.lastName}</td>
-                    <td>{player.email}</td>
-                    <td>{player.mobilePhone}</td>
-                </tr>)
-        }
+                                <Dropdown.Menu>
+                                    <Dropdown.Item eventKey={player.id} onSelect={this.onPlayerBuyin}>Buy-In</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </td>
+                        <td>{player.firstName}</td>
+                        <td>{player.lastName}</td>
+                        <td>{player.email}</td>
+                        <td>{player.mobilePhone}</td>
+                    </tr>)
+            }
+        })
+
+        const showPlayerName = this.state.showPlayer ? `${this.state.showPlayer.firstName} ${this.state.showPlayer.lastName}` : null
+        const showPlayerSeating = this.state.showSeating ? `Table ${this.props.tables.tablesById[this.state.showSeating.tableId].name}, Seat ${this.state.showSeating.seat + 1}` : null
+        const target = document.getElementById("heading1")
 
         return (
-            <div className="PlayersView">
+            <div className="ReservationsView">
+                <Row>
+                    <Col>
+                        <>
+                            <Overlay target={target} show={this.state.show} placement="bottom">
+                                {({ placement, arrowProps, show: _show, popper, ...props }) => (
+                                    <div
+                                        {...props}
+                                        className="SeatingOverlay"
+                                        style={{
+                                            ...props.style
+                                        }}
+                                    >
+                                        <div className="PlayerName">{showPlayerName}</div>
+                                        <div className="PlayerSeating">{showPlayerSeating}</div>
+                                    </div>
+                                )}
+                            </Overlay>
+                        </>
+                    </Col>
+                </Row>
                 <Row>
                     <Col sm="4" />
                     <Col sm="4">
-                        <h1>Players</h1>
+                        <h1 id="heading1">Reservations</h1>
                     </Col>
                     <Col sm="4" />
                 </Row>
@@ -145,15 +158,18 @@ class ReservationsView extends Component {
 const mapStateToProps = state => {
     return {
         tournament: state.tournament,
-        tournamentState: state.tournamentState,
-        players: state.players
+        players: state.players,
+        tables: state.tables
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        reservePlayer: player => {
-            dispatch(reservePlayer(player))
+        buyinPlayer: player => {
+            dispatch(buyinPlayer(player))
+        },
+        seatPlayer: (seating) => {
+            dispatch(seatPlayer(seating))
         }
     }
 }

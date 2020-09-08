@@ -52,6 +52,7 @@ const tables = (state = initialTables, action) => {
                 newState.tablesById[seating.tableId] = table
             })
 
+
             // return {
             //     ...state,
             //     seating: action.seating
@@ -61,8 +62,8 @@ const tables = (state = initialTables, action) => {
         
 
         case TableAction.SEAT_PLAYER:
-            let table = Object.assign({}, state.tablesById[action.tableId])
-            table.players[action.seat] = action.player.id
+            let table = Object.assign({}, state.tablesById[action.seating.tableId])
+            table.players[action.seating.seat] = action.seating.playerId
             return {
                 ...state,
                 tablesById: Object.assign({}, state.tablesById, table)

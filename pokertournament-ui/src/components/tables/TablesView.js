@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { Row, Col, Table } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
+import "./TablesView.css";
 
 class TablesView extends Component {
 
@@ -12,7 +13,7 @@ class TablesView extends Component {
             const table = this.props.tables.tablesById[tableId]
 
             table.players.forEach((playerId, seatIndex) => {
-                const player = playerId ? this.props.players.byPlayerId[playerId] : null
+                const player = playerId ? this.props.players.info[this.props.players.infoIndexByPlayerId[playerId]] : null
                 const playerName = player ? `${player.firstName} ${player.lastName}` : ''
 
                 tableRows.push(
@@ -23,7 +24,7 @@ class TablesView extends Component {
                 )
             })
 
-            tables.push(<Col sm="2">
+            tables.push(<Col sm="3">
                 <Table striped bordered hover>
                     <thead>
                         <tr>

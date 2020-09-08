@@ -103,9 +103,9 @@ export const setReservations = reservations => ({
 //     player
 // })
 
-export const reservePlayer = player => ({
+export const reservePlayer = reservation => ({
     type: PlayerAction.RESERVE_PLAYER,
-    player
+    reservation
 })
 
 export const buyinPlayer = player => ({
@@ -113,11 +113,9 @@ export const buyinPlayer = player => ({
     player
 })
 
-export const seatPlayer = (player, tableId, seat) => ({
+export const seatPlayer = (seating) => ({
     type: PlayerAction.SEAT_PLAYER,
-    player,
-    tableId,
-    seat
+    seating
 })
 
 export const bustPlayer = player => ({
