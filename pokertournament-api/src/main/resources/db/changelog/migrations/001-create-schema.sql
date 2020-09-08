@@ -1,6 +1,6 @@
 --changeset author:chuckpilon id:create-schema
 
--- TODO: Usee league-based tables (e.g. tables) as templates that must be copied over when creating a tournament.
+-- TODO: Use league-based tables (e.g. tables) as templates that must be copied over when creating a tournament.
 -- For example, Pocket Aces 2020 has tables defined. When  a new Pocket Aces 2020 tournament is created, the league
 -- tables for the basis for the tournament tables
 
@@ -89,6 +89,17 @@ CREATE TABLE tables (
     FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
 );
 
+CREATE TABLE table_status (
+    id SERIAL,
+    tournament_id INT,
+    table_id INT NOT NULL,
+    active BOOLEAN NOT NULL,
+    open_seats SMALLINT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
+    FOREIGN KEY (table_id) REFERENCES tables (id)
+);
+
 CREATE TABLE tournament_current_state (
     tournament_id INT NOT NULL,
     level_status_code INT NOT NULL,
@@ -110,17 +121,6 @@ CREATE TABLE tournament_state_history (
     FOREIGN KEY (tournament_id) REFERENCES tournaments (id)
 );
 
-CREATE TABLE table_status (
-    id SERIAL,
-    tournament_id INT,
-    table_id INT NOT NULL,
-    active BOOLEAN NOT NULL,
-    open_seats SMALLINT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
-    FOREIGN KEY (table_id) REFERENCES tables (id)
-);
-
 CREATE TABLE seating (
     id SERIAL,
     tournament_id INT,
@@ -140,6 +140,7 @@ CREATE TABLE reservations (
     player_id INT NOT NULL,
     timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
     PRIMARY KEY (id),
+    UNIQUE (tournament_id, player_id),
     FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
     FOREIGN KEY (player_id) REFERENCES players (id)
 );

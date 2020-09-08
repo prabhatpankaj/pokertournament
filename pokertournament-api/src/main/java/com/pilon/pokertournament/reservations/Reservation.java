@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import io.micrometer.core.lang.NonNull;
 import lombok.Data;
@@ -25,17 +24,14 @@ public class Reservation {
     private Long id;
 
     @Column
-    @NotNull
     @NonNull
     private Long tournamentId;
 
     @Column
-    @NotNull
     @NonNull
     private Long playerId;
 
     @Column
-    @NotNull
     @NonNull
     private LocalDateTime timestamp = LocalDateTime.now();
 }

@@ -1,7 +1,25 @@
-.PlayersView {
+.ReservationsView {
     margin: 1em;
 }
 
-.PlayersView h1 {
+.ReservationsView h1 {
     text-align: center;
+}
+
+.PlayerName {
+    font-size: 64px;
+    text-align: center;
+}
+
+.PlayerSeating {
+    font-size: 64px;
+    text-align: center;
+}
+
+.SeatingOverlay {
+    background-color: rgba(217, 217, 217, 0.85);
+    padding: 2px 10px;
+    color: black;
+    border-radius: 3;
+    border: 2px solid black;
 }

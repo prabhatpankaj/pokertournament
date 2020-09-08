@@ -94,7 +94,7 @@ VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket 
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
 VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 9', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-07-31 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 4);
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
-VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 10', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-08-28 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
+VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 10', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-08-28 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 4);
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
 VALUES ((SELECT(id) FROM leagues WHERE name = '2020 Pocket Aces'), '2020 Pocket Aces Event 11', '$40 Buy-in, $40 Rebuy (through level 4)', 'Pocket Aces', '2020-09-25 19:00:00', 'Mike Lutz - 8216 125th Street Savage, MN 55378', 1);
 INSERT INTO tournaments (league_id, name, description, hosted_by, scheduled_start, location, status_code) 
@@ -176,6 +176,16 @@ VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM t
 INSERT INTO table_status (tournament_id, table_id, active, open_seats)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Hearts'), FALSE, 0);
 
+INSERT INTO reservations (tournament_id, player_id, timestamp)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 4, NOW());
+INSERT INTO reservations (tournament_id, player_id, timestamp)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 11, NOW());
+INSERT INTO reservations (tournament_id, player_id, timestamp)
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), 45, NOW());
+
+-- INSERT INTO seating (tournament_id, table_id, player_id, seat)
+-- VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 45, 9);
+
 -- FIXIT: When is this table populated with the initial state? First seating?
 
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
@@ -197,7 +207,7 @@ VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM t
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 38, 8);
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), 45, 9);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), null, 9);
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Spades'), null, 10);
 
@@ -208,13 +218,13 @@ VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM t
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), null, 2);
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), 4, 3);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), null, 3);
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), null, 4);
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), 17, 5);
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), 11, 6);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), null, 6);
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Diamonds'), null, 7);
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
@@ -260,4 +270,4 @@ VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM t
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
 VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Hearts'), null, 8);
 INSERT INTO seating (tournament_id, table_id, player_id, seat)
-VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Hearts'), 23, 0);
+VALUES (CURRVAL(pg_get_serial_sequence('tournaments', 'id')), (SELECT(id) FROM tables WHERE name = 'Hearts'), 23, 9);
