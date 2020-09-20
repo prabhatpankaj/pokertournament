@@ -43,12 +43,6 @@ const players = (state = initialPlayers, action) => {
                 reservedByPlayerId: Object.assign({}, reservedByPlayerId)
             }
 
-        // case PlayerAction.ADD_PLAYER:
-        //     return {
-        //         ...state,
-        //         infoIndexByPlayerId: Object.assign({}, state.infoIndexByPlayerId, { [action.player.id]: action.player })
-        //     }
-
         case PlayerAction.RESERVE_PLAYER:
             return {
                 ...state,
@@ -75,7 +69,7 @@ const players = (state = initialPlayers, action) => {
                 seatingByPlayerId: Object.assign({}, seatingByPlayerId)
             }
     
-        case PlayerAction.SEAT_PLAYER:
+        case TableAction.SEAT_PLAYER:
             return {
                 ...state,
                 seating: [...state.seating, action.seating],
@@ -95,27 +89,3 @@ const players = (state = initialPlayers, action) => {
 }
 
 export default players
-
-// function todos(state = [], action) {
-//     switch (action.type) {
-//       case ADD_TODO:
-//         return [
-//           ...state,
-//           {
-//             text: action.text,
-//             completed: false
-//           }
-//         ]
-//       case TOGGLE_TODO:
-//         return state.map((todo, index) => {
-//           if (index === action.index) {
-//             return Object.assign({}, todo, {
-//               completed: !todo.completed
-//             })
-//           }
-//           return todo
-//         })
-//       default:
-//         return state
-//     }
-//   }

@@ -1,77 +1,71 @@
 import { TableAction } from '../actions'
 
 const initialTables = {
-    "tableIds": [],
-    "tablesById": {},
-    "seating": []
+    tableInfo: [],              // array of table information
+    tablesSeatingInfo: [],      // array of seating information, tablesSeatingInfo[tableIndex][seatIndex] == playerId
+    indexForTableId: {}         // map of tableId => index for tableInfo and tablesSeatingInfo
 }
 
 const tables = (state = initialTables, action) => {
     switch (action.type) {
-        case TableAction.SET_TABLES:
-
-            // {
-            //     "id": 1,
-            //     "tournamentId": 14,
-            //     "name": "Spades",
-            //     "seats": 10
-            // },
-
-            let tableIds = []
-            let tablesById = {}
-
-            // FIXIT: Could do this with action.tables.reduce
-            action.tables.map(table => {
-                tableIds.push(table.id)
-                table.players = new Array(table.seats).fill(null)
-                tablesById[table.id] = table
-                return table
-            })
+        case TableAction.SET_TABLES: {
+            var indexForTableId = {}
+            var setTablesTableSeatingInfo = []
+            action.tables.forEach((table, index) => {
+                indexForTableId[table.id] = index
+                setTablesTableSeatingInfo[index] = new Array(table.seats);
+            });
 
             return {
                 ...state,
-                tableIds: tableIds,
-                tablesById: tablesById
+
+                tableInfo: action.tables,
+                tablesSeatingInfo: setTablesTableSeatingInfo,
+                indexForTableId: indexForTableId
             }
+        }
 
-        case TableAction.SET_SEATING:
-            // action.seating is 
-            // {
-            //     "id": 1,
-            //     "tournamentId": 14,
-            //     "tableId": 1,
-            //     "seat": 1,
-            //     "playerId": 36
-            // },
-
+        case TableAction.SET_SEATING: {
+            const newTableSeatingInfo = state.tablesSeatingInfo.slice(0)
             let newState = Object.assign({}, state)
 
             action.seating.forEach(seating => {
-                let table = Object.assign({}, state.tablesById[seating.tableId])
-                table.players[seating.seat] = seating.playerId
-                newState.tablesById[seating.tableId] = table
+                const tableIndex = state.indexForTableId[seating.tableId]
+                const tableSeatingInfo = newTableSeatingInfo[tableIndex]
+                tableSeatingInfo[seating.seat] = seating.playerId
             })
 
+            newState.tablesSeatingInfo = newTableSeatingInfo
+            return newState
+        }
 
+        case TableAction.SEAT_PLAYER: {
+            var tableIndex = state.indexForTableId[action.seating.tableId]
+
+            // TODO: I can probably do this with a map similar to
             // return {
             //     ...state,
-            //     seating: action.seating
+            //     tablesSeatingInfo: state.tablesSeatingInfo.map((tableSeatingInfo, index) => {
+            //         if (index === tableIndex) {
+            //             ...
+            //         }
+            //     })
             // }
 
-            return newState
-        
+            var newTableSeatingInfo = state.tablesSeatingInfo[tableIndex].slice(0)
+            newTableSeatingInfo[action.seating.seat] = action.seating.playerId
+            var newTablesSeatingInfo = state.tablesSeatingInfo.slice(0, tableIndex).concat([newTableSeatingInfo]).concat(state.tablesSeatingInfo.slice(tableIndex + 1))
 
-        case TableAction.SEAT_PLAYER:
-            let table = Object.assign({}, state.tablesById[action.seating.tableId])
-            table.players[action.seating.seat] = action.seating.playerId
             return {
                 ...state,
-                tablesById: Object.assign({}, state.tablesById, table)
+                tablesSeatingInfo: newTablesSeatingInfo
             }
+
+        }
 
         default:
             return state
     }
 }
-  
+
 export default tables

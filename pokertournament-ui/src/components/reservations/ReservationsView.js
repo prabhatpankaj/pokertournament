@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Dropdown } from 'react-bootstrap';
 import Overlay from 'react-bootstrap/Overlay'
 import { buyinPlayer, seatPlayer } from '../../actions';
-import fetch from "node-fetch";
 import "./ReservationsView.css";
+import fetch from "node-fetch";
 
 class ReservationsView extends Component {
 
@@ -36,10 +36,30 @@ class ReservationsView extends Component {
     }
 
     seatPlayer = (tournament, player) => {
-        const url = `${process.env.REACT_APP_API_PATH}/seating/tournament/${tournament.id}/player/${player.id}/random`
-        const that = this
+        // Randomly seat the player:
+        // 1. Count the number of empty seats by counting nulls in tablesSeatingInfo[][], m
+        // 2. Generate a random number n [0, m)
+        // 3. Select the nth seat in tablesSeatingInfo[][] where the seat is null
 
-        fetch(url, { method: 'PUT' })
+        var emptySeats = []
+        for (var tableIndex = 0; tableIndex < this.props.tables.tablesSeatingInfo.length; ++tableIndex) {
+            const table = this.props.tables.tableInfo[tableIndex]
+            const tablesSeatingInfo = this.props.tables.tablesSeatingInfo[tableIndex]
+            for (var seatIndex = 0; seatIndex < table.seats; ++seatIndex) {
+                if (tablesSeatingInfo[seatIndex] == null) {
+                    emptySeats.push({ tableId: table.id, seatIndex: seatIndex })
+                }
+            }
+        }
+
+        const randomSeatIndex = Math.floor(Math.random() * Math.floor(emptySeats.length - 1));
+        const randomSeat = emptySeats[randomSeatIndex]
+        const url = `${process.env.REACT_APP_API_PATH}/seating/tournament/${tournament.id}/table/${randomSeat.tableId}/seat/${randomSeat.seatIndex}/player/${player.id}`
+        var that = this
+
+        fetch(url, {
+            method: 'PUT'
+        })
             .then(response => response.json())
             .then(seating => {
                 that.props.seatPlayer(seating)
@@ -48,7 +68,6 @@ class ReservationsView extends Component {
                     showSeating: seating,
                     show: true
                 }))
-
                 setTimeout(() => {
                     that.setState(() => ({
                         show: false
@@ -57,11 +76,8 @@ class ReservationsView extends Component {
             })
             .catch(error => {
                 alert(error)
-            });
-    }
+            })
 
-    setShow = (show) => {
-        this.setState({ show: show })
     }
 
     showPlayer = (player) => {
@@ -97,8 +113,19 @@ class ReservationsView extends Component {
             }
         })
 
-        const showPlayerName = this.state.showPlayer ? `${this.state.showPlayer.firstName} ${this.state.showPlayer.lastName}` : null
-        const showPlayerSeating = this.state.showSeating ? `Table ${this.props.tables.tablesById[this.state.showSeating.tableId].name}, Seat ${this.state.showSeating.seat + 1}` : null
+        var showPlayerName
+        if (this.state.showPlayer) {
+            showPlayerName = `${this.state.showPlayer.firstName} ${this.state.showPlayer.lastName}`
+        } else {
+            showPlayerName = null
+        }
+        var showPlayerSeating
+        if (this.state.showSeating) {
+            const tableName = this.props.tables.tableInfo[this.props.tables.indexForTableId[this.state.showSeating.tableId]].name
+            showPlayerSeating = `Table ${tableName}, Seat ${this.state.showSeating.seat + 1}`
+        } else {
+            showPlayerSeating = null
+        }
         const target = document.getElementById("heading1")
 
         return (

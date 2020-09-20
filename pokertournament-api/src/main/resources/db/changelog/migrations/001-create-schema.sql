@@ -94,7 +94,6 @@ CREATE TABLE table_status (
     tournament_id INT,
     table_id INT NOT NULL,
     active BOOLEAN NOT NULL,
-    open_seats SMALLINT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (tournament_id) REFERENCES tournaments (id),
     FOREIGN KEY (table_id) REFERENCES tables (id)

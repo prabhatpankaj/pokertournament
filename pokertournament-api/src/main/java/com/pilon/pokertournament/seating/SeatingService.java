@@ -22,5 +22,14 @@ public class SeatingService {
     public Optional<Seating> updateSeatRandom(Long tournamentId, Long playerId) {
         return seatingRepository.updateSeatRandom(tournamentId, playerId);
     }
+
+	public Seating saveSeat(Long tournamentId, Long tableId, Integer seatIndex, Long playerId) {
+        Seating seating = new Seating();
+        seating.setTournamentId(tournamentId);
+        seating.setTableId(tableId);
+        seating.setSeat(seatIndex);
+        seating.setPlayerId(playerId);
+		return seatingRepository.save(seating);
+	}
     
 }
