@@ -1,7 +1,5 @@
 package com.pilon.pokertournament.seating;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +15,6 @@ public class SeatingManager {
 
     public Iterable<Seating> findAllByTournamentIdAndTableId(Long tournamentId, Long tableId) {
         return seatingService.findAllByTournamentIdAndTableId(tournamentId, tableId);
-    }
-
-    public Optional<Seating> updateSeatRandom(Long tournamentId, Long playerId) {
-        return seatingService.updateSeatRandom(tournamentId, playerId);
     }
 
 	public Seating saveSeat(Long tournamentId, Long tableId, Integer seatIndex, Long playerId) {

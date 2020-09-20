@@ -1,7 +1,5 @@
 package com.pilon.pokertournament.seating;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,13 +39,7 @@ public class SeatingController {
     @RequestMapping(path = "/tournament/{tournamentId}/player/{playerId}/random", method = RequestMethod.PUT)
     public ResponseEntity<Seating> updateSeatRandom(@PathVariable Long tournamentId, @PathVariable Long playerId) throws Exception {
         log.info("updateSeatRandom:{}", playerId);
-        Optional<Seating> seating = seatingManager.updateSeatRandom(tournamentId, playerId);
-        if (seating.isPresent()) {
-            return new ResponseEntity<Seating>(seating.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Seating>(HttpStatus.NOT_FOUND);
-        }
-
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }
