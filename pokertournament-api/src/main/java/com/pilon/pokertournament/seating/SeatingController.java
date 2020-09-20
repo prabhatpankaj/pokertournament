@@ -30,6 +30,14 @@ public class SeatingController {
         return seatingManager.findAllByTournamentIdAndTableId(tournamentId, tableId);
     }
 
+    @RequestMapping(path = "/tournament/{tournamentId}/table/{tableId}/seat/{seatIndex}/player/{playerId}", method = RequestMethod.PUT)
+    public ResponseEntity<Seating> saveSeat(@PathVariable Long tournamentId, @PathVariable Long tableId, @PathVariable Integer seatIndex, @PathVariable Long playerId) throws Exception {
+        log.info("updateSeat:tournamentId={}:tableId={}:seatIndex={}:playerId={}", tournamentId, tableId, seatIndex, playerId);
+        Seating seating = seatingManager.saveSeat(tournamentId, tableId, seatIndex, playerId);
+        log.info("seating:{}", seating);
+        return new ResponseEntity<Seating>(seating, HttpStatus.OK);
+    }
+
     @RequestMapping(path = "/tournament/{tournamentId}/player/{playerId}/random", method = RequestMethod.PUT)
     public ResponseEntity<Seating> updateSeatRandom(@PathVariable Long tournamentId, @PathVariable Long playerId) throws Exception {
         log.info("updateSeatRandom:{}", playerId);

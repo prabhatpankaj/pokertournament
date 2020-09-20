@@ -98,11 +98,6 @@ export const setReservations = reservations => ({
     reservations
 })
 
-// export const addPlayer = player => ({
-//     type: PlayerAction.ADD_PLAYER,
-//     player
-// })
-
 export const reservePlayer = reservation => ({
     type: PlayerAction.RESERVE_PLAYER,
     reservation
@@ -114,18 +109,11 @@ export const buyinPlayer = player => ({
 })
 
 export const seatPlayer = (seating) => ({
-    type: PlayerAction.SEAT_PLAYER,
+    type: TableAction.SEAT_PLAYER,
     seating
 })
 
 export const bustPlayer = player => ({
     type: PlayerAction.BUST_PLAYER,
     player
-})
-
-export const seatPlayerAtTable = (player, tableId, seat) => ({
-    type: TableAction.SEAT_PLAYER,
-    player,
-    tableId,
-    seat
 })

@@ -19,4 +19,6 @@ public interface SeatingRepository extends CrudRepository<Seating, Long> {
     @Transactional
     @Query(nativeQuery=true, value="UPDATE seating SET player_id = :playerId WHERE id = (SELECT id FROM seating WHERE player_id IS NULL AND tournament_id = :tournamentId ORDER BY RANDOM() LIMIT 1) RETURNING *")
     Optional<Seating> updateSeatRandom(@Param("tournamentId") Long tournamentId, @Param("playerId") Long playerId);
+
+	// public Seating save(Long tournamentId, Long tableId, Integer seatIndex, Long playerId);
 }

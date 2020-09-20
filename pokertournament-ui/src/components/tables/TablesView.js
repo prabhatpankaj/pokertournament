@@ -8,13 +8,14 @@ class TablesView extends Component {
 
     render() {
         let tables = []
-        this.props.tables.tableIds.forEach(tableId => {
+        this.props.tables.tablesSeatingInfo.forEach((tablesSeatingInfo, tableIndex) => {
+            const table = this.props.tables.tableInfo[tableIndex]
             const tableRows = []
-            const table = this.props.tables.tablesById[tableId]
 
-            table.players.forEach((playerId, seatIndex) => {
-                const player = playerId ? this.props.players.info[this.props.players.infoIndexByPlayerId[playerId]] : null
-                const playerName = player ? `${player.firstName} ${player.lastName}` : ''
+            for (var seatIndex = 0; seatIndex < table.seats; ++seatIndex) {
+                const playerId = tablesSeatingInfo[seatIndex]
+                const player = (playerId == null) ? null : this.props.players.info[this.props.players.infoIndexByPlayerId[playerId]]
+                const playerName = player ? `${player.firstName} ${player.lastName}` : null
 
                 tableRows.push(
                     <tr key={seatIndex}>
@@ -22,7 +23,7 @@ class TablesView extends Component {
                         <td>{playerName}</td>
                     </tr>
                 )
-            })
+            }
 
             tables.push(<Col sm="3">
                 <Table striped bordered hover>
@@ -40,7 +41,6 @@ class TablesView extends Component {
                     </tbody>
                 </Table>
             </Col>)
-
         })
 
         return (

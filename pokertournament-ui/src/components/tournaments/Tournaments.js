@@ -91,7 +91,7 @@ class Tournaments extends Component {
     }
 
     fetchPlayers() {
-        // TODO: [PT-38] This should be players in league
+        // TODO: This should be players in league
         const url = `${process.env.REACT_APP_API_PATH}${API.PLAYERS_URL}`
         const that = this
 

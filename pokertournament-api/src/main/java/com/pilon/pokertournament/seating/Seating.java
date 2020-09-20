@@ -11,10 +11,12 @@ import javax.validation.constraints.NotNull;
 import io.micrometer.core.lang.NonNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Data
 @Entity
+@ToString
 @Table(name = "seating")
 public class Seating {
     @Id
