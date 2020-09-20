@@ -42,25 +42,18 @@ const tables = (state = initialTables, action) => {
         case TableAction.SEAT_PLAYER: {
             var tableIndex = state.indexForTableId[action.seating.tableId]
 
-            // TODO: I can probably do this with a map similar to
-            // return {
-            //     ...state,
-            //     tablesSeatingInfo: state.tablesSeatingInfo.map((tableSeatingInfo, index) => {
-            //         if (index === tableIndex) {
-            //             ...
-            //         }
-            //     })
-            // }
-
-            var newTableSeatingInfo = state.tablesSeatingInfo[tableIndex].slice(0)
-            newTableSeatingInfo[action.seating.seat] = action.seating.playerId
-            var newTablesSeatingInfo = state.tablesSeatingInfo.slice(0, tableIndex).concat([newTableSeatingInfo]).concat(state.tablesSeatingInfo.slice(tableIndex + 1))
-
             return {
                 ...state,
-                tablesSeatingInfo: newTablesSeatingInfo
-            }
+                tablesSeatingInfo: state.tablesSeatingInfo.map((tableSeatingInfo, index) => {
+                    if (index === tableIndex) {
+                        var newTableSeatingInfo = Object.assign({}, tableSeatingInfo)
+                        newTableSeatingInfo[action.seating.seat] = action.seating.playerId
+                        return newTableSeatingInfo
+                    }
 
+                    return tableSeatingInfo
+                })
+            }
         }
 
         default:
