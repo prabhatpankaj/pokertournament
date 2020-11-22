@@ -115,7 +115,6 @@ class ReservationsView extends Component {
             <div className="ReservationsView">
                 <Row>
                     <Col>
-                        <Seater/>
                         <>
                             <Overlay target={target} show={this.state.showOverlay} placement="bottom">
                                 {({ placement, arrowProps, show: _show, popper, ...props }) => (
