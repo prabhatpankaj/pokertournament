@@ -24,8 +24,8 @@
 		<junit.surefire.version>1.2.0</junit.surefire.version>
 		<failsafe.version>2.22.2</failsafe.version>
 		<junit.failsafe.version>1.2.0</junit.failsafe.version>
-		<testcontainers.version>1.12.5</testcontainers.version>
-		<testcontainers.postgres.version>1.12.5</testcontainers.postgres.version>
+		<testcontainers.version>1.15.0</testcontainers.version>
+		<testcontainers.postgres.version>1.15.0</testcontainers.postgres.version>
 	</properties>
 
 	<dependencies>

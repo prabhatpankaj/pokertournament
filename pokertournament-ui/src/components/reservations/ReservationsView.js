@@ -4,87 +4,77 @@ import { withRouter } from 'react-router-dom'
 import { Row, Col, Table, Dropdown } from 'react-bootstrap';
 import Overlay from 'react-bootstrap/Overlay'
 import { buyinPlayer, seatPlayer } from '../../actions';
+import randomlySeatPlayer from '../../playerActions'
 import "./ReservationsView.css";
-import fetch from "node-fetch";
+import Logger from "js-logger";
 
 class ReservationsView extends Component {
 
     state = {
         showPlayer: null,
         showSeating: null,
-        show: false
+        showOverlay: false
     }
 
-    // eslint-disable-next-line
     constructor(props) {
         super(props);
+        this.selectedPlayers = []
     }
 
-    onPlayerBuyin = (eventKey, event) => {
+    onPlayersBuyIn = (eventKey, event) => {
         event.preventDefault()
 
-        const playerIndex = this.props.players.infoIndexByPlayerId[eventKey]
+        this.selectedPlayers.forEach((playerId) => {
+            this.buyInPlayer(playerId)
+            this.seatPlayer(playerId)
+        })
+        this.selectedPlayers = []
+    }
+
+    buyInPlayer = (playerId) => {
+        Logger.info(`buyInPlayer:${playerId}`)
+    }    
+
+    seatPlayer = (playerId) => {
+        const playerIndex = this.props.players.infoIndexByPlayerId[playerId]
         const player = this.props.players.info[playerIndex]
         if (player) {
-            this.buyinPlayer(this.props.tournament, player)
-            this.seatPlayer(this.props.tournament, player)
-        }
-    }
+            const that = this
 
-    buyinPlayer = (tournament, player) => {
-        // TODO: Where do I save the buyin?
-    }
-
-    seatPlayer = (tournament, player) => {
-        // Randomly seat the player:
-        // 1. Count the number of empty seats by counting nulls in tablesSeatingInfo[][], m
-        // 2. Generate a random number n [0, m)
-        // 3. Select the nth seat in tablesSeatingInfo[][] where the seat is null
-
-        var emptySeats = []
-        for (var tableIndex = 0; tableIndex < this.props.tables.tablesSeatingInfo.length; ++tableIndex) {
-            const table = this.props.tables.tableInfo[tableIndex]
-            const tablesSeatingInfo = this.props.tables.tablesSeatingInfo[tableIndex]
-            for (var seatIndex = 0; seatIndex < table.seats; ++seatIndex) {
-                if (tablesSeatingInfo[seatIndex] == null) {
-                    emptySeats.push({ tableId: table.id, seatIndex: seatIndex })
-                }
-            }
-        }
-
-        const randomSeatIndex = Math.floor(Math.random() * Math.floor(emptySeats.length - 1));
-        const randomSeat = emptySeats[randomSeatIndex]
-        const url = `${process.env.REACT_APP_API_PATH}/seating/tournament/${tournament.id}/table/${randomSeat.tableId}/seat/${randomSeat.seatIndex}/player/${player.id}`
-        var that = this
-
-        fetch(url, {
-            method: 'PUT'
-        })
-            .then(response => response.json())
-            .then(seating => {
-                that.props.seatPlayer(seating)
-                that.setState(() => ({
-                    showPlayer: player,
-                    showSeating: seating,
-                    show: true
-                }))
-                setTimeout(() => {
+            randomlySeatPlayer(this.props.tournament.id, this.props.tables, playerId)
+                .then(response => response.json())
+                .then(seating => {
+                    that.props.seatPlayer(seating)
                     that.setState(() => ({
-                        show: false
+                        showPlayer: player,
+                        showSeating: seating,
+                        showOverlay: true
                     }))
-                }, 2000)
-            })
-            .catch(error => {
-                alert(error)
-            })
-
+                    setTimeout(() => {
+                        that.setState(() => ({
+                            showOverlay: false
+                        }))
+                    }, 2000)
+                })
+                .catch(error => {
+                    alert(error)
+                })
+        }
     }
 
     showPlayer = (player) => {
-        if (this.props.players.seatingByPlayerId[player.id] !== undefined)
-            return false
+        return (this.props.players.seatingByPlayerId[player.id] !== undefined) ? false : true
+    }
 
-        return true
+    onSelectPlayer = (event) => {
+        const playerId = event.target.value
+
+        if (event.target.checked) {
+            this.selectedPlayers.push(playerId)
+        } else {
+            var index = this.selectedPlayers.indexOf(playerId);
+            this.selectedPlayers.splice(index, 1);
+        }
     }
 
     render() {
@@ -96,14 +86,7 @@ class ReservationsView extends Component {
                 playerRows.push(
                     <tr key={index}>
                         <td>
-                            <Dropdown>
-                                <Dropdown.Toggle size="sm" variant="secondary" id="dropdown-basic">
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                    <Dropdown.Item eventKey={player.id} onSelect={this.onPlayerBuyin}>Buy-In</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                            <input type="checkbox" value={player.id} onClick={this.onSelectPlayer.bind(this)} />
                         </td>
                         <td>{player.firstName}</td>
                         <td>{player.lastName}</td>
@@ -133,7 +116,7 @@ class ReservationsView extends Component {
                 <Row>
                     <Col>
                         <>
-                            <Overlay target={target} show={this.state.show} placement="bottom">
+                            <Overlay target={target} show={this.state.showOverlay} placement="bottom">
                                 {({ placement, arrowProps, show: _show, popper, ...props }) => (
                                     <div
                                         {...props}
@@ -162,6 +145,20 @@ class ReservationsView extends Component {
                     <Col sm="8">
                         <Table striped bordered hover>
                             <thead>
+                            <tr>
+                                    <th>
+                                        <input type="checkbox" onClick="onSelectAll" />
+                                    </th>
+                                    <th colSpan="5">
+                                        <Dropdown>
+                                            <Dropdown.Toggle variant="primary" id="dropdown-basic">Actions</Dropdown.Toggle>
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item onSelect={this.onPlayersBuyIn}>Buy-In</Dropdown.Item>
+                                                <Dropdown.Item onSelect={this.onPlayersForfeitReservation}>Forfeit Reservation</Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                    </th>
+                                </tr>
                                 <tr>
                                     <th>Action</th>
                                     <th>First Name</th>

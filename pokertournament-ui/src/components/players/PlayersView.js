@@ -8,24 +8,28 @@ import "./PlayersView.css";
 
 class PlayersView extends Component {
 
-    // eslint-disable-next-line
+    state = {
+        showPlayer: null,
+        showSeating: null,
+        showOverlay: false
+    }
+
     constructor(props) {
         super(props);
+        this.selectedPlayers = []
     }
 
-    onPlayerReserveSeat = (eventKey, event) => {
+    onPlayersReserveSeat = (eventKey, event) => {
         event.preventDefault()
 
-        const playerId = eventKey
-        const playerIndex = this.props.players.infoIndexByPlayerId[playerId]
-        const player = this.props.players.info[playerIndex]
-        if (player) {
-            this.reservePlayer(this.props.tournament, player)
-        }
+        this.selectedPlayers.forEach((playerId) => {
+            this.reservePlayer(this.props.tournament, playerId)
+        })
+        this.selectedPlayers = []
     }
 
-    reservePlayer = (tournament, player) => {
-        const url = `${process.env.REACT_APP_API_PATH}/reservations/tournament/${tournament.id}/player/${player.id}`
+    reservePlayer = (tournament, playerId) => {
+        const url = `${process.env.REACT_APP_API_PATH}/reservations/tournament/${tournament.id}/player/${playerId}`
         const that = this
 
         fetch(url, { method: 'POST' })
@@ -33,8 +37,21 @@ class PlayersView extends Component {
             .then((reservation) => {
                 that.props.reservePlayer(reservation)
             })
-
     }
+
+    onPlayersBuyIn = (eventKey, event) => {
+        event.preventDefault()
+
+        this.selectedPlayers.forEach((playerId) => {
+            this.buyInPlayer(this.props.tournament, playerId)
+            this.seatPlayer(this.props.tournament, playerId)
+        })
+        this.selectedPlayers = []
+    }
+
+    buyInPlayer = (tournament, playerId) => {
+
+    }    
 
     showPlayer = (player) => {
         if (this.props.players.reservedByPlayerId[player.id] !== undefined) {
@@ -48,6 +65,17 @@ class PlayersView extends Component {
         return true
     }
 
+    onSelectPlayer = (event) => {
+        const playerId = event.target.value
+
+        if (event.target.checked) {
+            this.selectedPlayers.push(playerId)
+        } else {
+            var index = this.selectedPlayers.indexOf(playerId);
+            this.selectedPlayers.splice(index, 1);
+        }
+    }
+
     render() {
         const playerRows = []
         this.props.players.info.forEach((player, index) => {
@@ -55,14 +83,7 @@ class PlayersView extends Component {
                 playerRows.push(
                     <tr key={index}>
                         <td>
-                            <Dropdown>
-                                <Dropdown.Toggle size="sm" variant="secondary" id="dropdown-basic">
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                    <Dropdown.Item eventKey={player.id} onSelect={this.onPlayerReserveSeat}>Reserve Seat</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                            <input type="checkbox" value={player.id} onClick={this.onSelectPlayer.bind(this)} />
                         </td>
                         <td>{player.firstName}</td>
                         <td>{player.lastName}</td>
@@ -77,7 +98,7 @@ class PlayersView extends Component {
                 <Row>
                     <Col sm="4" />
                     <Col sm="4">
-                    <h1>Players</h1>
+                        <h1>Players</h1>
                     </Col>
                     <Col sm="4" />
                 </Row>
@@ -87,11 +108,26 @@ class PlayersView extends Component {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th>Action</th>
+                                    <th>
+                                        <input type="checkbox" onClick="onSelectAll" />
+                                    </th>
+                                    <th colSpan="5">
+                                        <Dropdown>
+                                            <Dropdown.Toggle variant="primary" id="dropdown-basic">Actions</Dropdown.Toggle>
+                                            <Dropdown.Menu>
+                                                <Dropdown.Item onSelect={this.onPlayersReserveSeat}>Reserve Seat</Dropdown.Item>
+                                                <Dropdown.Item onSelect={this.onPlayersBuyIn}>Buy-In</Dropdown.Item>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th></th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Email</th>
                                     <th>Mobile Phone</th>
+                                    <th>Player ID</th>
                                 </tr>
                             </thead>
                             <tbody>
