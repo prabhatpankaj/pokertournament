@@ -2,4 +2,14 @@ databaseChangeLog:
 - include:
     file: db/changelog/migrations/001-create-schema.sql
 - include:
-    file: db/changelog/migrations/002-populate-schema.sql
+    file: db/changelog/migrations/002-populate-domain.sql
+- include:
+    file: db/changelog/migrations/003-populate-users.sql
+- include:
+    file: db/changelog/migrations/004-populate-leagues.sql
+- include:
+    file: db/changelog/migrations/005-populate-players.sql
+- include:
+    file: db/changelog/migrations/006-populate-test-schedule.sql
+- include:
+    file: db/changelog/migrations/007-populate-test-tournament.sql
