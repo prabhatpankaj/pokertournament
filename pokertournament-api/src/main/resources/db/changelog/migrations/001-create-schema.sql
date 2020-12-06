@@ -1,9 +1,5 @@
 --changeset author:chuckpilon id:create-schema
 
--- TODO: Use league-based tables (e.g. tables) as templates that must be copied over when creating a tournament.
--- For example, Pocket Aces 2020 has tables defined. When  a new Pocket Aces 2020 tournament is created, the league
--- tables for the basis for the tournament tables
-
 CREATE TABLE users (
     username VARCHAR(255) NOT NULL,
     enabled BOOLEAN NOT NULL,
